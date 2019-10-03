@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>git on 指尖时光</title>
+    <link>https://blog.caojun.xyz/tags/git/</link>
+    <description>Recent content in git on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 02 Jun 2019 22:13:27 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>游戏开发团队的Git工作流设计</title>
+      <link>https://blog.caojun.xyz/posts/git-workflow/</link>
+      <pubDate>Sun, 02 Jun 2019 22:13:27 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/git-workflow/</guid>
+      <description>如果只用一句话来概括为什么要需要定义工作流，那我的回答是&amp;rdquo;提高效率&amp;ldquo;。简单说工作流就是定义清楚&amp;rdquo;什么情况</description>
+    </item>
+    
+  </channel>
+</rss>

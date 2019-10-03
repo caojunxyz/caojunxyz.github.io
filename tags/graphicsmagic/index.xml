@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GraphicsMagic on 指尖时光</title>
+    <link>https://blog.caojun.xyz/tags/graphicsmagic/</link>
+    <description>Recent content in GraphicsMagic on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 29 Jul 2018 21:53:47 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/tags/graphicsmagic/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>如何正确的自动生成App图标</title>
+      <link>https://blog.caojun.xyz/posts/auto-app-icons/</link>
+      <pubDate>Sun, 29 Jul 2018 21:53:47 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/auto-app-icons/</guid>
+      <description>在做iOS开发时，需要设置很多不同分辨率的图标。这些图标大多是正方形的，也有一些情况下是长方形的，例如Sticker Pack Extension中的</description>
+    </item>
+    
+  </channel>
+</rss>

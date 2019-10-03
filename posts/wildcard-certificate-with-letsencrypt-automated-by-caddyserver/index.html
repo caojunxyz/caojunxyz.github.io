@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>使用Let&#39;s Encrypt通配符证书装备个人站点 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="使用Let&#39;s Encrypt通配符证书装备个人站点" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/wildcard-certificate-with-letsencrypt-automated-by-caddyserver/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">使用Let&#39;s Encrypt通配符证书装备个人站点</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/wildcard-certificate-with-letsencrypt-automated-by-caddyserver/" class="article-date">
+                <time datetime='2018-09-02T17:23:14.000&#43;00:00' itemprop="datePublished">2018-09-02</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://blog.caojun.xyz//categories/%E6%8A%98%E8%85%BE">折腾</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            <p>3月13日，<strong>Let&rsquo;s Encrypt</strong>在Twitter上<a href="https://twitter.com/letsencrypt/status/973607502188195840">宣布通配符证书(<strong>wildcard certificate</strong>)支持正式上线</a>。对于很多公司来说，又多了一个大大的不需要购买付费证书的理由。
+<img src="/images/letsencrypt_wildcard_tweet.png" alt="" /></p>
+
+<p>3月27日，<strong>Caddy Web Server</strong><a href="https://twitter.com/caddyserver/status/978613422102257664">发推宣布发布新版本<strong>0.10.12</strong>，支持自动生成通配符证书</a>。
+<img src="/images/caddyserver_wildcard_tweet.png" alt="" /></p>
+
+<p>通配符证书只有通过<a href="https://datatracker.ietf.org/wg/acme/about/">ACMEv2</a>才能得到，另一方面，通配符证书必须通过修改<a href="https://www.cloudflare.com/learning/dns/dns-records/dns-txt-record/">DNS的TXT记录</a>才能验证申请方拥有对域名的控制权。
+使用CloudFlare进行<a href="https://certbot.eff.org/docs/using.html#dns-plugins">DNS解析</a>, 取消CDN仅做DNS解析，否则证书是CloudFlare的CDN证书, 可授权使用 Cloudflare API key</p>
+
+<p><em>My Profile &ndash;&gt; API Key &ndash;&gt; Global API Key &ndash;&gt; View API Key</em></p>
+
+<p>修改<a href="https://hub.docker.com/r/abiosoft/caddy/~/dockerfile/">Caddy Dockerfile</a></p>
+
+<pre><code>ARG version=&quot;0.10.12&quot;
+ARG plugins=&quot;git cloudflare&quot;  
+# 注释掉如下两行
+#COPY Caddyfile /etc/Caddyfile
+#COPY index.html /srv/index.html
+</code></pre>
+
+<p>查看Caddy dns指令文档：
+<a href="https://caddyserver.com/docs/automatic-https#enabling-the-dns-challenge">https://caddyserver.com/docs/automatic-https#enabling-the-dns-challenge</a></p>
+
+<p>修改docker-compose.yml :</p>
+
+<pre><code># 设置环境变量:
+CLOUDFLARE_EMAIL
+CLOUDFLARE_API_KEY
+ACME_AGREE: 1  #自动agree证书签发协议
+</code></pre>
+
+        </div>
+
+        
+        
+        
+
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/wildcard">wildcard
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/letsencrypt">letsencrypt
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/caddy">caddy
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/dnspod">dnspod
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/cloudflare">cloudflare
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/sdkman/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            SDKMAN介绍
+        </div>
+    </a>
+    
+    
+    <a href="/posts/virtualbox-network-settings/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">分享我的VirtualBox网络设置&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

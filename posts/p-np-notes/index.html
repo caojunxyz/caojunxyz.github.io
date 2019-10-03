@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>P-NP问题定义学习笔记 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="P-NP问题定义学习笔记" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/p-np-notes/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">P-NP问题定义学习笔记</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/p-np-notes/" class="article-date">
+                <time datetime='2018-03-30T10:43:51.000&#43;00:00' itemprop="datePublished">2018-03-30</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://blog.caojun.xyz//categories/%E6%8A%80%E6%9C%AF">技术</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="/images/n-np-npc.svg" alt="" /></p>
+
+<p><strong>P</strong>问题即是多项式时间复杂度可以求解的问题，取多项式单词(<strong>P</strong>olynomial)的首字母。<strong>NP</strong>问题<strong>并不是</strong>不能在多项式时间复杂度内求解的问题，而是<strong>可以</strong>在多项式时间复杂度内<strong>验证</strong>一个解的问题。</p>
+
+<p>多项式时间复杂度即是O(1),O(n),O(log(n)),O(n^a)等函数级别的时间复杂度。其它诸如O(n!),O(a^n)等函数级别的时间复杂度是非多项式的。随着问题规模的扩大，只有多项式时间复杂度的求解方法是在时间上可以接受的。为了说明什么是NPC问题，要先解释什么叫<strong>“约化(Reducibility)”</strong>。如果可以用求解问题B的方法求解问题A则说明问题A可以约化为问题B，意即问题A可以“变成”问题B。例如一元一次方程可以约化为一元二次方程，一个问题约化为另一个问题，时间复杂度增加了，问题的应用范围也增大了。通过对某些问题的不断约化，我们能够不断寻找复杂度更高，但应用范围更广的算法来代替复杂度虽然低，但只能用于很小的一类问题的算法。</p>
+
+<p>我的理解是*“约化就是寻找更通用解的过程”*。</p>
+
+<p>如果不断约化NP问题能够得到一个问题可以包含所有的NP问题，那这个问题就是NPC问题，即NP完全问题。NPC问题有很多，它们是<a href="https://en.wikipedia.org/wiki/List_of_NP-complete_problems">一类问题</a>。
+P-NP问题也是著名的千禧年问题(<strong><a href="https://en.wikipedia.org/wiki/Millennium_Prize_Problems">Millennium Prize Problems</a></strong>)之一。</p>
+
+<p>参考资料:</p>
+
+<ol>
+<li><a href="https://www.youtube.com/watch?v=MyeV2_tGqvw">What Is Big O? (Comparing Algorithms)</a> (<em>Undefined Behavior</em>)</li>
+<li><a href="http://www.matrix67.com/blog/archives/105">什么是P问题、NP问题和NPC问题</a> (<em>Matrix67</em>)</li>
+<li><a href="https://www.youtube.com/watch?v=OY41QYPI8cw">P vs. NP - An Introduction</a> (<em>Undefined Behavior</em>)</li>
+<li><a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/lecture-videos/lecture-16-complexity-p-np-np-completeness-reductions/">Lecture 16: Complexity: P, NP, NP-completeness, Reductions</a> (<em>MIT Open Course</em>)</li>
+</ol>
+
+        </div>
+
+        
+        
+        
+
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/p">P
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/np">NP
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/npc">NPC
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/how-to-write-a-combo-function/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            如何正确的实现一个计算组合数函数
+        </div>
+    </a>
+    
+    
+    <a href="/posts/count-and-say/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">解读Leetcode题目之&#34;Count and Say&#34;&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

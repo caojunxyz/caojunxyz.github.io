@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>技术 on 指尖时光</title>
+    <link>https://blog.caojun.xyz/categories/%E6%8A%80%E6%9C%AF/</link>
+    <description>Recent content in 技术 on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 09 Jun 2019 15:48:44 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/categories/%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>CentOS安装配置Docker环境</title>
+      <link>https://blog.caojun.xyz/posts/use-docker-on-centos7/</link>
+      <pubDate>Sun, 09 Jun 2019 15:48:44 +0800</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/use-docker-on-centos7/</guid>
+      <description>目前我所有的服务都是使用Docker来运行，而Linux发行版也最终选定CentOS和大多数公司的选择保持一致。Docker的安装配置在官网</description>
+    </item>
+    
+    <item>
+      <title>群晖NAS设置root用户免密SSH登陆</title>
+      <link>https://blog.caojun.xyz/posts/nas-root-ssh/</link>
+      <pubDate>Sat, 08 Jun 2019 22:48:11 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/nas-root-ssh/</guid>
+      <description>公司的数据备份使用的是群晖DS418Play NAS系统，安装默认用户是admin。为了通过脚本自动备份数据，需要使用root用户免密ssh登</description>
+    </item>
+    
+    <item>
+      <title>游戏开发团队的Git工作流设计</title>
+      <link>https://blog.caojun.xyz/posts/git-workflow/</link>
+      <pubDate>Sun, 02 Jun 2019 22:13:27 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/git-workflow/</guid>
+      <description>如果只用一句话来概括为什么要需要定义工作流，那我的回答是&amp;rdquo;提高效率&amp;ldquo;。简单说工作流就是定义清楚&amp;rdquo;什么情况</description>
+    </item>
+    
+    <item>
+      <title>USB Type-C的前世今生</title>
+      <link>https://blog.caojun.xyz/posts/usb-type-c/</link>
+      <pubDate>Sat, 17 Nov 2018 17:37:46 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/usb-type-c/</guid>
+      <description>最早了解到USB Type-C接口（简称USB-C或Type-C）应该是从2015年苹果发布New MacBook开始的。很长一段时间，我对苹果</description>
+    </item>
+    
+    <item>
+      <title>Ruby元编程学习笔记（二）</title>
+      <link>https://blog.caojun.xyz/posts/ruby-meta-programming-note-2/</link>
+      <pubDate>Sun, 21 Oct 2018 22:24:55 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/ruby-meta-programming-note-2/</guid>
+      <description>有时候，我们可能要扩展已有的类，可以通过打开类（Open Class)和细化（Refinement)的方式。打开类是全局影响的，而细化的方式可</description>
+    </item>
+    
+    <item>
+      <title>Ruby元编程学习笔记（一）</title>
+      <link>https://blog.caojun.xyz/posts/ruby-meta-programming-note-1/</link>
+      <pubDate>Sun, 14 Oct 2018 21:42:29 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/ruby-meta-programming-note-1/</guid>
+      <description>Ruby的class关键字更像是一个作用于操作符，而不是类型声明语句。class关键字的核心任务是把你带到类的上下文中，上你可以在里面定义方</description>
+    </item>
+    
+    <item>
+      <title>Ruby中String和Symbol的区别</title>
+      <link>https://blog.caojun.xyz/posts/ruby-diff-string-symbol/</link>
+      <pubDate>Wed, 26 Sep 2018 21:08:58 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/ruby-diff-string-symbol/</guid>
+      <description>String(字符串) &amp;quot;iPhone&amp;quot; &#39;iPhone&#39; Symbol(符号) :iPhone 区别 类型不同 $ irb --simple-prompt &amp;gt;&amp;gt; &amp;quot;iPhone&amp;quot;.class =&amp;gt; String &amp;gt;&amp;gt; :iPhone.class =&amp;gt; Symbol 字符串可变（mutable)，符号不可变(immutabl</description>
+    </item>
+    
+    <item>
+      <title>TOML简明教程</title>
+      <link>https://blog.caojun.xyz/posts/toml-lang/</link>
+      <pubDate>Tue, 18 Sep 2018 22:43:04 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/toml-lang/</guid>
+      <description>TOML （Tom&amp;rsquo;s Obvious, Minimal Language) 是由Tom Preston-Werner设计的一门语言。可以将它简单理解为一种数据描述格式，类比xml, yaml, json, i</description>
+    </item>
+    
+    <item>
+      <title>json iterator介绍</title>
+      <link>https://blog.caojun.xyz/posts/jsoniter-go/</link>
+      <pubDate>Tue, 18 Sep 2018 22:06:22 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/jsoniter-go/</guid>
+      <description>jsoniter的Go语言实现的在Github上宣称的主要特性有两点：首先是快，其次是与标准库完全兼容。暂且不谈benchmark是否客观，</description>
+    </item>
+    
+    <item>
+      <title>SDKMAN介绍</title>
+      <link>https://blog.caojun.xyz/posts/sdkman/</link>
+      <pubDate>Sat, 08 Sep 2018 20:45:39 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/sdkman/</guid>
+      <description>最近的工作涉及到通过命令行使用gradle构建Android应用，涉及到不同的gradle版本频繁切换。了解到SDKMAN ( The Software Development Kit Manager )这个</description>
+    </item>
+    
+    <item>
+      <title>分享我的VirtualBox网络设置</title>
+      <link>https://blog.caojun.xyz/posts/virtualbox-network-settings/</link>
+      <pubDate>Sun, 19 Aug 2018 21:26:36 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/virtualbox-network-settings/</guid>
+      <description>使用Mac作为开发机的程序员可能会遇到这样一个使用场景：通过免费的VirtualBox安装一个Linux Server。有可能运行一个web程</description>
+    </item>
+    
+    <item>
+      <title>如何正确的自动生成App图标</title>
+      <link>https://blog.caojun.xyz/posts/auto-app-icons/</link>
+      <pubDate>Sun, 29 Jul 2018 21:53:47 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/auto-app-icons/</guid>
+      <description>在做iOS开发时，需要设置很多不同分辨率的图标。这些图标大多是正方形的，也有一些情况下是长方形的，例如Sticker Pack Extension中的</description>
+    </item>
+    
+    <item>
+      <title>如何正确的实现一个计算组合数函数</title>
+      <link>https://blog.caojun.xyz/posts/how-to-write-a-combo-function/</link>
+      <pubDate>Fri, 06 Apr 2018 00:20:54 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/how-to-write-a-combo-function/</guid>
+      <description>计算组合数(Combination) C(n, k)的数学公式为 n! / ( k! * (n-k)! ), !表示阶乘(Factorial)的。 按公式很容易理解：分别求出三个阶乘数</description>
+    </item>
+    
+    <item>
+      <title>P-NP问题定义学习笔记</title>
+      <link>https://blog.caojun.xyz/posts/p-np-notes/</link>
+      <pubDate>Fri, 30 Mar 2018 10:43:51 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/p-np-notes/</guid>
+      <description>P问题即是多项式时间复杂度可以求解的问题，取多项式单词(Polynomial)的首字母。NP问题并不是不能在多项式时间复杂度内求解的问题，而</description>
+    </item>
+    
+    <item>
+      <title>解读Leetcode题目之&#34;Count and Say&#34;</title>
+      <link>https://blog.caojun.xyz/posts/count-and-say/</link>
+      <pubDate>Wed, 28 Mar 2018 21:00:42 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/count-and-say/</guid>
+      <description>Leetcode算法题目第38题《Count and Say》(又名《Look and Say》)的难度为Easy，但是题目本身并不是太容易理解其表达的意思</description>
+    </item>
+    
+    <item>
+      <title>浅谈散列函数</title>
+      <link>https://blog.caojun.xyz/posts/%E6%B5%85%E8%B0%88%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Wed, 03 Jan 2018 20:47:17 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/%E6%B5%85%E8%B0%88%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0/</guid>
+      <description>本文从程序员的视角介绍md5、sha1、sha256、sha512这几个散列函数。 散列函数(hash function)，又名哈希（音译）函数</description>
+    </item>
+    
+    <item>
+      <title>Go语言包管理简介</title>
+      <link>https://blog.caojun.xyz/posts/go%E8%AF%AD%E8%A8%80%E5%8C%85%E7%AE%A1%E7%90%86%E7%AE%80%E4%BB%8B/</link>
+      <pubDate>Mon, 12 Dec 2016 00:36:05 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/go%E8%AF%AD%E8%A8%80%E5%8C%85%E7%AE%A1%E7%90%86%E7%AE%80%E4%BB%8B/</guid>
+      <description>基础 Go程序通过包(package)进行组织，一个包可以由多个文件组成，但这些文件必须位于同一目录下。每个文件通过在首行用package语句</description>
+    </item>
+    
+    <item>
+      <title>Excel列号的二十六进制表示</title>
+      <link>https://blog.caojun.xyz/posts/excel%E5%88%97%E5%8F%B7%E7%9A%84%E4%BA%8C%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E8%A1%A8%E7%A4%BA/</link>
+      <pubDate>Thu, 24 Nov 2016 23:45:06 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/excel%E5%88%97%E5%8F%B7%E7%9A%84%E4%BA%8C%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E8%A1%A8%E7%A4%BA/</guid>
+      <description>Excel为了方便区分行和列，对行号采用十进制整数递增表示，列号采用一种特殊的“二十六进制”表示。十进制在人类的日常生活中广泛使用，是最容易</description>
+    </item>
+    
+    <item>
+      <title>浅谈游戏数值配置工具</title>
+      <link>https://blog.caojun.xyz/posts/%E6%B5%85%E8%B0%88%E6%B8%B8%E6%88%8F%E6%95%B0%E5%80%BC%E9%85%8D%E7%BD%AE%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Mon, 21 Nov 2016 23:56:59 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/%E6%B5%85%E8%B0%88%E6%B8%B8%E6%88%8F%E6%95%B0%E5%80%BC%E9%85%8D%E7%BD%AE%E5%B7%A5%E5%85%B7/</guid>
+      <description>国内绝大多数游戏研发公司的游戏数值都是在Excel中配置维护，再通过自动化工具转换为程序运行需要的数据文件。使用Excel一方面是因为它极其</description>
+    </item>
+    
+    <item>
+      <title>Go语言自动化测试简介</title>
+      <link>https://blog.caojun.xyz/posts/go%E8%AF%AD%E8%A8%80%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%AE%80%E4%BB%8B/</link>
+      <pubDate>Fri, 14 Oct 2016 22:14:51 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/go%E8%AF%AD%E8%A8%80%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%AE%80%E4%BB%8B/</guid>
+      <description>Go语言提供了对包（*package*）进行自动化测试的支持，带来了很大的工程便利。本文主要介绍相关的常用知识，进一步学习可阅读官方文档。 测</description>
+    </item>
+    
+  </channel>
+</rss>

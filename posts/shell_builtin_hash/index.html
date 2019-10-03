@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Linux Shell如何查找命令 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="Linux Shell如何查找命令" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/shell_builtin_hash/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Linux Shell如何查找命令</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/shell_builtin_hash/" class="article-date">
+                <time datetime='2019-07-13T19:43:29.000&#43;08:00' itemprop="datePublished">2019-07-13</time>
+            </a>
+            
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            <p>在Linux Shell（例如bash）中输入ls，系统会显示当前目录的文件列表，但当你直接输入一个你自己开发的程序的文件名时，系统会提示找不到该文件，这是为什么呢？Shell中有一个叫<strong>PATH</strong>的环境变量，当输入命令时，系统会在PATH包含的路径列表中依次查找该命令，如果找到就立即执行。如果你自己编写的命令没有包含在PATH中，系统就提示找不到了。这时，就需要显式的指定文件路径，例如&rdquo;./xxx&rdquo;表示执行当前目录下的xxx文件。为了在任意目录中方便的执行xxx文件，我们可以将它添加到PATH当中。以bash为例，在<strong><em>~/.bash_profile</em></strong>中添加<strong><em>PATH=$PATH:custom_path</em></strong>。</p>
+
+<p>当PATH环境变量包含的路径很多，且每个路径下的文件都很多时，每次查找需要的时间累积起来其实是挺多的。Shell的优化策略是增加缓存，很容易想到是通过hash表的方式，将命令名作为key，路径作为value。不同Shell的实现策略不同，以bash为例，内置了<strong><em>hash</em></strong>命令。hash表数据是缓存在内存中的，每个会话都是不同的缓存，此处可以ssh登录到一台远程Linux主机实验。</p>
+
+<p><img src="/images/bash_hash.png" alt="如图所示" /></p>
+
+<p>如上图所示，刚登录时hash表为空，没执行一个新命令hash表会增加一条记录，执行hash -r会清除hash表。</p>
+
+<p>为什么需要注意这个机制呢？如果对Python virtualenv有了解的话，就会明白，每次切换Python的版本就需要重建hash表，否则缓存的还是旧版本Python的路径。</p>
+
+<p>不同的shell对hash的实现细节可能不同，但原理都是相同的。</p>
+
+<p><a href="https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html#Bourne-Shell-Builtins"><strong>Bash</strong></a></p>
+
+<pre><code class="language-bash"> hash [-r] [-p filename] [-dt] [name]
+</code></pre>
+
+<p><a href="http://zsh.sourceforge.net/Doc/Release/Shell-Builtin-Commands.html"><strong>Zsh</strong></a></p>
+
+<pre><code class="language-bash">hash [ -Ldfmrv ] [ name[=value] ] ...
+</code></pre>
+
+        </div>
+
+        
+        
+        
+
+        
+
+
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/exercise-file-transmit/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            问题练习 -- 如何快速分发大文件到大量服务器
+        </div>
+    </a>
+    
+    
+    <a href="/posts/unity-manual-activate/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">手动激活Unity License&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

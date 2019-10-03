@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>群晖NAS设置root用户免密SSH登陆 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="群晖NAS设置root用户免密SSH登陆" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/nas-root-ssh/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">群晖NAS设置root用户免密SSH登陆</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/nas-root-ssh/" class="article-date">
+                <time datetime='2019-06-08T22:48:11.000&#43;00:00' itemprop="datePublished">2019-06-08</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://blog.caojun.xyz//categories/%E6%8A%80%E6%9C%AF">技术</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>公司的数据备份使用的是<a href="https://www.synology.cn/en-us/products/DS418play">群晖DS418Play</a> NAS系统，安装默认用户是admin。为了通过脚本自动备份数据，需要使用root用户免密ssh登陆。本文针对macOS和Linux系统总结如下是开启步骤：</p>
+
+<h4 id="1-以admin用户登陆到nas系统-并切换到root用户">1. 以admin用户登陆到NAS系统，并切换到root用户</h4>
+
+<pre><code class="language-bash">ssh &lt;-p [port]&gt; admin@[IP] # 如果不是默认22端口，需要显示指定
+sudo -i # 切换到root用户，需要输入admin用户密码
+</code></pre>
+
+<h4 id="2-修改sshd-config配置">2. 修改sshd_config配置</h4>
+
+<pre><code class="language-bash">cd /etc/ssh
+chmod 755 sshd_config
+vi sshd_config
+</code></pre>
+
+<p>去掉&rdquo;<em>PermitRootLogin prohibit-password</em>&ldquo;行的&rdquo;<em>#</em>&ldquo;注释符号，并修改为&rdquo;<em>PermitRootLogin yes</em>&ldquo;</p>
+
+<h4 id="3-重启">3. 重启</h4>
+
+<pre><code class="language-bash">reboot # 重启
+# ------------------------ 等待重启完成后 ------------------------
+ssh &lt;-p [port]&gt; admin@[IP] # 如果不是默认22端口，需要显示指定
+sudo -i # 切换到root用户，需要输入admin用户密码
+</code></pre>
+
+<h4 id="4-设置root用户密码">4. 设置root用户密码</h4>
+
+<pre><code class="language-bash">synouser --setpw root [password]
+</code></pre>
+
+<h4 id="5-拷贝公钥到nas主机">5. 拷贝公钥到NAS主机</h4>
+
+<p>此步骤的前提是本机已经<a href="https://www.ssh.com/ssh/keygen/">生成ssh密钥</a></p>
+
+<pre><code class="language-bash">ssh-copy-id &lt;-p [port]&gt; root@[IP]
+</code></pre>
+
+<h4 id="6-修改本机ssh-config配置文件">6. 修改本机ssh config配置文件</h4>
+
+<pre><code class="language-bash">vi ~/.ssh/config
+</code></pre>
+
+<p>增加如下配置项：</p>
+
+<pre><code class="language-bash">Host nas
+    hostname [your nas ip address]
+    user root
+    port [your nas ssh port]
+</code></pre>
+
+<h4 id="7-登陆测试">7. 登陆测试</h4>
+
+<pre><code class="language-bash">ssh nas # 使用该命令测试是否能登陆NAS系统
+</code></pre>
+
+        </div>
+
+        
+        
+        <div class="article-toc" >
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#1-以admin用户登陆到nas系统-并切换到root用户">1. 以admin用户登陆到NAS系统，并切换到root用户</a></li>
+<li><a href="#2-修改sshd-config配置">2. 修改sshd_config配置</a></li>
+<li><a href="#3-重启">3. 重启</a></li>
+<li><a href="#4-设置root用户密码">4. 设置root用户密码</a></li>
+<li><a href="#5-拷贝公钥到nas主机">5. 拷贝公钥到NAS主机</a></li>
+<li><a href="#6-修改本机ssh-config配置文件">6. 修改本机ssh config配置文件</a></li>
+<li><a href="#7-登陆测试">7. 登陆测试</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+
+
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/use-docker-on-centos7/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            CentOS安装配置Docker环境
+        </div>
+    </a>
+    
+    
+    <a href="/posts/git-workflow/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">游戏开发团队的Git工作流设计&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

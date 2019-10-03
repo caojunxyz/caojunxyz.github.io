@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Git LFS介绍 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="Git LFS介绍" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/git-lfs/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Git LFS介绍</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/git-lfs/" class="article-date">
+                <time datetime='2019-08-25T22:36:22.000&#43;08:00' itemprop="datePublished">2019-08-25</time>
+            </a>
+            
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            <p><a href="https://en.wikipedia.org/wiki/Git">Git</a>的设计初衷是管理Linux内核的开发，即对源代码（文本文件）进行版本控制。Git是基于文件快照而不是增量差异进行文件存储的，如果一个文件有3个版本，即是只有微小的差异，在Git仓库中也对应着3个blob文件。基于快照的设计使得在Git中创建分支非常快捷方便。文本文件的压缩率是非常高的，二进制文件（例如图片、视频、so文件等）的压缩率则几乎很难再被压缩。这意味这如果我们用Git来管理大的二进制文件，这肯能会导致仓库膨胀得非常快。注意，即使最后这些二进制文件被删除了也并不会减少仓库大小，因为它们的历史版本已经存储到了仓库中。Git仓库的的大小超过1GB时可能会面临性能问题，git clone可能都会因为pack超时而失败。</p>
+
+<p>要彻底解决这个问题，普遍的做法是使用<a href="https://git-lfs.github.com/">Git LFS (Large File Storage)</a>，即Git大文件存储。它的原理是将二进制文件存储到其它地方，例如本地文件系统、NFS、aws s3等，而在Git仓库中仅保存一个文本文件用户包含指向该二进制文件存储的信息。</p>
+
+<p>在macOS上使用Git LFS的步骤：</p>
+
+<ol>
+<li>安装： <code>brew install git-lfs</code></li>
+<li>在需要使用LFS的Git仓库中进行设置: <code>git lfs install</code></li>
+<li>设置需要使用LFS的文件类型，例如<code>git lfs track &quot;*.psd&quot;</code></li>
+<li>将 <em>.gitattributes</em> 文件纳入版本控制: <code>git add .gitattributes</code></li>
+<li>其它操作就和常规的Git操作一致了: <code>git add; git commit; git push;</code></li>
+</ol>
+
+<p>如果需要 <em>push</em> 到远程仓库，则需要远程仓库支持LFS。</p>
+
+<p>如果是代码托管平台，<em>github.com</em>,  <em>gitlab.com</em> 都是支持的。</p>
+
+<p>如果是自建Git服务器，<em>gitlab ce</em> ,  <em><a href="https://docs.gitea.io/en-us/">gitrea</a></em> 。</p>
+
+<p>注意 <em><a href="https://gogs.io/">gogs</a></em> 到目前为止还未支持LFS，虽然它很轻量级。</p>
+
+        </div>
+
+        
+        
+        
+
+        
+
+
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/git-merge-case-1/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Git Merge操作不当导致文件丢失
+        </div>
+    </a>
+    
+    
+    <a href="/posts/gorm-postgres-json/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">GORM使用PostgreSQL数据库json类型的一次挖坑经历&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

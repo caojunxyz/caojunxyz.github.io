@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VirtualBox on 指尖时光</title>
+    <link>https://blog.caojun.xyz/tags/virtualbox/</link>
+    <description>Recent content in VirtualBox on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 19 Aug 2018 21:26:36 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/tags/virtualbox/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>分享我的VirtualBox网络设置</title>
+      <link>https://blog.caojun.xyz/posts/virtualbox-network-settings/</link>
+      <pubDate>Sun, 19 Aug 2018 21:26:36 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/virtualbox-network-settings/</guid>
+      <description>使用Mac作为开发机的程序员可能会遇到这样一个使用场景：通过免费的VirtualBox安装一个Linux Server。有可能运行一个web程</description>
+    </item>
+    
+  </channel>
+</rss>

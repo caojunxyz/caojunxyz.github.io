@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Go语言包管理简介 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="Go语言包管理简介" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/go%E8%AF%AD%E8%A8%80%E5%8C%85%E7%AE%A1%E7%90%86%E7%AE%80%E4%BB%8B/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Go语言包管理简介</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/go%E8%AF%AD%E8%A8%80%E5%8C%85%E7%AE%A1%E7%90%86%E7%AE%80%E4%BB%8B/" class="article-date">
+                <time datetime='2016-12-12T00:36:05.000&#43;00:00' itemprop="datePublished">2016-12-12</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://blog.caojun.xyz//categories/%E6%8A%80%E6%9C%AF">技术</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<h2 id="基础">基础</h2>
+
+<p>Go程序通过包(<strong>package</strong>)进行组织，一个包可以由多个文件组成，但这些文件必须位于<strong>同一目录</strong>下。每个文件通过在首行用<strong>package</strong>语句声明所属的包，例如_package math_，包名不要求一定要与目录名相同（<em>虽然通常会使用相同的</em>)。 同一个包下定义的常量、类型、变量和函数都是互相<strong>可见</strong>的，即使位于不同的文件中。大写字母开头的元素可以导出到其它包中使用。在这种约束的工程结构组织下，编译器无需额外指令（_通常是写一个Makefile文件<em>）就清楚知道怎样构建程序。编译的时候每个包会生成一个*.a*文件，可在<a href="https://golang.org/cmd/go/"><strong>build</strong></a>时通过**</em>-work_<strong>参数打印临时路径查看，这些.a文件再链接生成最终的可执行文件。要引入外部包，通过</strong>import<strong>语句，例如<em>import math</em> / _import github.com/boltdb/bolt_。import的参数是包路径。关于[</strong>GOPATH**]<a href="https://golang.org/doc/code.html#GOPATH">1</a>的管理，一种做法是设置一个唯一路径，另一种做法是为每个项目单独设置，我推荐使用第一种。</p>
+
+<p>如果工程的输出是可执行文件则必需有<strong>main</strong>包。对于仅设计为内部实现使用，而不是被外部引用的包可以放到<strong>internal</strong>目录中，这样位于internal目录外的包就不能引用其中的包，否则会编译错误。internal的设计可以防止内部实现细节扩散到外部。</p>
+
+<p>有四种导入(<strong>import</strong>)包的方式：</p>
+
+<pre><code class="language-Go">1. import   &quot;path/pkg&quot;
+2. import x &quot;path/pkg&quot;
+3. import . &quot;path/pkg&quot;
+4. import _ &quot;path/pkg&quot;
+</code></pre>
+
+<p>假设包名和目录名一致(此处假设为<em>pkg</em>)，使用第1种导入方式，在使用时必须显式的使用包名作为限定符(<em>说明名字空间</em>)，第2种方式使用指定的名字x作为限定符，第3种方式导入的包不需要使用限定符（导入包和当前包在同一名称空间，要注意名字冲突问题），第4种方式不导入名字空间，只是对导入包进行初始化操作。最好不要使用第3种导入方式，否则当工程变大时将很难维护。</p>
+
+<h2 id="引入外部包的问题和解决办法">引入外部包的问题和解决办法</h2>
+
+<p>通常稍大一点规模的项目都会引入<strong>外部包</strong>(<em>例如数据库驱动</em>) ，而不是把每个轮子都造一遍（<em>不必要/成本不允许/根本没造轮子的能力</em>)。<strong>外部</strong>即意味着不在自己的控制之内，可能产生新旧版本的API不兼容问题，例如函数增加了参数/结构体字段类型修改，甚至外部包的作者直接把项目删除了！这就可能导致在你本机可以编译通过并正常运行的程序在新同事那里连编译都通不过的情况发生。其中一种解决办法是把用到的外部项目<a href="https://help.github.com/articles/fork-a-repo/"><strong>fork</strong></a>一份，但又会存在升级维护的问题，而且这种方式给人的直观感受就是丑陋的。我曾经遇到过mongodb驱动的不同版本支持的document最大size是不同的，导致遭遇更新驱动版本后数据库操作失败的问题。</p>
+
+<p>Go工具链在1.5版本增加了实验性质的vendor机制(通过<strong>GO15VENDOREXPERIMENT</strong>环境变量开启)来解决包依赖关系的问题，从Go1.6开始默认开启，Go1.7成为标准特性。但是Go官方并没有提供相关工具，有很多的<a href="https://github.com/golang/go/wiki/PackageManagementTools">第三方实现</a>。通过综合评估各个工具的热度(<a href="https://help.github.com/articles/about-stars/"><strong><em>github star</em></strong></a> / <em>在开源项目中的使用情况</em>)和易用性，推荐掌握<a href="https://github.com/kardianos/govendor"><strong>govendor</strong></a>和<a href="https://github.com/tools/godep"><strong>godep</strong></a> (<em>按先后优先级</em>)。</p>
+
+<h3 id="govendor">govendor</h3>
+
+<p>govendor的基本原理就是通过<strong>vendor.json</strong>文件描述来确定工程使用的外部包。看一个<a href="https://github.com/caojunxyz/govendortest">简单示例</a>：</p>
+
+<pre><code class="language-json">{
+	&quot;comment&quot;: &quot;&quot;,
+	&quot;ignore&quot;: &quot;test&quot;,
+	&quot;package&quot;: [
+		{
+			&quot;checksumSHA1&quot;: &quot;Vw77VGlwiPNNoCPc+lKVeQWcKK4=&quot;,
+			&quot;path&quot;: &quot;github.com/boltdb/bolt&quot;,
+			&quot;revision&quot;: &quot;4b1ebc1869ad66568b313d0dc410e2be72670dda&quot;,
+			&quot;revisionTime&quot;: &quot;2016-10-28T19:36:45Z&quot;
+		},
+		{
+			&quot;checksumSHA1&quot;: &quot;Jl0BawxPBuKr2uY1FpdXGyfCzrA=&quot;,
+			&quot;path&quot;: &quot;github.com/caojunxyz/upid&quot;,
+			&quot;revision&quot;: &quot;f8f05b4acc042cfc1a81bc9dbecb5232800d974b&quot;,
+			&quot;revisionTime&quot;: &quot;2016-10-12T11:57:35Z&quot;
+		}
+	],
+	&quot;rootPath&quot;: &quot;github.com/caojunxyz/govendortest&quot;
+}
+</code></pre>
+
+<p>基于vendor.json可以保证不同的构建者使用相同的外部包<a href="https://golang.org/cmd/go/"><strong>build</strong></a>工程，进而保证可重复的确定输出。通过<a href="https://github.com/kardianos/govendor/blob/master/doc/faq.md"><strong>FAQ</strong></a>可以快速掌握govendor的常用命令，此处不再赘述(<em>可另起一篇介绍</em>)。使用govendor命令可以在工程根目录下增加vendor目录，依赖的外部包可以通过命令拷贝一份，并且还可以通过命令升级维护。例如示例项目的vendor目录结构为：</p>
+
+<pre><code>vendor/
+	   vendor.json
+	   github.com/
+                boltdb/
+                    bolt/
+	   caojun.xyz/
+                upid/
+</code></pre>
+
+<p>任何情况都把vendor.json签入(<em>check in</em>)版本控制系统中，vendor目录下的外部包拷贝通常根据情况决定是否签入版本控制，main包下的vendor外部包就签入，否则不签入。这里很容易理解，这样可以防止大量的重复代码。</p>
+
+<h3 id="godep">godep</h3>
+
+<p>我在使用godep的过程中遇到一个<a href="https://github.com/tools/godep/issues/377"><strong>问题</strong></a>，目前还没有被close，以后再单独写一篇介绍。</p>
+
+<h3 id="使用gopkg-in管理github开源包">使用gopkg.in管理github开源包</h3>
+
+<p>有很多被广泛使用的<a href="https://github.com/"><strong>github</strong></a>开源项目通过<a href="http://labix.org/gopkg.in"><strong>gopkg.in</strong></a>进行版本管理，例如<a href="https://github.com/go-mgo/mgo"><strong>mgo</strong></a>、<a href="https://github.com/go-yaml/yaml"><strong>yaml</strong></a>。gopkg.in非侵入式的设计堪称巧妙，非常具有借鉴意义。它的设计建立在对版本号的管理约定和<a href="https://golang.org/cmd/go/"><strong>go get</strong></a>命令对http响应<strong>meta</strong>信息的处理上。</p>
+
+<p>采用三段式的版本号设计：(<strong>vMAJOR[.MINOR[.PATCH]]</strong>)，例如v1, v2, v2.0, v2.1.3。这里最重要的是主版本号(<em>MAJOR</em>)的变更，这往往意味着向后不兼容的修改。主版本号0表示不稳定版本，github上相应项目如果没有任何满足约定的tag或branch时默认为_v0_，对应master分支。</p>
+
+<p><strong>meta</strong>信息的格式为<code>&lt;meta name=&quot;go-import&quot; content=&quot;pkg git repo&quot;&gt;</code>。</p>
+
+<ul>
+<li>pkg: 包名，例如gopkg.in/yaml.v2</li>
+<li>git: 版本控制系统</li>
+<li>repo: 源代码地址，例如<a href="https://github.com/go-yaml/yaml.git">https://github.com/go-yaml/yaml.git</a></li>
+</ul>
+
+<p>gopkg.in支持两种URL样式，例如：</p>
+
+<pre><code>gopkg.in/pkg.v3      → github.com/go-pkg/pkg (branch/tag v3, v3.N, or v3.N.M)
+gopkg.in/user/pkg.v3 → github.com/user/pkg (branch/tag v3, v3.N, or v3.N.M)
+</code></pre>
+
+<p>第一种样式更精简，通常用于被广泛使用的有较大影响力的开源项目，例如gopkg.in/yaml.v2，它通过包名和user名的名字约定来精简样式。第二种样式通常用于个人项目，例如pkg.in/caojunxyz/upid.v0。</p>
+
+<p>以gopkg.in/yaml.v2为例说明大致原理：</p>
+
+<ol>
+<li>本地运行_go get gopkg.in/yaml.v2_命令，发起<a href="https://gopkg.in/go-yaml/yaml.v1?go-get=1请求">https://gopkg.in/go-yaml/yaml.v1?go-get=1请求</a></li>
+<li>gopkg.in服务器收到请求后解析出目标项目名_yaml_和目标版本号<em>v2</em></li>
+<li>gopkg.in服务器到github服务器查询go-yaml/yaml项目是否存在，且存在名为_v2_的<a href="https://git-scm.com/docs/git-tag"><strong>tag</strong></a>或<a href="https://git-scm.com/docs/git-branch"><strong>branch</strong></a></li>
+<li>gopkg.in服务器在响应go get的meta信息中包含源代码<a href="https://git-scm.com/docs/git-clone"><strong>clone</strong></a>地址和GOPATH中的对应下载目录</li>
+<li>go get克隆代码到本地</li>
+</ol>
+
+<p>这个例子中meta信息为：
+<code>&lt;meta name=&quot;go-import&quot; content=&quot;gopkg.in/yaml.v2 git https://github.com/go-yaml/yaml.git&quot;&gt;</code></p>
+
+<p>如果在浏览器中打开gopkg.in/yaml.v2，系统会自动生成一个web页面，其中包含所有可用版本。通过_&ldquo;Source Code&rdquo;<em>超链接可以跳转到项目的github地址，通过</em>&ldquo;API Documentation&rdquo;_超链接可以跳转到项目在<a href="https://godoc.org/"><strong>godog.org</strong></a>的对应文档页面。godog.org也是一个很巧妙的设计，有点类似gopkg.in，它通过godoc命令生成项目文档。</p>
+
+<h2 id="go-get使用自定义域名">go get使用自定义域名</h2>
+
+<p>有时候我们可能会有通过自定义域名引用包的需求，比如公司内部的项目。这种情况下，源代码可能通过自建仓库（例如使用<a href="https://about.gitlab.com"><strong>GitLab</strong></a>, <a href="https://about.gitlab.com"><strong>Gogs</strong></a>, <a href="https://enterprise.github.com"><strong>Github企业版</strong></a>等）托管或者托管在第三方的私有仓库中。go get默认是不支持从自定义域名参数获取代码的，有一种做法是修改Go源码实现该功能（<em>很容易就实现了</em>)，网上也有人是这样做的，但这种方式是侵入式的，Go官方默认不支持自有其道理。更加优雅的方式是通过类似gopkg.in的方式，直接上代码：</p>
+
+<pre><code class="language-Go">const domain = &quot;caojun.xyz&quot;
+
+// const host = &quot;https://github.com/caojunxyz&quot; // 托管在github
+const host = &quot;http://caojun.xyz:3000&quot;          // Gogs自建仓库
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	list := strings.Split(r.URL.Path, &quot;/&quot;)
+	if len(list) &gt; 1 {
+		repo := strings.Join(list[1:], &quot;/&quot;)
+		content := fmt.Sprintf(&quot;%s/%s&quot;, domain, repo)
+		meta := fmt.Sprintf(`&lt;meta name=&quot;go-import&quot; content=&quot;%s git %s/%s.git&quot;&gt;`, content, host, repo)
+		fmt.Println(&quot;meta:&quot;, meta)
+		fmt.Fprint(w, meta)
+	}
+}
+
+func main() {
+	http.HandleFunc(&quot;/&quot;, handler)
+	http.ListenAndServe(&quot;:80&quot;, nil)
+	select {}
+}
+</code></pre>
+
+<p>这里需要注意的是，如果自定义域名已经有web应用运行(<em>公司主页</em>)该如何处理:</p>
+
+<ul>
+<li>单独使用一个子域名例如code.caojun.xyz(<strong>推荐</strong>)</li>
+<li>web端检测客户端是否浏览器发起的请求，如果不是才返回<strong>go-import meta</strong>信息</li>
+</ul>
+
+        </div>
+
+        
+        
+        <div class="article-toc" >
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#基础">基础</a></li>
+<li><a href="#引入外部包的问题和解决办法">引入外部包的问题和解决办法</a>
+<ul>
+<li><a href="#govendor">govendor</a></li>
+<li><a href="#godep">godep</a></li>
+<li><a href="#使用gopkg-in管理github开源包">使用gopkg.in管理github开源包</a></li>
+</ul></li>
+<li><a href="#go-get使用自定义域名">go get使用自定义域名</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/go">Go
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/%E5%8C%85%E7%AE%A1%E7%90%86">包管理
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/go-vendor">go vendor
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/go-get">go get
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/%E6%B5%85%E8%B0%88%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            浅谈散列函数
+        </div>
+    </a>
+    
+    
+    <a href="/posts/excel%E5%88%97%E5%8F%B7%E7%9A%84%E4%BA%8C%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E8%A1%A8%E7%A4%BA/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Excel列号的二十六进制表示&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

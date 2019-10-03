@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>letsencrypt on 指尖时光</title>
+    <link>https://blog.caojun.xyz/tags/letsencrypt/</link>
+    <description>Recent content in letsencrypt on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 02 Sep 2018 17:23:14 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/tags/letsencrypt/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>使用Let&#39;s Encrypt通配符证书装备个人站点</title>
+      <link>https://blog.caojun.xyz/posts/wildcard-certificate-with-letsencrypt-automated-by-caddyserver/</link>
+      <pubDate>Sun, 02 Sep 2018 17:23:14 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/wildcard-certificate-with-letsencrypt-automated-by-caddyserver/</guid>
+      <description>3月13日，Let&amp;rsquo;s Encrypt在Twitter上宣布通配符证书(wildcard certificate)支持正式上线。对于</description>
+    </item>
+    
+  </channel>
+</rss>

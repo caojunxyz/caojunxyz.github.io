@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gradle on 指尖时光</title>
+    <link>https://blog.caojun.xyz/tags/gradle/</link>
+    <description>Recent content in gradle on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 08 Sep 2018 20:45:39 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/tags/gradle/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SDKMAN介绍</title>
+      <link>https://blog.caojun.xyz/posts/sdkman/</link>
+      <pubDate>Sat, 08 Sep 2018 20:45:39 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/sdkman/</guid>
+      <description>最近的工作涉及到通过命令行使用gradle构建Android应用，涉及到不同的gradle版本频繁切换。了解到SDKMAN ( The Software Development Kit Manager )这个</description>
+    </item>
+    
+  </channel>
+</rss>

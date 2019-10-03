@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>指尖时光</title>
+    <link>https://blog.caojun.xyz/about/</link>
+    <description>Recent content on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 08 Jun 2019 20:45:39 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/about/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title></title>
+      <link>https://blog.caojun.xyz/about/</link>
+      <pubDate>Wed, 08 Jun 2016 20:45:39 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/about/</guid>
+      <description>Talk: caojun dot xyz at gmail 朋友们: 海边码字 &amp;nbsp;&amp;nbsp; 阿斌 &amp;nbsp;&amp;nbsp; 远山淡影 &amp;nbsp;&amp;nbsp; return0 &amp;nbsp;&amp;nbsp; Wangx&amp;rsquo;s blog &amp;nbsp; &amp;nbsp; DevYuan &amp;nbsp; &amp;nbsp; niannian &amp;nbsp; Deepzz</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>健身 on 指尖时光</title>
+    <link>https://blog.caojun.xyz/categories/%E5%81%A5%E8%BA%AB/</link>
+    <description>Recent content in 健身 on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 21 Jan 2019 17:49:54 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/categories/%E5%81%A5%E8%BA%AB/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>科学健身，从了解腹式呼吸开始</title>
+      <link>https://blog.caojun.xyz/posts/abdominal-respiration/</link>
+      <pubDate>Mon, 21 Jan 2019 17:49:54 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/abdominal-respiration/</guid>
+      <description>现如今，久坐带来的职业慢性健康问题经常给生活带来困扰，脊椎相关问题平时都是盲人按摩舒缓，钱花了不少，但治标不治本，而且有重度依赖倾向。大家都</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/</loc>
+    <lastmod>2019-09-15T22:05:56+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/ssh_practise/</loc>
+    <lastmod>2019-09-15T22:05:56+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/</loc>
+    <lastmod>2019-09-15T22:05:56+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/traverse_dir_with_golang/</loc>
+    <lastmod>2019-09-08T22:19:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/git-merge-case-1/</loc>
+    <lastmod>2019-09-01T19:12:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/git-lfs/</loc>
+    <lastmod>2019-08-25T22:36:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/gorm-postgres-json/</loc>
+    <lastmod>2019-08-18T13:32:02+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/install-standalone-postgresql-client-tools/</loc>
+    <lastmod>2019-08-06T20:43:36+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/gomodules/</loc>
+    <lastmod>2019-08-04T13:40:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/gitattributes/</loc>
+    <lastmod>2019-07-24T22:18:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/exercise-file-transmit/</loc>
+    <lastmod>2019-07-21T20:07:13+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/shell_builtin_hash/</loc>
+    <lastmod>2019-07-13T19:43:29+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/unity-manual-activate/</loc>
+    <lastmod>2019-07-02T20:08:56+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/backup-restore-gitlab-in-docker/</loc>
+    <lastmod>2019-06-23T20:08:44+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/macos_trust_ssl/</loc>
+    <lastmod>2019-06-16T20:13:09+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/jenkins-slave-nodes-connect/</loc>
+    <lastmod>2019-06-10T20:33:42+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/categories/</loc>
+    <lastmod>2019-06-09T15:48:44+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/use-docker-on-centos7/</loc>
+    <lastmod>2019-06-09T15:48:44+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/</loc>
+    <lastmod>2019-06-09T15:48:44+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/centos/</loc>
+    <lastmod>2019-06-09T15:48:44+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/docker/</loc>
+    <lastmod>2019-06-09T15:48:44+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/categories/%E6%8A%80%E6%9C%AF/</loc>
+    <lastmod>2019-06-09T15:48:44+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/nas-root-ssh/</loc>
+    <lastmod>2019-06-08T22:48:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/about/</loc>
+    <lastmod>2019-06-08T20:45:39+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/git/</loc>
+    <lastmod>2019-06-02T22:13:27+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/git-workflow/</loc>
+    <lastmod>2019-06-02T22:13:27+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/git-workflow/</loc>
+    <lastmod>2019-06-02T22:13:27+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/categories/%E5%81%A5%E8%BA%AB/</loc>
+    <lastmod>2019-01-21T17:49:54+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/abdominal-respiration/</loc>
+    <lastmod>2019-01-21T17:49:54+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/%E8%85%B9%E5%BC%8F%E5%91%BC%E5%90%B8/</loc>
+    <lastmod>2019-01-21T17:49:54+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/etcher/</loc>
+    <lastmod>2018-11-24T12:12:53+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/reinstall-macos/</loc>
+    <lastmod>2018-11-24T12:12:53+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/createinstallmedia/</loc>
+    <lastmod>2018-11-24T12:12:53+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/macos/</loc>
+    <lastmod>2018-11-24T12:12:53+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/categories/%E6%8A%98%E8%85%BE/</loc>
+    <lastmod>2018-11-24T12:12:53+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/type-c/</loc>
+    <lastmod>2018-11-17T17:37:46+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/usb/</loc>
+    <lastmod>2018-11-17T17:37:46+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/usb-type-c/</loc>
+    <lastmod>2018-11-17T17:37:46+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/categories/%E4%BA%BA%E7%94%9F/</loc>
+    <lastmod>2018-11-11T17:22:09+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/ontheroad-1/</loc>
+    <lastmod>2018-11-11T17:22:09+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/ruby-meta-programming-note-2/</loc>
+    <lastmod>2018-10-21T22:24:55+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/ruby/</loc>
+    <lastmod>2018-10-21T22:24:55+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/ruby-meta-programming-note-1/</loc>
+    <lastmod>2018-10-14T21:42:29+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/ruby-diff-string-symbol/</loc>
+    <lastmod>2018-09-26T21:08:58+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/toml-lang/</loc>
+    <lastmod>2018-09-18T22:43:04+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/golang/</loc>
+    <lastmod>2018-09-18T22:43:04+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/toml/</loc>
+    <lastmod>2018-09-18T22:43:04+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/v0.4.0/</loc>
+    <lastmod>2018-09-18T22:43:04+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/json/</loc>
+    <lastmod>2018-09-18T22:06:22+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/jsoniter-go/</loc>
+    <lastmod>2018-09-18T22:06:22+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/sdkman/</loc>
+    <lastmod>2018-09-08T20:45:39+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/gradle/</loc>
+    <lastmod>2018-09-08T20:45:39+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/sdk/</loc>
+    <lastmod>2018-09-08T20:45:39+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/caddy/</loc>
+    <lastmod>2018-09-02T17:23:14+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/cloudflare/</loc>
+    <lastmod>2018-09-02T17:23:14+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/dnspod/</loc>
+    <lastmod>2018-09-02T17:23:14+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/letsencrypt/</loc>
+    <lastmod>2018-09-02T17:23:14+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/wildcard/</loc>
+    <lastmod>2018-09-02T17:23:14+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/wildcard-certificate-with-letsencrypt-automated-by-caddyserver/</loc>
+    <lastmod>2018-09-02T17:23:14+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/bridge/</loc>
+    <lastmod>2018-08-19T21:26:36+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/host-only/</loc>
+    <lastmod>2018-08-19T21:26:36+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/network/</loc>
+    <lastmod>2018-08-19T21:26:36+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/virtualbox/</loc>
+    <lastmod>2018-08-19T21:26:36+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/virtualbox-network-settings/</loc>
+    <lastmod>2018-08-19T21:26:36+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/graphicsmagic/</loc>
+    <lastmod>2018-07-29T21:53:47+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/auto-app-icons/</loc>
+    <lastmod>2018-07-29T21:53:47+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/dns/</loc>
+    <lastmod>2018-04-25T23:21:43+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/hiwifi.easucks/</loc>
+    <lastmod>2018-04-25T23:21:43+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/%E6%9E%81%E8%B7%AF%E7%94%B1/</loc>
+    <lastmod>2018-04-25T23:21:43+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/hiwifi-fifa-dns-issue/</loc>
+    <lastmod>2018-04-25T23:21:43+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/how-to-write-a-combo-function/</loc>
+    <lastmod>2018-04-06T00:20:54+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/</loc>
+    <lastmod>2018-04-06T00:20:54+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2018-04-06T00:20:54+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/%E7%BB%84%E5%90%88%E6%95%B0/</loc>
+    <lastmod>2018-04-06T00:20:54+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/%E9%98%B6%E4%B9%98/</loc>
+    <lastmod>2018-04-06T00:20:54+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/np/</loc>
+    <lastmod>2018-03-30T10:43:51+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/npc/</loc>
+    <lastmod>2018-03-30T10:43:51+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/p/</loc>
+    <lastmod>2018-03-30T10:43:51+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/p-np-notes/</loc>
+    <lastmod>2018-03-30T10:43:51+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/leetcode/</loc>
+    <lastmod>2018-03-28T21:00:42+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/count-and-say/</loc>
+    <lastmod>2018-03-28T21:00:42+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</loc>
+    <lastmod>2018-03-15T18:44:58+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/md5/</loc>
+    <lastmod>2018-01-03T20:47:17+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/sha1/</loc>
+    <lastmod>2018-01-03T20:47:17+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/sha256/</loc>
+    <lastmod>2018-01-03T20:47:17+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/%E6%95%A3%E5%88%97/</loc>
+    <lastmod>2018-01-03T20:47:17+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/%E6%B5%85%E8%B0%88%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0/</loc>
+    <lastmod>2018-01-03T20:47:17+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/go/</loc>
+    <lastmod>2016-12-12T00:36:05+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/go%E8%AF%AD%E8%A8%80%E5%8C%85%E7%AE%A1%E7%90%86%E7%AE%80%E4%BB%8B/</loc>
+    <lastmod>2016-12-12T00:36:05+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/go-get/</loc>
+    <lastmod>2016-12-12T00:36:05+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/go-vendor/</loc>
+    <lastmod>2016-12-12T00:36:05+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/%E5%8C%85%E7%AE%A1%E7%90%86/</loc>
+    <lastmod>2016-12-12T00:36:05+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/excel/</loc>
+    <lastmod>2016-11-24T23:45:06+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/excel%E5%88%97%E5%8F%B7%E7%9A%84%E4%BA%8C%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E8%A1%A8%E7%A4%BA/</loc>
+    <lastmod>2016-11-24T23:45:06+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/%E4%BA%8C%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6/</loc>
+    <lastmod>2016-11-24T23:45:06+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/%E5%B7%A5%E5%85%B7/</loc>
+    <lastmod>2016-11-21T23:56:59+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/%E6%95%B0%E5%80%BC/</loc>
+    <lastmod>2016-11-21T23:56:59+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/%E6%B5%85%E8%B0%88%E6%B8%B8%E6%88%8F%E6%95%B0%E5%80%BC%E9%85%8D%E7%BD%AE%E5%B7%A5%E5%85%B7/</loc>
+    <lastmod>2016-11-21T23:56:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/%E6%B8%B8%E6%88%8F/</loc>
+    <lastmod>2016-11-21T23:56:59+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/go%E8%AF%AD%E8%A8%80%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%AE%80%E4%BB%8B/</loc>
+    <lastmod>2016-10-14T22:14:51+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/go-test/</loc>
+    <lastmod>2016-10-14T22:14:51+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/</loc>
+    <lastmod>2016-10-14T22:14:51+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/about/</loc>
+    <lastmod>2016-06-08T20:45:39+00:00</lastmod>
+  </url>
+  
+</urlset>

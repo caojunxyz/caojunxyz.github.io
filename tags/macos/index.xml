@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>macOS on 指尖时光</title>
+    <link>https://blog.caojun.xyz/tags/macos/</link>
+    <description>Recent content in macOS on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 24 Nov 2018 12:12:53 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/tags/macos/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>U盘安装macOS踩坑记</title>
+      <link>https://blog.caojun.xyz/posts/reinstall-macos/</link>
+      <pubDate>Sat, 24 Nov 2018 12:12:53 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/reinstall-macos/</guid>
+      <description>自从购买第一台苹果电脑(Macbook Air第一代）切换到苹果电脑办公已有6年历史，这期间重装系统的次数其实很少，总结一下大概有两种情况：1</description>
+    </item>
+    
+  </channel>
+</rss>

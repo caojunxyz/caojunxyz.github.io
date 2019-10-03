@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ruby中String和Symbol的区别 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="Ruby中String和Symbol的区别" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/ruby-diff-string-symbol/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Ruby中String和Symbol的区别</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/ruby-diff-string-symbol/" class="article-date">
+                <time datetime='2018-09-26T21:08:58.000&#43;00:00' itemprop="datePublished">2018-09-26</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://blog.caojun.xyz//categories/%E6%8A%80%E6%9C%AF">技术</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<h4 id="string-字符串">String(字符串)</h4>
+
+<pre><code class="language-ruby">&quot;iPhone&quot;
+'iPhone'
+</code></pre>
+
+<h4 id="symbol-符号">Symbol(符号)</h4>
+
+<pre><code class="language-ruby">:iPhone
+</code></pre>
+
+<h4 id="区别">区别</h4>
+
+<ol>
+<li>类型不同</li>
+</ol>
+
+<pre><code class="language-ruby">   $ irb --simple-prompt
+   &gt;&gt; &quot;iPhone&quot;.class
+   =&gt; String
+   &gt;&gt; :iPhone.class
+   =&gt; Symbol
+</code></pre>
+
+<ol>
+<li>字符串可变（mutable)，符号不可变(immutable)</li>
+</ol>
+
+<pre><code class="language-ruby">   $ irb --simple-prompt
+   &gt;&gt; s = 'iphone'
+   =&gt; &quot;iphone&quot;
+   &gt;&gt; s.object_id
+   =&gt; 70344182559760
+   &gt;&gt; s[1] = 'P'
+   =&gt; &quot;P&quot;
+   &gt;&gt; s
+   =&gt; &quot;iPhone&quot;
+   &gt;&gt; s.object_id
+   =&gt; 70344182559760
+</code></pre>
+
+<ol>
+<li>同名符号是相同对象，而相同字符串则是不同对象</li>
+</ol>
+
+<pre><code class="language-ruby">   $ irb --simple-prompt
+   &gt;&gt; &quot;iPhone&quot;.object_id
+   =&gt; 70182408206300
+   &gt;&gt; 'iPhone'.object_id
+   =&gt; 70182408188520
+   &gt;&gt; :iPhone.object_id
+   =&gt; 1168028
+   &gt;&gt; :iPhone.object_id
+   =&gt; 1168028
+</code></pre>
+
+<h4 id="总结">总结</h4>
+
+<p>基于以上3点区别，在作为常量（例如hash key）等场合，使用符号占用更少的内存，更高效。因为符号与字符串是不同类型，符号对象就不能使用字符串方法，例如#upcase, #split等。两者可以通过<strong><em>to_s</em></strong>和<strong><em>to_sym</em></strong>方法互相转换。</p>
+
+<pre><code class="language-ruby">$ irb --simple-prompt
+&gt;&gt; &quot;iPhone&quot;.class
+=&gt; String
+&gt;&gt; :iPhone.class
+=&gt; Symbol
+&gt;&gt; &quot;iPhone&quot;.to_sym.class
+=&gt; Symbol
+&gt;&gt; :iPhone.to_s.class
+=&gt; String
+</code></pre>
+
+<p>当用作hash key时，两者是不等价的（*其实很好理解，因为类型就不同*），不能混用。</p>
+
+<pre><code class="language-ruby">$ irb --simple-prompt
+&gt;&gt; a = {:name =&gt; 'ruby', :version =&gt; '2.4.0'}
+=&gt; {:name=&gt;&quot;ruby&quot;, :version=&gt;&quot;2.4.0&quot;}
+&gt;&gt; a.each do |k, v|
+?&gt; puts &quot;#{k}: #{k.class}&quot;
+&gt;&gt; end
+name: Symbol
+version: Symbol
+=&gt; {:name=&gt;&quot;ruby&quot;, :version=&gt;&quot;2.4.0&quot;}
+&gt;&gt; b = {&quot;name&quot; =&gt; &quot;ruby&quot;, &quot;version&quot; =&gt; &quot;2.4.0&quot;}
+=&gt; {&quot;name&quot;=&gt;&quot;ruby&quot;, &quot;version&quot;=&gt;&quot;2.4.0&quot;}
+&gt;&gt; b.each do |k, v|
+?&gt; puts &quot;#{k}: #{k.class}&quot;
+&gt;&gt; end
+name: String
+version: String
+=&gt; {&quot;name&quot;=&gt;&quot;ruby&quot;, &quot;version&quot;=&gt;&quot;2.4.0&quot;}
+</code></pre>
+
+        </div>
+
+        
+        
+        <div class="article-toc" >
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#string-字符串">String(字符串)</a></li>
+<li><a href="#symbol-符号">Symbol(符号)</a></li>
+<li><a href="#区别">区别</a></li>
+<li><a href="#总结">总结</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/ruby">ruby
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/ruby-meta-programming-note-1/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Ruby元编程学习笔记（一）
+        </div>
+    </a>
+    
+    
+    <a href="/posts/toml-lang/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">TOML简明教程&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

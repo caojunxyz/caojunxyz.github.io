@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DNS on 指尖时光</title>
+    <link>https://blog.caojun.xyz/tags/dns/</link>
+    <description>Recent content in DNS on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 25 Apr 2018 23:21:43 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/tags/dns/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>记一次极路由翻墙遇到的DNS解析问题</title>
+      <link>https://blog.caojun.xyz/posts/hiwifi-fifa-dns-issue/</link>
+      <pubDate>Wed, 25 Apr 2018 23:21:43 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/hiwifi-fifa-dns-issue/</guid>
+      <description>我家里的*&amp;ldquo;科学上网&amp;rdquo;*环境是极路由4增强版安装FIFA助手插件, 这是我目前知道的基于极路由最简单的姿势。首先需要对</description>
+    </item>
+    
+  </channel>
+</rss>

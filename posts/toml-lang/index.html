@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOML简明教程 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="TOML简明教程" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/toml-lang/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">TOML简明教程</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/toml-lang/" class="article-date">
+                <time datetime='2018-09-18T22:43:04.000&#43;00:00' itemprop="datePublished">2018-09-18</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://blog.caojun.xyz//categories/%E6%8A%80%E6%9C%AF">技术</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p><strong><a href="https://github.com/toml-lang/toml">TOML</a></strong> （<em>Tom&rsquo;s Obvious, Minimal Language</em>) 是由<a href="https://en.wikipedia.org/wiki/Tom_Preston-Werner">Tom Preston-Werner</a>设计的一门语言。可以将它简单理解为一种数据描述格式，类比xml, yaml, json, ini等。它主要的设计目标是对人类友好（_有明显语义、容易阅读_）的小型<strong>配置文件</strong>格式。有了这个前提就没有必要去“杠”谁比谁更好，想要“一门技术吃天下&rdquo;，选择恰当的工具应用在恰当的地方即可。一些复杂的IDE通常适用xml格式作为配置文件，例如AndroidStudio，XCode；知名开源软件<a href="https://docs.docker.com/compose/overview/">Docker</a>, <a href="https://drone.io/">Drone</a>等适用yaml作为配置文件；json在网络通信中被广泛使用; <a href="http://doc.crates.io/">Cargo</a>, <a href="http://influxdb.com/">InfluxDB</a>, <a href="https://traefik.io/">Traefik</a>等使用toml。</p>
+
+<p>toml的当前的最新版本是v0.5.0, 已可认为足够稳定。但因为我要使用的Go和ruby实现还只支持到v0.4.0，所以本文介绍<a href="https://github.com/toml-lang/toml/tree/v0.4.0">v0.4.0</a>的语言规范以及Go和ruby实现的使用。关于实现情况可以查看<a href="https://github.com/toml-lang/toml/wiki">wiki</a>。</p>
+
+<h3 id="v0-4-0">v0.4.0</h3>
+
+<h4 id="语言规范">语言规范</h4>
+
+<ul>
+<li>区分大小写</li>
+<li>只支持UTF-8编码</li>
+<li>空白字符只包括 tab (0x09) 和 空格 (0x20)</li>
+<li>换行支持 LF (0x0A) 和 CRLF (0x0D0A)</li>
+</ul>
+
+<h4 id="注释">注释</h4>
+
+<p>以# 开头到行尾部分，没有多行注释符</p>
+
+<pre><code class="language-toml"># I am a comment. Hear me roar. Roar.
+key = &quot;value&quot; # Yeah, you can do this.
+</code></pre>
+
+<h4 id="字符串">字符串</h4>
+
+<p>字符串分为基础 <em>(basic)</em> 字符串和字面量 <em>(literal)</em> 字符串两类，分别用双引号 <strong>&ldquo;</strong> 和单引号 <strong>&lsquo;</strong> 作为分隔符。基础字符串中转义会生效，字面量字符串的最终结果即为其书写形式。每类字符串又支持单行和多行模式，多行模式分别使用连续的三个分隔符作为字符串的起始和结尾，<strong>紧接开始分隔符的换行会被忽略</strong>。</p>
+
+<pre><code class="language-toml">str0 = &quot;&quot;&quot;
+Roses are red
+Violets are blue&quot;&quot;&quot;
+# 'Roles are red'之前的换行符会被忽略，这非常有用
+</code></pre>
+
+<h5 id="基础字符串">基础字符串</h5>
+
+<p>长字符串可以用 *<em>\*</em> 连接多行书写，提高可读性，其后直到下一个非空白字符的所有空白字符和换行符都会被忽略掉。多行字符串中可以出现双引号，不需要转义，除非连续出现可能导致字符串在语义上提前结束。</p>
+
+<pre><code class="language-toml"># On a Unix system, the above multi-line string will most likely be the same as:
+str1 = &quot;Roses are red\nViolets are blue&quot;
+
+# On a Windows system, it will most likely be equivalent to:
+str2 = &quot;Roses are red\r\nViolets are blue&quot;
+
+# The following strings are byte-for-byte equivalent:
+str3 = &quot;The quick brown fox jumps over the lazy dog.&quot;
+
+str4 = &quot;&quot;&quot;
+The quick brown \
+
+
+  fox jumps over \
+    the lazy dog.&quot;&quot;&quot;
+
+str3 = &quot;&quot;&quot;\
+       The quick brown \
+       fox jumps over \
+       the lazy dog.\
+       &quot;&quot;&quot;
+</code></pre>
+
+<h5 id="字面量字符串">字面量字符串</h5>
+
+<p>不允许出现控制字符（tab除外），如果要包括任意二进制数据，建议使用base64编码。</p>
+
+<pre><code class="language-toml"># What you see is what you get.
+winpath  = 'C:\Users\nodejs\templates'
+winpath2 = '\\ServerX\admin$\system32\'
+quoted   = 'Tom &quot;Dubs&quot; Preston-Werner'
+regex    = '&lt;\i\c*\s*&gt;'
+regex2 = '''I [dw]on't need \d{2} apples'''
+lines  = '''
+The first newline is
+trimmed in raw strings.
+   All other whitespace
+   is preserved.
+'''
+</code></pre>
+
+<h4 id="整型">整型</h4>
+
+<pre><code class="language-toml">int1 = +99
+int2 = 42
+int3 = 0
+int4 = -17
+
+# 大的数字可以使用【下划线】分隔以增加可读性
+int5 = 1_000
+int6 = 5_349_221
+int7 = 1_2_3_4_5     # VALID but discouraged
+
+# hexadecimal with prefix `0x`
+hex1 = 0xDEADBEEF
+hex2 = 0xdeadbeef
+hex3 = 0xdead_beef
+
+# octal with prefix `0o`
+oct1 = 0o01234567
+oct2 = 0o755 # useful for Unix file permissions
+
+# binary with prefix `0b`
+bin1 = 0b11010110
+</code></pre>
+
+<h4 id="浮点型">浮点型</h4>
+
+<p>遵从IEEE 754规范</p>
+
+<pre><code class="language-toml"># fractional
+flt1 = +1.0
+flt2 = 3.1415
+flt3 = -0.01
+
+# exponent
+flt4 = 5e+22
+flt5 = 1e6
+flt6 = -2E-2
+
+# both
+flt7 = 6.626e-34
+
+# use underscore to enhance readability
+flt8 = 224_617.445_991_228
+
+# infinity
+sf1 = inf  # positive infinity
+sf2 = +inf # positive infinity
+sf3 = -inf # negative infinity
+
+# not a number
+sf4 = nan  # actual sNaN/qNaN encoding is implementation specific
+sf5 = +nan # same as `nan`
+sf6 = -nan # valid, actual encoding is implementation specific
+</code></pre>
+
+<h4 id="布尔型">布尔型</h4>
+
+<pre><code class="language-toml">bool1 = true
+bool2 = false
+</code></pre>
+
+<h4 id="日期和时间">日期和时间</h4>
+
+<p>遵从<a href="http://tools.ietf.org/html/rfc3339">RFC 3339</a>标准，时间秒的小数点部分（如下的ldt6的 <em>.999999</em> 部分）的精度是实现相关的，但至少是毫秒级，无法支持的精度部分会被截断。</p>
+
+<pre><code class="language-toml">odt1 = 1979-05-27T07:32:00Z
+odt2 = 1979-05-27T00:32:00-07:00
+odt3 = 1979-05-27T00:32:00.999999-07:00
+</code></pre>
+
+<h4 id="数组">数组</h4>
+
+<p>方括号包围的值序列，元素之间用都好分隔，中间的空白符会被忽略。数据类型必须一致。” <strong>尾逗号</strong> &ldquo;是允许的。</p>
+
+<pre><code class="language-toml">arr1 = [ 1, 2, 3 ]
+arr2 = [ &quot;red&quot;, &quot;yellow&quot;, &quot;green&quot; ]
+arr3 = [ [ 1, 2 ], [3, 4, 5] ]
+arr4 = [ &quot;all&quot;, 'strings', &quot;&quot;&quot;are the same&quot;&quot;&quot;, '''type''']
+arr5 = [ [ 1, 2 ], [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;] ] # this is ok
+
+arr6 = [ 1, 2.0 ] # INVALID
+
+arr7 = [
+  1, 2, 3
+]
+
+arr8 = [
+  1,
+  2, # this is ok
+]
+</code></pre>
+
+<h4 id="字典">字典</h4>
+
+<p>字典是键值对的集合，方括号中加名字单独一行声明字典的开始，直到下一个字典声明或EOF结束。键可用的字符集为 <strong>(A-Za-z0-9_-)</strong> ，如果需要用到其它字符需要用引号，推荐尽可能使用 <em>裸键</em> 。键是无序的。</p>
+
+<pre><code class="language-toml">[table]
+key = &quot;value&quot;
+bare_key = &quot;value&quot;
+bare-key = &quot;value&quot;
+
+&quot;127.0.0.1&quot; = &quot;value&quot;
+&quot;character encoding&quot; = &quot;value&quot;
+&quot;ʎǝʞ&quot; = &quot;value&quot;
+</code></pre>
+
+<p>字典可以通过 <strong>.</strong> 号嵌套，可以直接指定内层嵌套表，而不需要先依次定义外层表:</p>
+
+<pre><code class="language-toml">[dog.&quot;tater.man&quot;]
+type = &quot;pug&quot;
+# json representation of above is : { &quot;dog&quot;: { &quot;tater.man&quot;: {&quot;type&quot;: &quot;pug&quot; } } }
+
+[a.b.c]          # this is best practice
+[ d.e.f ]        # same as [d.e.f]
+[ g .  h  . i ]  # same as [g.h.i]
+[ j . &quot;ʞ&quot; . l ]  # same as [j.&quot;ʞ&quot;.l]
+
+# [x] you
+# [x.y] don't
+# [x.y.z] need these
+[x.y.z.w] # for this to work
+
+
+</code></pre>
+
+<p>允许定义空表：</p>
+
+<pre><code class="language-toml">[a] # empty table
+
+[b]
+d = 1
+</code></pre>
+
+<p>可以先设置嵌套表，再设置上层表：</p>
+
+<pre><code class="language-toml">[a.b]
+c = 1
+
+[a]
+d = 2
+</code></pre>
+
+<p><strong><em>键和表都不允许重复定义</em></strong> ：</p>
+
+<pre><code class="language-toml"># DO NOT DO THIS
+[a]
+b = 1
+
+[a]
+c = 2
+
+# DO NOT DO THIS EITHER
+[a]
+b = 1
+
+[a.b]
+c = 2
+
+</code></pre>
+
+<h4 id="内联-inline-字典">内联(inline)字典</h4>
+
+<p>提供一种紧凑的字典表达方式，例如：</p>
+
+<pre><code class="language-toml">name = { first = &quot;Tom&quot;, last = &quot;Preston-Werner&quot; }
+point = { x = 1, y = 2 }
+
+# above is identical to the following
+
+[name]
+first = &quot;Tom&quot;
+last = &quot;Preston-Werner&quot;
+
+[point]
+x = 1
+y = 2
+</code></pre>
+
+<h4 id="字典数组">字典数组</h4>
+
+<pre><code class="language-toml">[[fruit]]
+  name = &quot;apple&quot;
+
+  [fruit.physical]
+    color = &quot;red&quot;
+    shape = &quot;round&quot;
+
+  [[fruit.variety]]
+    name = &quot;red delicious&quot;
+    
+  [[fruite.variety]]
+  
+  [[fruit.variety]]
+    name = &quot;granny smith&quot;
+
+[[fruit]]
+  name = &quot;banana&quot;
+
+  [[fruit.variety]]
+    name = &quot;plantain&quot;
+</code></pre>
+
+<p>以上结构的等价json表示为：</p>
+
+<pre><code class="language-json">{
+  &quot;fruit&quot;: [
+    {
+      &quot;name&quot;: &quot;apple&quot;,
+      &quot;physical&quot;: {
+        &quot;color&quot;: &quot;red&quot;,
+        &quot;shape&quot;: &quot;round&quot;
+      },
+      &quot;variety&quot;: [
+        { &quot;name&quot;: &quot;red delicious&quot; },
+        { },
+        { &quot;name&quot;: &quot;granny smith&quot; }
+      ]
+    },
+    {
+      &quot;name&quot;: &quot;banana&quot;,
+      &quot;variety&quot;: [
+        { &quot;name&quot;: &quot;plantain&quot; }
+      ]
+    }
+  ]
+}
+</code></pre>
+
+<h3 id="go实现">Go实现</h3>
+
+<p>Go (@thompelletier) - <a href="https://github.com/pelletier/go-toml">https://github.com/pelletier/go-toml</a></p>
+
+<pre><code class="language-golang">var blob = []byte(`
+	[postgres]
+	user = &quot;pelletier&quot;
+	password = &quot;mypassword&quot;`)
+
+type Postgres struct {
+	User     string
+	Password string
+}
+
+type Config struct {
+	Postgres Postgres
+}
+
+func get_toml() {
+	config, err := toml.LoadBytes(blob)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	user := config.Get(&quot;postgres.user&quot;).(string)
+	log.Println(&quot;user:&quot;, user)
+
+	pgConfig := config.Get(&quot;postgres&quot;).(*toml.Tree)
+	if pgConfig != nil {
+		password := pgConfig.Get(&quot;password&quot;).(string)
+		log.Println(&quot;password:&quot;, password)
+	}
+}
+
+func unmarshal_toml() {
+	config := Config{}
+	toml.Unmarshal(blob, &amp;config)
+	log.Printf(&quot;%+v\n&quot;, config)
+}
+
+</code></pre>
+
+<h3 id="ruby实现">Ruby实现</h3>
+
+<p>Ruby (@eMancu) - <a href="https://github.com/eMancu/toml-rb">https://github.com/eMancu/toml-rb</a> (toml-rb gem)</p>
+
+<p><em>gem install tomb-rb</em></p>
+
+<pre><code class="language-ruby">require 'toml-rb'
+
+# From a stream!
+stream = &lt;&lt;-EOS
+	[postgres]
+	user = &quot;pelletier&quot;
+	password = &quot;mypassword&quot;
+EOS
+puts TomlRB.parse(stream)
+# =&gt; {&quot;title&quot;=&gt;&quot;wow!&quot;, &quot;awesome&quot;=&gt;{&quot;you&quot;=&gt;true, &quot;others&quot;=&gt;false}}
+</code></pre>
+
+        </div>
+
+        
+        
+        <div class="article-toc" >
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#v0-4-0">v0.4.0</a>
+<ul>
+<li><a href="#语言规范">语言规范</a></li>
+<li><a href="#注释">注释</a></li>
+<li><a href="#字符串">字符串</a>
+<ul>
+<li><a href="#基础字符串">基础字符串</a></li>
+<li><a href="#字面量字符串">字面量字符串</a></li>
+</ul></li>
+<li><a href="#整型">整型</a></li>
+<li><a href="#浮点型">浮点型</a></li>
+<li><a href="#布尔型">布尔型</a></li>
+<li><a href="#日期和时间">日期和时间</a></li>
+<li><a href="#数组">数组</a></li>
+<li><a href="#字典">字典</a></li>
+<li><a href="#内联-inline-字典">内联(inline)字典</a></li>
+<li><a href="#字典数组">字典数组</a></li>
+</ul></li>
+<li><a href="#go实现">Go实现</a></li>
+<li><a href="#ruby实现">Ruby实现</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/toml">toml
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/golang">golang
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/ruby">ruby
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/v0.4.0">v0.4.0
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/ruby-diff-string-symbol/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Ruby中String和Symbol的区别
+        </div>
+    </a>
+    
+    
+    <a href="/posts/jsoniter-go/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">json iterator介绍&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>游戏开发团队的Git工作流设计 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="游戏开发团队的Git工作流设计" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/git-workflow/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">游戏开发团队的Git工作流设计</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/git-workflow/" class="article-date">
+                <time datetime='2019-06-02T22:13:27.000&#43;00:00' itemprop="datePublished">2019-06-02</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://blog.caojun.xyz//categories/%E6%8A%80%E6%9C%AF">技术</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            <p>如果只用一句话来概括为什么要需要定义工作流，那我的回答是&rdquo;<strong>提高效率</strong>&ldquo;。简单说工作流就是定义清楚&rdquo;<strong>什么情况做什么事情，以及该怎么做</strong>”。有了这个工作指南，我们即可按部就班的做事情，不用临时去思考到底该怎么做，进一步避免分歧导致工作的停滞甚至争吵。当团队规模越大，工作流的意义越明显，甚至没有工作流就没有协作可言。</p>
+
+<p>为什么是Git而不是SVN？首先，Git相对于SVN的优势不再此处讨论，毫无疑问的是Git意味着更高的生产效率。根据我的经验，团队中各种排斥Git的原因<strong>只能</strong>归结为一个字&rdquo;<strong>懒</strong>&ldquo;。如果团队中至少有一位非常熟悉Git的布道师，再加上老板的支持，其实是很容易执行下去。根据我们团队目前的情况来看，部分美术同学都会很主动的去学习Git，并在工作中使用得非常好。</p>
+
+<p>下图是工作流图：</p>
+
+<p><img src="/images/git-workflow-game.png" alt="如图所示" /></p>
+
+<p>此处采用<strong>双主线分支</strong>的设计，<strong>master</strong>和<strong>release</strong>都为主线分支，即长期存在的分支。master分支为开发主分支，需要保证相对稳定（不能阻塞其他人的工作）。日常的功能开发都是从master分支checkout新的分支*task-n*进行开发，当功能开发完成并验收后合并到master分支，此时可以删除task-n分支，也可以随时再checkout功能分支进行bug修复。</p>
+
+<p>对于一些长期存在的功能开发，例如策划数值配置，美术资源交付可以建立特殊的（长期存在）的功能分支，例如<em>design</em>, *art*。其它功能分支如果需要依赖这些资源，可以在开发过程中合并到task-n，因为这些分支其实也是和task-n等价的，也可以随时删除了再重新从master分支出来。</p>
+
+<p>当开发完成里程碑需要发布正式版本时，将master分支合并到release分支，并继续在release分支进行最后交付的迭代，可以迭代多个版本，例如从v0.0.1-rc1-rcn，当到某次迭代稳定时则发布正式的版本，例如v0.0.1。因为某些团队成员可能还要继续下一个版本的功能开发，所以需要将release分支的修改同步到master分会，但master分支的修改次数不再同步到release（下个版本规划的内容不需要同步到当前发布分支）。</p>
+
+<p>正式发布的版本（v0.0.1）如果发现bug，则从该tag新建hotfix分支进行修复，修复完成后再合并到release分支进行测试验证并进一步发布新版本v0.0.2，热修复内容也需要同步回master分支。</p>
+
+<p>功能开发过程中也可以随时根据需要去合并master的内容，例如合并一些功能模块的开发内容。合并的提交点以紫色表示。</p>
+
+<p>因为整个开发工程中会不断新建/删除/合并分支，为了更好的理清提交线，可以使用rebase方式合并。</p>
+
+<p>结合CI/CD会很香，:-)</p>
+
+        </div>
+
+        
+        
+        
+
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/git">git
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/git-workflow">git workflow
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/nas-root-ssh/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            群晖NAS设置root用户免密SSH登陆
+        </div>
+    </a>
+    
+    
+    <a href="/posts/abdominal-respiration/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">科学健身，从了解腹式呼吸开始&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

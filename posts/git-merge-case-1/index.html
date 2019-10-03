@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Git Merge操作不当导致文件丢失 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="Git Merge操作不当导致文件丢失" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/git-merge-case-1/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Git Merge操作不当导致文件丢失</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/git-merge-case-1/" class="article-date">
+                <time datetime='2019-09-01T19:12:12.000&#43;08:00' itemprop="datePublished">2019-09-01</time>
+            </a>
+            
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            <p>之前团队在使用Git的时候发生了文件 &ldquo;<em>莫名其妙</em>&rdquo; 丢失的情况，说是莫名其妙，是因为通过查看log提交记录，并没有任何关于这些文件的  &ldquo;<em>Deleted</em>&rdquo; 状态信息。最后检查出来是某位成员 <em>merge</em> 操作不当造成的。对于理解一些Git原理的人来说，可能在平时完全不会进行错误的操作。而对于不了解Git原理，特别是使用图形界面客户端且在使用Git的过程中SVN经验带入太多的人来说还是很容易犯这个错误的。</p>
+
+<p>可以按如下步骤在本地复现该过程：</p>
+
+<ol>
+<li><p><code>git init git-example</code>在本地创建git仓库，并<code>cd git-example</code>进入到该目录</p></li>
+
+<li><p><code>echo &quot;aaa&quot; &gt; a</code>创建文件a，<strong><em>Stage</em></strong>（<code>git add .</code>） <strong><em>Commit</em></strong>  (<code>git commit -m 'add file a'</code>)</p></li>
+
+<li><p>创建分支dev <code>git checkout -b dev</code></p></li>
+
+<li><p><code>echo &quot;AAA&quot; &gt; a</code> 修改文件a，Stage &ndash;&gt; Commit</p></li>
+
+<li><p>切换到master分支 <code>git checkout master</code></p></li>
+
+<li><p><code>echo &quot;aAaA&quot; &gt; a</code> 修改文件a，Stage &ndash;&gt; Commit</p></li>
+
+<li><p>创建文件夹dir <code>mkdir dir</code>, 添加文件b到dir中 <code>echo &quot;bbb&quot; &gt; dir/b</code>, Stage &ndash;&gt; Commit</p></li>
+
+<li><p>切换到dev分支<code>git checkout dev</code></p></li>
+
+<li><p>合并master分支<code>git merge master</code>，合并有冲突，工作区状态为：</p></li>
+</ol>
+
+<p>​    UU a</p>
+
+<p>​    A  dir/b</p>
+
+<ol>
+<li><p>解决a文件冲突，保留两次提交的修改，并Stage(<code>git add a</code>)</p></li>
+
+<li><p><strong><em>Unstage</em></strong> （<code>git reset dir/b</code>)， 此时工作区状态为：</p>
+
+<p>​   M  a</p>
+
+<p>​   ?? dir/</p></li>
+
+<li><p>清理本地工作去<code>git clean -fd</code></p></li>
+
+<li><p><strong><em>Commit</em></strong> (<code>git commit -m 'merge master'</code>)</p></li>
+
+<li><p>切换到master分支<code>git chekcout master</code></p></li>
+
+<li><p>合并dev分支<code>git merge dev</code>, 合并完成后dir/b文件及dir目录将被删除</p></li>
+</ol>
+
+<p>再次说明，这个明显不该犯的错误，对于使用图形界面且不熟悉Git原理的人来说是一个容易犯的错误。问题就发生在第11步的操作，dev分支的开发者可能认为自己没有添加dir/b文件，于是discard了对dir/b文件的添加。这其实是并不是在dev分支的合并中忽略了该文件，而是在合并提交中将该文件排除（删除了）。当dev分支开发完成，master合并时dir/b就被删除了。</p>
+
+<p>团队中的愿意去花时间去了解Git原理的人可能很少，甚至对于游戏开发这种团队，要给没有任何程序背景的美术和策划讲清楚原理几乎时间不可能的事情。我的做法是告诉团队成员，在合并的时候除了解决冲突不要进行任何其它操作，按照这个原则执行下来暂时还没有继续犯同样的错误。</p>
+
+        </div>
+
+        
+        
+        
+
+        
+
+
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/traverse_dir_with_golang/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Go语言遍历文件夹的两种方法
+        </div>
+    </a>
+    
+    
+    <a href="/posts/git-lfs/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Git LFS介绍&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

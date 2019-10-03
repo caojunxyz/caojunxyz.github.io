@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>深入浅出Go Modules // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="深入浅出Go Modules" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/gomodules/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">深入浅出Go Modules</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/gomodules/" class="article-date">
+                <time datetime='2019-08-04T13:40:10.000&#43;08:00' itemprop="datePublished">2019-08-04</time>
+            </a>
+            
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>Go语言从1.11和1.12版本开始引入了初步的modules支持，官方计划是从1.13版本开始默认支持module模式。按Go官方团队的里程碑计划估计，今年8月份1.13会正式发布。</p>
+
+<h2 id="module是什么">Module是什么</h2>
+
+<p><em>&ldquo;A module is a collection of Go packages&rdquo;</em>, 一个模块是一个Go package的集合。</p>
+
+<h3 id="package是什么呢">package是什么呢？</h3>
+
+<p>如下代码段所示:</p>
+
+<pre><code class="language-Go">import (
+  &quot;fmt&quot;
+  log &quot;github.com/sirupsen/logrus&quot;
+)
+</code></pre>
+
+<p><em>fmt</em> 和 <em>github.com/sirupsen/logrus</em> 都是package，其中fmt是语言本身包含的package（可以类比为C++的STL），logrus是第三方package。</p>
+
+<h3 id="为什么需要package">为什么需要package？</h3>
+
+<p>package的引入是为了支持模块化的源代码组织方式，Go程序至少需要一个<em>main</em> package，但应该几乎难以找到一个有用的稍具规模的程序可以不用引入其它package的。</p>
+
+<h3 id="module的用途">Module的用途</h3>
+
+<p>我们思考一个问题，如果项目规模较大，我们引入了第三方包A（v2.0.0)和B （V1.1.0)，而B-1.0.0又引入了A-1.0.0。我们通过go get获取的包A的版本只能是确定的一个版本，它不可能同时是v2.0.0和v1.0.0，这时候就需要依赖管理<em>(dependency management)</em> 了。Module的主要工作就是进行依赖管理，在这之前Go语言有一些第三方的依赖管理工具，例如godep, govendor等等。可以说，依赖管理是Go工程的刚需工具，那么在语言官方层面上统一规范是提供支持就是非常有必要的了。</p>
+
+<h3 id="语义化版本">语义化版本</h3>
+
+<p>依赖管理处理的其中一个核心问题就是版本升级，如果要在语言官方层面统一依赖管理，那么版本在package的版本管理上统一规范就是很必要的了，Go Module要求遵从<a href="https://semver.org/">语义化</a>的版本规范，关于版本选择的设计详细，可以参考<a href="https://github.com/golang/go/wiki/Modules#version-selection">Version Selection</a>。</p>
+
+<h2 id="使用module">使用Module</h2>
+
+<p>读者如果是Module初学者，可以同步在自己的电脑上进行操作。</p>
+
+<h3 id="命令">命令</h3>
+
+<p>在命令行中输入<code>go mod help</code>即可查看Module工具有哪些命令。</p>
+
+<p><strong><em>download</em></strong>  <strong><em>edit</em></strong>  <strong><em>graph</em></strong> <strong><em>init</em></strong>  <strong><em>tidy</em></strong>  <strong><em>vendor</em></strong>    <strong><em>verify</em></strong>    <strong><em>why</em></strong></p>
+
+<h3 id="路径">路径</h3>
+
+<p>因为Module目前还不是语言默认的依赖管理模式（要到Go1.13），所以还需要考虑兼容问题。如果在GOPATH下，Module模式是默认关闭的（即使项目有go.mod文件）,需要通过<code>GO111MODULE=on</code>显式的打开。如果不在GOPATH下，则不需要设置该环境变量激活Module模式。另一方面，有Module支持，我们的项目不用统一放到一个GOPATH下或者设置多个GOPATH了。Module管理的模块依赖文件保存在 <em>GOPATH/pkg/mod</em> 目录下。<em>GOPATH/pkg/mod/cache</em> 目录是缓存目录，防止重复下载，其它目录则组织不同版本的模块，例如：</p>
+
+<p>golang.org/x/</p>
+
+<pre><code>crypto@v0.0.0-20190325154230-a5d413f7728c
+net@v0.0.0-20190311183353-d8887717615a
+net@v0.0.0-20190503192946-f4e77d36d62c
+net@v0.0.0-20190522155817-f3200d17e092
+net@v0.0.0-20190620200207-3b0461eec859
+</code></pre>
+
+<h3 id="init">init</h3>
+
+<p>假设我们在GOPATH外新建了hello目录，其中有hello.go和hello_test.go文件。文件内容分别如下：</p>
+
+<p><em>hello.go</em></p>
+
+<pre><code class="language-go">package hello
+func Hello() string {
+  return &quot;Hello, world.&quot;
+}
+</code></pre>
+
+<p><em>hello_test.go</em></p>
+
+<pre><code class="language-go">package hello
+
+import &quot;testing&quot;
+
+func TestHello(t *testing.T) {
+    want := &quot;Hello, world.&quot;
+    if got := Hello(); got != want {
+        t.Errorf(&quot;Hello() = %q, want %q&quot;, got, want)
+    }
+}
+</code></pre>
+
+<p>进入到hello目录，运行<code>go mod init example.com/hello</code>命令将该目录作为一个module的根目录进行初始化，初始化结束后hello目录新增了<strong><em>go .mod</em></strong>文件，文件内容为：</p>
+
+<pre><code class="language-go">module example.com/hello
+go 1.12
+</code></pre>
+
+<p>表示在该根目录声明了 <em>example.com/hello</em> 模块，使用的是Go版本是1.12，此后如果要新增子目录创建新的package，则package的导入路径自动为module名加子目录名。</p>
+
+<p>创建<em>morning/morning.go</em>, 在hello.go中导入该package的路径为 <em>import example.com/hello/morning</em> 。</p>
+
+<p>我们修改hello.go导入一个外部模块：</p>
+
+<pre><code class="language-go">package hello
+
+import &quot;rsc.io/quote&quot;
+
+func Hello() string {
+  return quote.Hello()
+}
+</code></pre>
+
+<p>运行<code>go test</code>，第一次运行可能会比较慢，因为需要先下载相关文件。PASS后，查看go.mod文件：</p>
+
+<pre><code class="language-go">module example.com/hello
+
+go 1.12
+
+require rsc.io/quote v1.5.2
+</code></pre>
+
+<p>我们可以看到在文件末尾新增了一条依赖声明，定义了依赖的模块（rsc.io/quote）及其版本号(v1.5.2)。还可以看到新增了一个<strong><em>go.sum</em></strong>文件，这是一个校验文件，不需要人工维护，是工具用于判断依赖是否发生变化。</p>
+
+<h3 id="查看所有依赖模块">查看所有依赖模块</h3>
+
+<p><code>go list -m all</code></p>
+
+<pre><code class="language-go">example.com/hello
+golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c
+rsc.io/quote v1.5.2
+rsc.io/sampler v1.3.0
+</code></pre>
+
+<p>该命令列出当前模块依赖的所有模块，可以看出，除了 <em>rsc.io/quote v1.5.2</em> 外，还间接依赖其它模块（rsc.io/quote v1.5.2所依赖的）。</p>
+
+<h3 id="版本升级">版本升级</h3>
+
+<h4 id="升级到最新版本">升级到最新版本</h4>
+
+<p>通过上一个命令，我们知道当前模块依赖的golang.org/x/text模块版本是v0.0.0，我们想尝试一下将它升级到最新版本是否兼容。运行: <code>go get golang.org/x/text</code></p>
+
+<p>升级后的go.mod文件:</p>
+
+<pre><code class="language-go">module example.com/hello
+
+go 1.12
+
+require (
+	golang.org/x/text v0.3.2 // indirect
+	rsc.io/quote v1.5.2
+)
+</code></pre>
+
+<p>升级后，运行<code>go test</code>，PASS代表升级成功。</p>
+
+<p>我们再升级一下rsc.io/sampler，<code>go get rsc.io/sampler</code>，再运行<code>go test</code>:</p>
+
+<pre><code class="language-go">--- FAIL: TestHello (0.00s)
+    hello_test.go:8: Hello() = &quot;99 bottles of beer on the wall, 99 bottles of beer, ...&quot;, want &quot;Hello, world.&quot;
+FAIL
+exit status 1
+FAIL	example.com/hello	0.006s
+</code></pre>
+
+<p>升级失败，说明升级到最新的rsc.io/sampler与当前模块不兼容，如果rsc.io/sampler严格遵守语义化版本]<a href="https://semver.org/">1</a>规范，则我们升级到一个兼容版本v1.3.z (z &gt; 0)是应该可以通过测试的。</p>
+
+<h4 id="升级到指定版本">升级到指定版本</h4>
+
+<p>我们先看看它有哪些已发布版本：<code>go list -m -versions rsc.io/sampler</code>， 结果为:</p>
+
+<pre><code class="language-go">rsc.io/sampler v1.0.0 v1.2.0 v1.2.1 v1.3.0 v1.3.1 v1.99.99
+</code></pre>
+
+<p>我们可以试试升级到v1.3.1: <code>go get rsc.io/sampler@v1.3.1</code>, 继续测试<code>go test</code>, 测试通过！再检查go.mod文件：</p>
+
+<pre><code class="language-go">module example.com/hello
+
+go 1.12
+
+require (
+	golang.org/x/text v0.3.2 // indirect
+	rsc.io/quote v1.5.2
+	rsc.io/sampler v1.3.1 // indirect
+)
+</code></pre>
+
+<h4 id="添加一个新的major版本依赖">添加一个新的major版本依赖</h4>
+
+<p>当遇到依赖同一模块的不同版本需求时，我们可以这样解决：</p>
+
+<p><em>hello.go</em></p>
+
+<pre><code class="language-go">package hello
+
+import (
+    &quot;rsc.io/quote&quot;
+    quoteV3 &quot;rsc.io/quote/v3&quot;
+)
+
+func Hello() string {
+    return quote.Hello()
+}
+
+func Proverb() string {
+    return quoteV3.Concurrency()
+}
+</code></pre>
+
+<p><em>hello_test.go</em></p>
+
+<pre><code class="language-go">package hello
+
+import &quot;testing&quot;
+
+func TestHello(t *testing.T) {
+    want := &quot;Hello, world.&quot;
+    if got := Hello(); got != want {
+        t.Errorf(&quot;Hello() = %q, want %q&quot;, got, want)
+    }
+}
+
+func TestProverb(t *testing.T) {
+    want := &quot;Concurrency is not parallelism.&quot;
+    if got := Proverb(); got != want {
+        t.Errorf(&quot;Proverb() = %q, want %q&quot;, got, want)
+    }
+}
+</code></pre>
+
+<p>因为是同一个模块，所以我们将v3版本导入为quoteV3。运行<code>go test</code>，go.mod文件有如下变更：</p>
+
+<pre><code class="language-go">module example.com/hello
+
+go 1.12
+
+require (
+	golang.org/x/text v0.3.2 // indirect
+	rsc.io/quote v1.5.2
+	rsc.io/quote/v3 v3.1.0
+	rsc.io/sampler v1.3.1 // indirect
+)
+</code></pre>
+
+<p>列出当前当前模块(example.com/hello)依赖的rsc.io/quote模块的所有版本：</p>
+
+<p><code>go list -m rsc.io/q...</code>， 结果为：</p>
+
+<pre><code class="language-go">rsc.io/quote v1.5.2
+rsc.io/quote/v3 v3.1.0
+</code></pre>
+
+<h4 id="升级到不兼容的版本">升级到不兼容的版本</h4>
+
+<p>按照<a href="https://semver.org/">语义化版本</a>规则，major版本的变更，意味着接口不兼容。如果还要使用新版本依赖，那就要求我们修改自己的代码去显式的使用新版本。这里，我们将模块对rsc.io/quote的所有依赖都升级到v3，删除对低版本的依赖，修改hello.go:</p>
+
+<pre><code class="language-go">package hello
+
+import (
+    &quot;rsc.io/quote/v3&quot;
+)
+
+func Hello() string {
+    return quote.HelloV3()
+}
+
+func Proverb() string {
+    return quote.Concurrency()
+}
+</code></pre>
+
+<p>运行<code>go test</code>, PASS。但是查看go.mod文件，依然包含 <em>rsc.io/quote v1.5.2</em> ，此时我们运行<code>go mod tidy</code>命令清理不再使用的依赖，清理后再查看go.mod文件，已经不再包含 <em>rsc.io/quote v1.5.2</em> 。</p>
+
+<h4 id="vendor">vendor</h4>
+
+<p>运行<code>go mod vendor</code>命令将在当前模块根目录生成<strong><em>vendor</em></strong>目录，将module的依赖都拷贝到该目录下。这样做主要有两个好处：</p>
+
+<ol>
+<li>保证依赖的所有模块都可以重复获取到，例如防止第三方作者将自己的开源项目删除。</li>
+<li>提高CI工具的效率，有了vendor目录，go build时就不用再重新去下载。</li>
+</ol>
+
+<p>当然，这也是有坏处的，那就是如果将vendor目录也提交到版本控制中，则会增加项目大小，增加管理复杂度。</p>
+
+<h2 id="发布module">发布Module</h2>
+
+<p>如果要将自己的module发布供他人使用，则需要遵守一定的规范，具体参考<a href="https://github.com/golang/go/wiki/Modules#how-to-prepare-for-a-release">Go官方文档</a>。</p>
+
+<h2 id="总结">总结</h2>
+
+<p>go.mod和go.sum文件都应该纳入到版本控制系统中，Go Module要依赖这两个文件工作。Go Modules核心要解决的问题就是<strong><em>可靠的重复构建</em></strong>，这是一个确定的工程需求。</p>
+
+        </div>
+
+        
+        
+        <div class="article-toc" >
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#module是什么">Module是什么</a>
+<ul>
+<li><a href="#package是什么呢">package是什么呢？</a></li>
+<li><a href="#为什么需要package">为什么需要package？</a></li>
+<li><a href="#module的用途">Module的用途</a></li>
+<li><a href="#语义化版本">语义化版本</a></li>
+</ul></li>
+<li><a href="#使用module">使用Module</a>
+<ul>
+<li><a href="#命令">命令</a></li>
+<li><a href="#路径">路径</a></li>
+<li><a href="#init">init</a></li>
+<li><a href="#查看所有依赖模块">查看所有依赖模块</a></li>
+<li><a href="#版本升级">版本升级</a>
+<ul>
+<li><a href="#升级到最新版本">升级到最新版本</a></li>
+<li><a href="#升级到指定版本">升级到指定版本</a></li>
+<li><a href="#添加一个新的major版本依赖">添加一个新的major版本依赖</a></li>
+<li><a href="#升级到不兼容的版本">升级到不兼容的版本</a></li>
+<li><a href="#vendor">vendor</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#发布module">发布Module</a></li>
+<li><a href="#总结">总结</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+
+
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/install-standalone-postgresql-client-tools/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            如何独立安装PostgreSQL客户端工具
+        </div>
+    </a>
+    
+    
+    <a href="/posts/gitattributes/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Unity项目spriteatlas文件在git中显示修改，但又无法提交的问题&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>USB on 指尖时光</title>
+    <link>https://blog.caojun.xyz/tags/usb/</link>
+    <description>Recent content in USB on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 17 Nov 2018 17:37:46 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/tags/usb/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>USB Type-C的前世今生</title>
+      <link>https://blog.caojun.xyz/posts/usb-type-c/</link>
+      <pubDate>Sat, 17 Nov 2018 17:37:46 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/usb-type-c/</guid>
+      <description>最早了解到USB Type-C接口（简称USB-C或Type-C）应该是从2015年苹果发布New MacBook开始的。很长一段时间，我对苹果</description>
+    </item>
+    
+  </channel>
+</rss>

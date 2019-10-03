@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Go语言自动化测试简介 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="Go语言自动化测试简介" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/go%E8%AF%AD%E8%A8%80%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%AE%80%E4%BB%8B/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Go语言自动化测试简介</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/go%E8%AF%AD%E8%A8%80%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%AE%80%E4%BB%8B/" class="article-date">
+                <time datetime='2016-10-14T22:14:51.000&#43;00:00' itemprop="datePublished">2016-10-14</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://blog.caojun.xyz//categories/%E6%8A%80%E6%9C%AF">技术</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>Go语言提供了对包（*package*）进行自动化测试的支持，带来了很大的工程便利。本文主要介绍相关的常用知识，进一步学习可阅读<a href="https://golang.org/pkg/testing/">官方文档</a>。</p>
+
+<p>测试文件必须以&rdquo;<em>_test.go</em>&ldquo;结尾，并和被测试包放在同一目录下。测试文件可以有多个，用以组织复杂的测试逻辑。一个典型的目录结构如下：
+<code>
+student/
+​    student.go
+​    student_test.go
+</code></p>
+
+<p><strong>student.go</strong>内容：</p>
+
+<pre><code class="language-Go">package student
+
+import &quot;math/rand&quot;
+
+type Math struct {
+	name string
+}
+
+func (m *Math) Perm(n int) []int {
+	return rand.Perm(n)
+}
+
+func (m *Math) Add(a, b int) int {
+	return a + b
+}
+
+func (m *Math) StupidSum(N int) int {
+	ret := 0
+	for i := 1; i &lt;= N; i++ {
+		ret += i
+	}
+	return ret
+}
+
+func (m *Math) SmartSum(N int) int {
+	return N * (N + 1) / 2
+}
+</code></pre>
+
+<h3 id="三类测试">三类测试</h3>
+
+<pre><code class="language-Go">func ExampleXxx() {}
+func TestXxx(t *testing.T) {}
+func BenchmarkXxx(b *testing.B) {}
+</code></pre>
+
+<p>三种函数分别用于不同的测试场景，Xxx部分可以省略，但不能以小写字母开头。良好的书写规范可以提高<a href="https://godoc.org/golang.org/x/tools/cmd/godoc">godoc</a>生成文档的可读性，例如<code>ExampleT_M()</code>，<strong>T</strong>为类型，<strong>M</strong>为类型方法。</p>
+
+<h4 id="范例测试">范例测试</h4>
+
+<p><strong><em>ExampleXxx</em></strong>主要用于测试在给定输入的情况下方法的输出是否与预期相符。测试将用例标准输出的结果与<code>// Output: expected result</code>注释的预期结果进行一致性比较。如果运行结果与注释中预期不一致，该用例失败。<code>// Output</code>没有严格的大小写和空格要求，例如写为<code>//ouput</code>也是可以的，不过最好统一。</p>
+
+<pre><code class="language-Go">func ExampleMath_Add() {
+	m := &amp;Math{}
+	fmt.Println(m.Add(2, 3))
+	// Output: 5
+}
+
+func ExampleMath_Perm() {
+	m := &amp;Math{}
+	for n := range m.Perm(4) {
+		fmt.Println(n)
+	}
+	// Output:
+	// 0
+	// 1
+	// 2
+	// 3
+}
+</code></pre>
+
+<p>注意，测试用例*ExampleMath_Perm*在给定输入的情况下，输出集合是确定的，但是顺序是随机的。预期结果可以书写任意一种合理结果，例如上面的预期也可以改为</p>
+
+<pre><code class="language-Go">// Output:
+// 3
+// 1
+// 2
+// 0
+</code></pre>
+
+<h4 id="通用测试">通用测试</h4>
+
+<p><strong><em>TestXxx</em></strong>类型的测试函数的参数为_*testing.T_类型，用于管理测试状态和格式化测试日志。测试日志累计到执行结束后才输出到标准输出。可以通过<strong><em>T</em></strong>的相关方法控制测试逻辑。</p>
+
+<pre><code class="language-Go">func (c *T) Log(args ...interface{})
+func (c *T) Logf(format string, args ...interface{})
+</code></pre>
+
+<p><strong><em>Log</em></strong>和<strong><em>Logf</em></strong>方法用于日志输出，默认只输出错误日志，如果要输出全部日志需要使用<strong><em>-v</em></strong>标识运行*go test*命令。benchmarks默认输出全部日志。</p>
+
+<pre><code class="language-Go">func (c *T) Fail()
+func (c *T) FailNow() 
+</code></pre>
+
+<pre><code class="language-Go">func TestFail(t *testing.T) {
+	t.Log(&quot;mark A&quot;)
+	t.Fail()
+	t.Log(&quot;mark B&quot;)
+}
+
+func TestFailNow(t *testing.T) {
+	t.Log(&quot;mark C&quot;)
+	t.FailNow()
+	t.Log(&quot;mark D&quot;)
+}
+
+func TestOther(t *testing.T) {
+	t.Log(&quot;mark E&quot;)
+}
+
+/* Output:
+--- FAIL: TestFail (0.00s)
+	student_test.go:44: mark A
+	student_test.go:46: mark B
+=== RUN   TestFailNow
+--- FAIL: TestFailNow (0.00s)
+	student_test.go:50: mark C
+=== RUN   TestOther
+--- PASS: TestOther (0.00s)
+	student_test.go:56: mark E
+*/
+</code></pre>
+
+<p><strong><em>Fail</em></strong>标记用例失败，但继续执行当前用例。<strong><em>FailNow</em></strong>标记用例失败并且立即停止执行当前用例，继续执行*下一个*（默认按书写顺序）用例。</p>
+
+<pre><code class="language-Go">func (c *T) Error(args ...interface{})
+func (c *T) Errorf(format string, args ...interface{})
+</code></pre>
+
+<p><strong><em>Error</em></strong>等价于Log加Fail，<strong><em>Errorf</em></strong>等价于Logf加Fail。</p>
+
+<pre><code class="language-Go">func (c *T) Skip(args ...interface{})
+func (c *T) SkipNow()
+func (c *T) Skipf(format string, args ...interface{})
+func (c *T) Skipped() bool
+</code></pre>
+
+<p><strong><em>SkipNow</em></strong>标记跳过并停止执行该用例，继续执行下一个用例。<strong><em>Skip</em></strong>等价于Log加SkipNow，<strong><em>Skipf</em></strong>等价于Logf加SkipNow，<strong><em>Skipped</em></strong>返还用例是否被跳过。</p>
+
+<pre><code class="language-Go">func (c *T) Parallel()
+</code></pre>
+
+<p>示意该测试用例和其它并行用例（也调用该方法的）一起并行执行。我们构造一个例子来测试Parallel()方法是否真的是并行执行测试用例：</p>
+
+<pre><code class="language-Go">var counter int32
+var wg sync.WaitGroup
+var N = 100000
+
+func TestParallel1(t *testing.T) {
+	t.Parallel()
+	wg.Add(1)
+	for i := 1; i &lt;= N; i++ {
+		atomic.AddInt32(&amp;counter, 1)
+		if i%5555 == 0 {
+			t.Log(&quot;p1 --&gt;&quot;, counter)
+		}
+	}
+	wg.Done()
+}
+
+func TestParallel2(t *testing.T) {
+	t.Parallel()
+	wg.Add(1)
+	for i := 1; i &lt;= N; i++ {
+		atomic.AddInt32(&amp;counter, 1)
+		if i%5555 == 0 {
+			t.Log(&quot;p2 --&gt;&quot;, counter)
+		}
+	}
+	wg.Done()
+}
+
+func TestParallelEnd(t *testing.T) {
+	t.Parallel()
+	time.After(time.Second)
+	// wg.Wait()
+	result := 2 * N
+	t.Log(&quot;result: &quot;, counter, result)
+}
+</code></pre>
+
+<p>因为现在CPU速度很快，两个不同的测试用例启动会有时间差，所以需要将N设得足够大才能看到并行随机效果。<code>if i%5555 == 0</code>这个条件分支的作用是减少日志输出。运行可以看到每次counter的结果是随机的，当把<code>wg.Wait()</code>这条语句打开时，可以看到确定的输出（*counter等于result*）。</p>
+
+<pre><code class="language-Go">func (c *T) Run(name string, f func(t *T)) bool 
+</code></pre>
+
+<pre><code class="language-Go">func TestRunSuits(t *testing.T) {
+	t.Run(&quot;A=1&quot;, func(t *testing.T) {
+		t.Log(&quot;sub test A=1&quot;)
+	})
+	t.Run(&quot;A=2&quot;, func(t *testing.T) {
+		t.Log(&quot;sub test A=2&quot;)
+	})
+	t.Run(&quot;B=1&quot;, func(t *testing.T) {
+		t.Log(&quot;sub test B=1&quot;)
+	})
+	t.Run(&quot;B=2&quot;, func(t *testing.T) {
+		t.Log(&quot;sub test B=2&quot;)
+	})
+}
+</code></pre>
+
+<p><strong><em>Run</em></strong> 运行一个名为name的子用例，返回该子用例是否通过。可以通过<strong><em>-run</em></strong> *exp*正则表达式参数指定要运行的子用例，例如上面例子中可以通过<em>go test -v -run &ldquo;/A&rdquo;</em> 运行两个子用例，正则表达式的顶层以 <strong><em>/</em></strong> 开头。子用例的引入方便更好的对测试用例进行组织。</p>
+
+<h4 id="bechmarks">Bechmarks</h4>
+
+<p><strong><em>Benchmarks</em></strong>类型的测试函数的参数为_*testing.B_类型，通过*go test*参数可以对测试用例进行正则匹配，可以控制使用的CPU核心数等。看一个例子：</p>
+
+<pre><code class="language-Go">func BenchmarkMath_StupidSum(b *testing.B) {
+	m := &amp;Math{}
+	for i := 0; i &lt; b.N; i++ {
+		m.StupidSum(1, 100)
+	}
+}
+
+func BenchmarkMath_SmartSum(b *testing.B) {
+	m := &amp;Math{}
+	for i := 0; i &lt; b.N; i++ {
+		m.SmartSum(1, 100)
+	}
+}
+
+func BenchmarkMath_StupidSumSerial(b *testing.B) {
+	m := &amp;Math{}
+	for i := 0; i &lt; b.N; i++ {
+		m.StupidSum(1, 100)
+	}
+}
+
+func BenchmarkMath_StupidSumParallel(b *testing.B) {
+	m := &amp;Math{}
+	for i := 0; i &lt; b.N; i++ {
+		b.RunParallel(func(pb *testing.PB) {
+			for pb.Next() {
+				m.StupidSum(1, 100)
+			}
+		})
+	}
+}
+
+func BenchmarkMath_SmartSumSerial(b *testing.B) {
+	m := &amp;Math{}
+	for i := 0; i &lt; b.N; i++ {
+		m.SmartSum(1, 100)
+	}
+}
+
+func BenchmarkMath_SmartSumParallel(b *testing.B) {
+	m := &amp;Math{}
+	for i := 0; i &lt; b.N; i++ {
+		b.RunParallel(func(pb *testing.PB) {
+			for pb.Next() {
+				m.SmartSum(1, 100)
+			}
+		})
+	}
+}
+/*
+go test -cpu 4 -benchmem -bench . 运行结果：
+BenchmarkMath_StupidSum-4           	30000000	        57.3 ns/op	       0 B/op	       0 allocs/op
+BenchmarkMath_SmartSum-4            	2000000000	         0.41 ns/op	       0 B/op	       0 allocs/op
+BenchmarkMath_StupidSumSerial-4     	30000000	        57.1 ns/op	       0 B/op	       0 allocs/op
+BenchmarkMath_StupidSumParallel-4   	   10000	    259288 ns/op	     181 B/op	       8 allocs/op
+BenchmarkMath_SmartSumSerial-4      	2000000000	         0.39 ns/op	       0 B/op	       0 allocs/op
+BenchmarkMath_SmartSumParallel-4    	   50000	    441988 ns/op	     176 B/op	       8 allocs/op
+PASS
+ok  	github.com/caojunxyz/gotest/student	30.222s
+*/
+
+/*
+go test -cpu 1 -benchmem -bench . 运行结果：
+BenchmarkMath_StupidSum         	30000000	        58.6 ns/op	       0 B/op	       0 allocs/op
+BenchmarkMath_SmartSum          	2000000000	         0.42 ns/op	       0 B/op	       0 allocs/op
+BenchmarkMath_StupidSumSerial   	20000000	        57.0 ns/op	       0 B/op	       0 allocs/op
+BenchmarkMath_StupidSumParallel 	   10000	    659949 ns/op	      80 B/op	       5 allocs/op
+BenchmarkMath_SmartSumSerial    	2000000000	         0.52 ns/op	       0 B/op	       0 allocs/op
+BenchmarkMath_SmartSumParallel  	   50000	    424859 ns/op	      80 B/op	       5 allocs/op
+PASS
+ok  	github.com/caojunxyz/gotest/student	33.202s
+*/
+
+</code></pre>
+
+<p>正则匹配：只运行*SmartSum*相关的测试命令*go test ***-bench *** &ldquo;SmartSum&rdquo;*
+指定使用CPU核心数：<em><strong><em>-cpu</em></strong> n</em>
+每个测试用例运行n次: <em><strong><em>-count</em></strong> n</em>
+打印内存分配统计信息: <strong><em>-benchmem</em></strong>
+<a href="http://www.infoq.com/cn/articles/test-coverage-rate-role">代码覆盖率</a>：<strong><em>-cover</em></strong></p>
+
+        </div>
+
+        
+        
+        <div class="article-toc" >
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#三类测试">三类测试</a>
+<ul>
+<li><a href="#范例测试">范例测试</a></li>
+<li><a href="#通用测试">通用测试</a></li>
+<li><a href="#bechmarks">Bechmarks</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/golang">golang
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/go-test">go test
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95">自动化测试
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/%E6%B5%85%E8%B0%88%E6%B8%B8%E6%88%8F%E6%95%B0%E5%80%BC%E9%85%8D%E7%BD%AE%E5%B7%A5%E5%85%B7/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            浅谈游戏数值配置工具
+        </div>
+    </a>
+    
+    
+    <a href="/about/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

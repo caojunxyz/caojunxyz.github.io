@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>解读Leetcode题目之&#34;Count and Say&#34; // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="解读Leetcode题目之&#34;Count and Say&#34;" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/count-and-say/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">解读Leetcode题目之&#34;Count and Say&#34;</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/count-and-say/" class="article-date">
+                <time datetime='2018-03-28T21:00:42.000&#43;00:00' itemprop="datePublished">2018-03-28</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://blog.caojun.xyz//categories/%E6%8A%80%E6%9C%AF">技术</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            <p>Leetcode算法题目第38题《Count and Say》(又名《Look and Say》)的难度为Easy，但是题目本身并不是太容易理解其表达的意思。甚至在讨论区（Discuss)有很多人质疑题目有严重问题，但也可以看到有人在讨论区发言说题目很清楚。很不幸的，我也属于看了几遍题目说<strong>”WTF&rdquo;</strong>的人，不过最后我总算搞清楚了，解答也被接受了（<strong>Accepted</strong>)。
+其实，Youtube上有一段视频，传奇数学家<a href="https://en.wikipedia.org/wiki/John_Horton_Conway">John H Conway</a>首次遇到该题目时也很懵逼，所以不用怀疑自己的智商。</p>
+
+<p><em>Look-and-Say Numbers(feat John Conway)</em></p>
+
+<p><em>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/ea7lJkEhytA" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+</em></p>
+
+<p>题目顾名思义，核心就是<strong>计数</strong>(Count)并说出来(Say), 搞清楚怎么计数以及怎么说就理解题目了。下面通过几个例子来说明：</p>
+
+<p><strong>1</strong> : <strong>&ldquo;1&rdquo;</strong>   &ndash;&gt; 1为初始计数，直接Say出来，即为<strong>&ldquo;1&rdquo;</strong>。
+<strong>2</strong> : <strong>&ldquo;11&rdquo;</strong>  &ndash;&gt; 2需要从1开始计数，而1为&rdquo;1&rdquo;：有1个&rdquo;1&rdquo;(<strong>计数为1</strong>，即<strong>&ldquo;11&rdquo;</strong>)
+<strong>3</strong> : <strong>&ldquo;21&rdquo;</strong>  &ndash;&gt; 3需要从2开始计数，而2为&rdquo;11&rdquo;：有2个&rdquo;1&rdquo;(<strong>计数为2</strong>， 即<strong>&ldquo;21&rdquo;</strong>)
+<strong>4</strong> : <strong>&ldquo;1211&rdquo;</strong>  &ndash;&gt; 4需要从3开始计数，而3为&rdquo;21&rdquo;：有1个&rdquo;2&rdquo;(<strong>计数为1</strong>， 即<strong>&ldquo;21&rdquo;</strong>)，加1个&rdquo;1&rdquo;(<strong>计数为1</strong>， 即<strong>&ldquo;11&rdquo;</strong>), 合并结果为<strong>&ldquo;1211&rdquo;</strong>。
+<strong>5</strong>: <strong>&ldquo;111221&rdquo;</strong>  &ndash;&gt; 5需要从4开始计数，而4为&rdquo;1211&rdquo;：有1个&rdquo;1&rdquo;(<strong>计数为1</strong>， 即<strong>&ldquo;11&rdquo;</strong>)，加1个&rdquo;2&rdquo;(<strong>计数为1</strong>， 即<strong>&ldquo;12&rdquo;</strong>), 加2个&rdquo;1&rdquo;(<strong>计数为2</strong>，即<strong>&ldquo;21&rdquo;</strong>)，合并结果为<strong>&ldquo;111221&rdquo;</strong>。</p>
+
+<p>附上我的答案:</p>
+
+<pre><code class="language-Go">func countAndSay(n int) string {
+	var say string
+	for i := 1; i &lt;= n; i++ {
+		if i == 1 {
+			say = &quot;1&quot;
+		} else {
+			var rs string
+			j := 0
+			k := 0
+			for {
+				v := say[j]
+				for k = j + 1; k &lt; len(say); k++ {
+					if say[k] != v {
+						break
+					}
+				}
+				s := fmt.Sprintf(&quot;%d%s&quot;, k-j, string(v))
+				rs += s
+				j = k
+				if j &gt;= len(say) {
+					break
+				}
+			}
+			say = rs
+		}
+	}
+	return say
+}
+</code></pre>
+
+        </div>
+
+        
+        
+        
+
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/leetcode">leetcode
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/p-np-notes/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            P-NP问题定义学习笔记
+        </div>
+    </a>
+    
+    
+    <a href="/posts/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">hexo搭建个人博客&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

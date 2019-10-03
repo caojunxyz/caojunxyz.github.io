@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MacOS如何让Chrome浏览器信任自签名证书 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="MacOS如何让Chrome浏览器信任自签名证书" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/macos_trust_ssl/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">MacOS如何让Chrome浏览器信任自签名证书</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/macos_trust_ssl/" class="article-date">
+                <time datetime='2019-06-16T20:13:09.000&#43;08:00' itemprop="datePublished">2019-06-16</time>
+            </a>
+            
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>有时候在公司内部可能会遇到使用Chrome访问某些内网https页面，浏览器提示不安全的情况，具体提示是&rdquo;<em>证书不可信</em>&ldquo;，例如：</p>
+
+<p><img src="/images/ssl/ssl_001.png" alt="如图所示" /></p>
+
+<p>这个不安全提示对正常访问网页没有任何影响，不过如果你有一些强迫症，觉得不爽，那么可以通过接下来的几个步骤让浏览器不再提示&rdquo;<em>不安全</em>&ldquo;。</p>
+
+<h3 id="将证书另存到本地">将证书另存到本地</h3>
+
+<p>在上图红色框中点击鼠标选中证书图标，按住不放拖放到桌面，证书文件(*.cer)会被保存到桌面。</p>
+
+<h3 id="将证书添加到钥匙链-keychain-access">将证书添加到钥匙链(Keychain Access)</h3>
+
+<p>双击上一步保存的证书文件，如：</p>
+
+<p><img src="/images/ssl/ssl_002.png" alt="如图所示" /></p>
+
+<h3 id="信任证书">信任证书</h3>
+
+<p>通过<em>KeyChain Access</em> — <em>login</em> —  <em>Category</em> — <em>Certificates</em> 在列表中选中刚才添加的证书，点击右键选择&rdquo;Get Info&rdquo;</p>
+
+<p><img src="/images/ssl/ssl_003.png" alt="如图所示" /></p>
+
+<p><img src="/images/ssl/ssl_005.png" alt="如图所示" /></p>
+
+<p>点击&rdquo;<strong>Trust</strong>&ldquo;项展开，在&rdquo;<em>When using this certificate</em>&ldquo;下来列表中选择&rdquo;<strong>Always Trust</strong>&ldquo;。</p>
+
+<p><img src="/images/ssl/ssl_006.png" alt="如图所示" /></p>
+
+<p>此时该证书已被标记为可信任状态：</p>
+
+<p><img src="/images/ssl/ssl_007.png" alt="如图所示" /></p>
+
+        </div>
+
+        
+        
+        <div class="article-toc" >
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#将证书另存到本地">将证书另存到本地</a></li>
+<li><a href="#将证书添加到钥匙链-keychain-access">将证书添加到钥匙链(Keychain Access)</a></li>
+<li><a href="#信任证书">信任证书</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+
+
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/backup-restore-gitlab-in-docker/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            备份和还原容器化部署的GitLab
+        </div>
+    </a>
+    
+    
+    <a href="/posts/jenkins-slave-nodes-connect/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Jenkins连接Slave节点的设置&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

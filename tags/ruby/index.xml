@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ruby on 指尖时光</title>
+    <link>https://blog.caojun.xyz/tags/ruby/</link>
+    <description>Recent content in ruby on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 21 Oct 2018 22:24:55 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Ruby元编程学习笔记（二）</title>
+      <link>https://blog.caojun.xyz/posts/ruby-meta-programming-note-2/</link>
+      <pubDate>Sun, 21 Oct 2018 22:24:55 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/ruby-meta-programming-note-2/</guid>
+      <description>有时候，我们可能要扩展已有的类，可以通过打开类（Open Class)和细化（Refinement)的方式。打开类是全局影响的，而细化的方式可</description>
+    </item>
+    
+    <item>
+      <title>Ruby元编程学习笔记（一）</title>
+      <link>https://blog.caojun.xyz/posts/ruby-meta-programming-note-1/</link>
+      <pubDate>Sun, 14 Oct 2018 21:42:29 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/ruby-meta-programming-note-1/</guid>
+      <description>Ruby的class关键字更像是一个作用于操作符，而不是类型声明语句。class关键字的核心任务是把你带到类的上下文中，上你可以在里面定义方</description>
+    </item>
+    
+    <item>
+      <title>Ruby中String和Symbol的区别</title>
+      <link>https://blog.caojun.xyz/posts/ruby-diff-string-symbol/</link>
+      <pubDate>Wed, 26 Sep 2018 21:08:58 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/ruby-diff-string-symbol/</guid>
+      <description>String(字符串) &amp;quot;iPhone&amp;quot; &#39;iPhone&#39; Symbol(符号) :iPhone 区别 类型不同 $ irb --simple-prompt &amp;gt;&amp;gt; &amp;quot;iPhone&amp;quot;.class =&amp;gt; String &amp;gt;&amp;gt; :iPhone.class =&amp;gt; Symbol 字符串可变（mutable)，符号不可变(immutabl</description>
+    </item>
+    
+    <item>
+      <title>TOML简明教程</title>
+      <link>https://blog.caojun.xyz/posts/toml-lang/</link>
+      <pubDate>Tue, 18 Sep 2018 22:43:04 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/toml-lang/</guid>
+      <description>TOML （Tom&amp;rsquo;s Obvious, Minimal Language) 是由Tom Preston-Werner设计的一门语言。可以将它简单理解为一种数据描述格式，类比xml, yaml, json, i</description>
+    </item>
+    
+  </channel>
+</rss>

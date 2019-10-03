@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>整数溢出 on 指尖时光</title>
+    <link>https://blog.caojun.xyz/tags/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/</link>
+    <description>Recent content in 整数溢出 on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 06 Apr 2018 00:20:54 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/tags/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>如何正确的实现一个计算组合数函数</title>
+      <link>https://blog.caojun.xyz/posts/how-to-write-a-combo-function/</link>
+      <pubDate>Fri, 06 Apr 2018 00:20:54 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/how-to-write-a-combo-function/</guid>
+      <description>计算组合数(Combination) C(n, k)的数学公式为 n! / ( k! * (n-k)! ), !表示阶乘(Factorial)的。 按公式很容易理解：分别求出三个阶乘数</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>记一次极路由翻墙遇到的DNS解析问题 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="记一次极路由翻墙遇到的DNS解析问题" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/hiwifi-fifa-dns-issue/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">记一次极路由翻墙遇到的DNS解析问题</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/hiwifi-fifa-dns-issue/" class="article-date">
+                <time datetime='2018-04-25T23:21:43.000&#43;00:00' itemprop="datePublished">2018-04-25</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://blog.caojun.xyz//categories/%E6%8A%98%E8%85%BE">折腾</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            <p>我家里的*&ldquo;科学上网&rdquo;*环境是<a href="http://www.hiwifi.com/j4turbo-para">极路由4增强版</a>安装<a href="https://github.com/Paull/hiwifi.easucks">FIFA助手插件</a>, 这是我目前知道的基于极路由最简单的姿势。首先需要对路由器进行root，意味着放弃保修权利。FIFA助手的安装过程按照说明文档一路操作即可。平时偶尔出现网络问题，重启下光猫和路由器就恢复了，这种姿势已经稳定运行了1年左右。</p>
+
+<p>今天晚上下班回家发现百度(<em>测试网络专用</em>)都打不开了，重启光猫和路由器后问题依然存在。此时怀疑欠费或者电信线路故障，致电10000客服电话排除了欠费和线路问题，客服帮忙清除缓存（*一直不知道这是什么鬼*）后问题依然没有解决。此时才开始把注意力放到路由器上，<code>ping www.baidu.com</code>没有响应，而<code>ping 114.114.114.114</code>正常。检查发现FIFA助手的<strong>[高级设置]</strong> &mdash;&gt; <strong>[远程DNS]</strong>下提示警告信息*“端口53未运行，端口54运行中”*，将DNS服务器列表试了一遍都不行。将SS服务停掉后可以正常访问百度了。此时定位到是FIFA助手导致的DNS问题，但也完全不知道原因，只有怀疑是一个bug，于是寄希望于有新版本可以更新，去github上看了下果然10几小时前才有新的提交。ssh到路由器运行<code>curl easucks.cn | sh</code>升级FIFA助手后远程DNS的状态恢复正常了，重新在浏览器中访问百度和谷歌都正常了，问题解决！</p>
+
+<p>作为一个高度依赖梯子提高生产力的程序员，看来有必要深度提高自己的翻墙能力，应该有造梯子的能力。知乎上有一个<a href="https://www.zhihu.com/question/54423336">关于路由器选购的讨论</a>，我的前两个路由器品牌分别是网件（R6100)和TP-LINK(非智能路由器)，R6100连不了几个设备就满载了，使用体验很差，不知道是不是买到假货了？极路由4使用中需要注意如果家里有2.4G设备连接不上可能需要关闭<strong>[合并2.4G和5G Wi-Fi]</strong>，否则2.4G设备可能连接到的是5G网络导致连接不上，我在使用小蚁1080P智能摄像机2的过程中就遇到了这个问题。</p>
+
+<p>下一个路由器准备试试华硕。</p>
+
+        </div>
+
+        
+        
+        
+
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/%E6%9E%81%E8%B7%AF%E7%94%B1">极路由
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/dns">DNS
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/hiwifi.easucks">hiwifi.easucks
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/auto-app-icons/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            如何正确的自动生成App图标
+        </div>
+    </a>
+    
+    
+    <a href="/posts/how-to-write-a-combo-function/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">如何正确的实现一个计算组合数函数&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

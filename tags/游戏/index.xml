@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>游戏 on 指尖时光</title>
+    <link>https://blog.caojun.xyz/tags/%E6%B8%B8%E6%88%8F/</link>
+    <description>Recent content in 游戏 on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 21 Nov 2016 23:56:59 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/tags/%E6%B8%B8%E6%88%8F/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>浅谈游戏数值配置工具</title>
+      <link>https://blog.caojun.xyz/posts/%E6%B5%85%E8%B0%88%E6%B8%B8%E6%88%8F%E6%95%B0%E5%80%BC%E9%85%8D%E7%BD%AE%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Mon, 21 Nov 2016 23:56:59 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/%E6%B5%85%E8%B0%88%E6%B8%B8%E6%88%8F%E6%95%B0%E5%80%BC%E9%85%8D%E7%BD%AE%E5%B7%A5%E5%85%B7/</guid>
+      <description>国内绝大多数游戏研发公司的游戏数值都是在Excel中配置维护，再通过自动化工具转换为程序运行需要的数据文件。使用Excel一方面是因为它极其</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>折腾 on 指尖时光</title>
+    <link>https://blog.caojun.xyz/categories/%E6%8A%98%E8%85%BE/</link>
+    <description>Recent content in 折腾 on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 24 Nov 2018 12:12:53 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/categories/%E6%8A%98%E8%85%BE/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>U盘安装macOS踩坑记</title>
+      <link>https://blog.caojun.xyz/posts/reinstall-macos/</link>
+      <pubDate>Sat, 24 Nov 2018 12:12:53 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/reinstall-macos/</guid>
+      <description>自从购买第一台苹果电脑(Macbook Air第一代）切换到苹果电脑办公已有6年历史，这期间重装系统的次数其实很少，总结一下大概有两种情况：1</description>
+    </item>
+    
+    <item>
+      <title>使用Let&#39;s Encrypt通配符证书装备个人站点</title>
+      <link>https://blog.caojun.xyz/posts/wildcard-certificate-with-letsencrypt-automated-by-caddyserver/</link>
+      <pubDate>Sun, 02 Sep 2018 17:23:14 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/wildcard-certificate-with-letsencrypt-automated-by-caddyserver/</guid>
+      <description>3月13日，Let&amp;rsquo;s Encrypt在Twitter上宣布通配符证书(wildcard certificate)支持正式上线。对于</description>
+    </item>
+    
+    <item>
+      <title>记一次极路由翻墙遇到的DNS解析问题</title>
+      <link>https://blog.caojun.xyz/posts/hiwifi-fifa-dns-issue/</link>
+      <pubDate>Wed, 25 Apr 2018 23:21:43 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/hiwifi-fifa-dns-issue/</guid>
+      <description>我家里的*&amp;ldquo;科学上网&amp;rdquo;*环境是极路由4增强版安装FIFA助手插件, 这是我目前知道的基于极路由最简单的姿势。首先需要对</description>
+    </item>
+    
+    <item>
+      <title>hexo搭建个人博客</title>
+      <link>https://blog.caojun.xyz/posts/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Thu, 15 Mar 2018 18:44:58 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
+      <description>前几日得空用hexo搭建了自己的个人博客， 在此做个记录，写下自己的思考与实践过程。 为什么要写博客 到目前位置，我的个人博客历史大概可以划分为五</description>
+    </item>
+    
+  </channel>
+</rss>

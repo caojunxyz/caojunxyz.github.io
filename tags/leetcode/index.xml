@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>leetcode on 指尖时光</title>
+    <link>https://blog.caojun.xyz/tags/leetcode/</link>
+    <description>Recent content in leetcode on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 28 Mar 2018 21:00:42 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/tags/leetcode/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>解读Leetcode题目之&#34;Count and Say&#34;</title>
+      <link>https://blog.caojun.xyz/posts/count-and-say/</link>
+      <pubDate>Wed, 28 Mar 2018 21:00:42 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/count-and-say/</guid>
+      <description>Leetcode算法题目第38题《Count and Say》(又名《Look and Say》)的难度为Easy，但是题目本身并不是太容易理解其表达的意思</description>
+    </item>
+    
+  </channel>
+</rss>

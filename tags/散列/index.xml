@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>散列 on 指尖时光</title>
+    <link>https://blog.caojun.xyz/tags/%E6%95%A3%E5%88%97/</link>
+    <description>Recent content in 散列 on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 03 Jan 2018 20:47:17 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/tags/%E6%95%A3%E5%88%97/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>浅谈散列函数</title>
+      <link>https://blog.caojun.xyz/posts/%E6%B5%85%E8%B0%88%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Wed, 03 Jan 2018 20:47:17 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/%E6%B5%85%E8%B0%88%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0/</guid>
+      <description>本文从程序员的视角介绍md5、sha1、sha256、sha512这几个散列函数。 散列函数(hash function)，又名哈希（音译）函数</description>
+    </item>
+    
+  </channel>
+</rss>

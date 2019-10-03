@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>问题练习 -- 如何快速分发大文件到大量服务器 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="问题练习 -- 如何快速分发大文件到大量服务器" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/exercise-file-transmit/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">问题练习 -- 如何快速分发大文件到大量服务器</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/exercise-file-transmit/" class="article-date">
+                <time datetime='2019-07-21T20:07:13.000&#43;08:00' itemprop="datePublished">2019-07-21</time>
+            </a>
+            
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<h2 id="设计目标">设计目标</h2>
+
+<p>将大文件快速分发到大量服务器</p>
+
+<p><em>demo请参考：<a href="https://github.com/caojunxyz/exercise-file-transmit">https://github.com/caojunxyz/exercise-file-transmit</a></em></p>
+
+<h2 id="分析">分析</h2>
+
+<p>大文件有多大？大量服务器有多少，百万台？这两个关键数据都会对问题的复杂度产生
+至关重要的影响。为了简化问题，我们将文件大小限定到1G左右，服务器规模限制到100-10000台。
+我们假设服务器之间的网络带宽都为100Mbit, 且服务器有足够的内存处理文件分发。实现会特别
+注意减少内存开销，但文件大小与整个分发过程中内存的使用情况未能做精确计算。</p>
+
+<ol>
+<li>假设分发服务器为<strong>M</strong>aster, 需要将1000MB的文件分发到目标服务器<strong>N</strong>ode，它们之间的带宽为100Mbit。
+理论耗时大致为: 1000/(<sup>100</sup>&frasl;<sub>10</sub>) = 100s</li>
+<li>如果目标服务器的数量为100，<strong>M</strong>依次将1000MB文件传输到这100个服务器，
+理论耗时大致为：100s x 100 = 10000s (~2.8小时)。显然，随着规模的扩大，
+耗时越来越难以接收。</li>
+<li>经过以上2点分析，最直接的瓶颈就在<strong>M</strong>的带宽，我们的解决办法核心就是突破<strong>M</strong>的带宽限制。
+n台目标服务器之间的带宽资源是可以充分利用的。</li>
+</ol>
+
+<h2 id="设计">设计</h2>
+
+<h3 id="分组">分组</h3>
+
+<p>将目标服务器进行分组，组间、组内都可以互相分发文件。</p>
+
+<h3 id="文件分块">文件分块</h3>
+
+<p>有了分组的设计，如果还是互相传输1000MB大小的文件，那么节点之间可以开始文件传输的最短等待时间也至少是100s，
+累计等待时间会远大于100s。为了减少等待时间，我们对文件进行分块，将文件分成很多小块进行分发，然后进行组装。</p>
+
+<h3 id="分组策略">分组策略</h3>
+
+<p>将100台服务器分为10组，每组10台服务器，其中有一个<strong>L</strong>eader节点，其它为<strong>N</strong>ormal节点。
+分组Id和节点Id都从0开始。
+1. <strong>M</strong>将文件块<em>block#n</em> <strong>Push</strong>给分组<strong>i</strong>(i = n % 10)的Leader。
+2. Leader收到block后进行校验并组装（写到文件中）,组装成功后向其它Leader节点以及本
+Group中的其中一个普通节点广播消息（消息内容为它拥有*block#n*）。
+3. 收到广播消息的节点向该节点<strong>Pull</strong>该*block#n*，并进行校验并组装，组装成功后重复2的广播操作，
+但广播对象不包含2中广播消息的节点（因为它已经拥有该block）。
+4. 当节点接收完所有文件块后，进行文件大小和sha1校验。
+5. Leader节点可以定时（例如每秒）向它所在Group的普通节点查询当前组装进度，Master节点可以向所有Leader节点
+查询一个Group的所有节点进度。</p>
+
+<h2 id="实现">实现</h2>
+
+<p>核心有两个部分：
+1. 文件分块与组装的逻辑
+2. 节点间的Push和Pull的调度</p>
+
+<p>注意的点：
+1. 不能并发操作同一个文件，特别注意io.Seek的时候也需要加锁保护
+2. 文件尽快落地</p>
+
+<h2 id="优化">优化</h2>
+
+<ol>
+<li>在实际使用中，目标机器上的程序应该是一个常驻的后台进程。每个文件分发应该是
+一个Session，但是目前没有完整的实现Session的管理。</li>
+<li>分组根据节点之前的实际网络情况来动态确定，例如一个局域网内的节点应该尽可能
+分到一个组。</li>
+<li>故障恢复，断点续传。如果Leader节点挂了，应该动态切换新的Leader。</li>
+<li>更好的用户操作及监控接口，例如Web方式。</li>
+</ol>
+
+        </div>
+
+        
+        
+        <div class="article-toc" >
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#设计目标">设计目标</a></li>
+<li><a href="#分析">分析</a></li>
+<li><a href="#设计">设计</a>
+<ul>
+<li><a href="#分组">分组</a></li>
+<li><a href="#文件分块">文件分块</a></li>
+<li><a href="#分组策略">分组策略</a></li>
+</ul></li>
+<li><a href="#实现">实现</a></li>
+<li><a href="#优化">优化</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+
+
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/gitattributes/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Unity项目spriteatlas文件在git中显示修改，但又无法提交的问题
+        </div>
+    </a>
+    
+    
+    <a href="/posts/shell_builtin_hash/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Linux Shell如何查找命令&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>U盘安装macOS踩坑记 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="U盘安装macOS踩坑记" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/reinstall-macos/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">U盘安装macOS踩坑记</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/reinstall-macos/" class="article-date">
+                <time datetime='2018-11-24T12:12:53.000&#43;00:00' itemprop="datePublished">2018-11-24</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://blog.caojun.xyz//categories/%E6%8A%98%E8%85%BE">折腾</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>自从购买第一台苹果电脑(Macbook Air第一代）切换到苹果电脑办公已有6年历史，这期间重装系统的次数其实很少，总结一下大概有两种情况：1. 在公司接手一台别人用过的电脑，通过重装得到一个全新的系统。2. 用太久了，各种东西乱七八糟，通过重装整理。</p>
+
+<h4 id="安装盘制作">安装盘制作</h4>
+
+<p>首先需要制作系统安装盘，可以通过命令行制作，也可以通过其它图形化工具制作。本文使用U盘在macOS系统中制作macOS Mojave安装盘为例。老款的Mac可能只支持USB2.0，可能不能识别3.0的U盘。首先在AppStore下载Mojave，下载完成后关闭安装提示界面，路径为<strong>/Applications/Install macOS Mojave.app</strong>。</p>
+
+<h5 id="命令行工具">命令行工具</h5>
+
+<ol>
+<li>通过磁盘工具格式化U盘，将U盘命名为*USB*（此处可取其它名字，下面命令中使用一致即可）</li>
+</ol>
+
+<p><img src="/images/reinstall-macos/diskformat.png" alt="如图所示" /></p>
+
+<ol>
+<li>打开终端运行：<code>sudo /Applications/Install\ macOS\ Mojave.app/Contents/Resources/createinstallmedia --volume /Volumes/USB</code></li>
+</ol>
+
+<p><img src="/images/reinstall-macos/cli.png" alt="如图所示" /></p>
+
+<h5 id="etcher工具">Etcher工具</h5>
+
+<p>​   <a href="https://www.balena.io/etcher/">Etcher</a>是一个跨平台的开源工具，可以使用<code>brew cask install etcher</code>安装，非常方便。我之前也多次使用它制作各种启动盘，但不幸的是使用Etcher 1.4.6制作的Mojave安装盘无法识别，此处花费我大量时间，因为此前成功过就没有怀疑是它的问题。也许后续版本会修复问题，但也提了个醒，<a href="https://support.apple.com/zh-cn/HT201372">苹果官方的命令行</a>安装方法是最可靠的。当使用其它方法遇到问题时可以快速用标准方法比较一下。使用方法很傻瓜，此处不啰嗦。此处要注意选择的镜像文件路径为<em>/Applications/Install macOS Mojave.app/Contents/SharedSupport/InstallESD.dmg</em></p>
+
+<p>​   <img src="/images/reinstall-macos/etcher_dmg.png" alt="如图所示" /></p>
+
+<p>​   <img src="/images/reinstall-macos/etcher_doing.png" alt="如图所示" /></p>
+
+<p>​   <img src="/images/reinstall-macos/etcher_finish.png" alt="如图所示" /></p>
+
+<h5 id="disk-drill工具">Disk Drill工具</h5>
+
+<p>​   <a href="https://www.cleverfiles.com/">Disk Drill</a>是我在使用Etcher 1.4.6遇到麻烦不得解决后上Youtube搜索到有Youtuber分享的视频中发现的，非常好用，感觉比Etcher还要傻瓜。用它制作的安装盘可以正常使用。</p>
+
+<p>​   <img src="/images/reinstall-macos/diskdrill.png" alt="如图所示" /></p>
+
+<h5 id="使用命令行工具和disk-drill制作的安装盘-可以识别为启动盘">使用命令行工具和Disk Drill制作的安装盘（可以识别为启动盘）</h5>
+
+<p>​   <img src="/images/reinstall-macos/usb1.png" alt="如图所示" /></p>
+
+<h5 id="使用etcher-1-4-6-制作的安装盘-无法识别为启动盘">使用Etcher 1.4.6 制作的安装盘（无法识别为启动盘）</h5>
+
+<p>​   <img src="/images/reinstall-macos/usb2.png" alt="如图所示" /></p>
+
+<h5 id="另外的坑">另外的坑</h5>
+
+<p>老款Mac mini甚至连2K显示器都不支持，我连接到自己的4K显示器上发现没有信号，接着连到同事的2K显示器也没有信号，最后连到一个同事的1080P终于有信号了。开始也没有注意这个问题，因为公司很多个不同型号的Mac mini。</p>
+
+<h4 id="如何从u盘启动安装">如何从U盘启动安装</h4>
+
+<p>按住<strong>Option (⌥)</strong>，再按电源键开机，知道出现下图</p>
+
+<p><img src="/images/reinstall-macos/boot.png" alt="如图所示" /></p>
+
+<h4 id="从网络安装">从网络安装</h4>
+
+<p>在开机时通过不同的组合按键可以通过网络安装不同的版本，如下所示：</p>
+
+<p><strong>Command (⌘)-R</strong> 安装您的 Mac 上装有的最新 macOS</p>
+
+<p><strong>Option-⌘-R</strong> 升级到与您的 Mac 兼容的最新 macOS</p>
+
+<p><strong>Shift-Option-⌘-R</strong> 安装 Mac 随附的 macOS 或与它最接近且仍在提供的版本</p>
+
+<p>鉴于国内的网络状况，从网络安装失败的概率很大。我曾经电话咨询过苹果技术支持，他们也建议通过U盘安装……</p>
+
+        </div>
+
+        
+        
+        <div class="article-toc" >
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#安装盘制作">安装盘制作</a>
+<ul>
+<li><a href="#命令行工具">命令行工具</a></li>
+<li><a href="#etcher工具">Etcher工具</a></li>
+<li><a href="#disk-drill工具">Disk Drill工具</a></li>
+<li><a href="#使用命令行工具和disk-drill制作的安装盘-可以识别为启动盘">使用命令行工具和Disk Drill制作的安装盘（可以识别为启动盘）</a></li>
+<li><a href="#使用etcher-1-4-6-制作的安装盘-无法识别为启动盘">使用Etcher 1.4.6 制作的安装盘（无法识别为启动盘）</a></li>
+<li><a href="#另外的坑">另外的坑</a></li>
+</ul></li>
+<li><a href="#如何从u盘启动安装">如何从U盘启动安装</a></li>
+<li><a href="#从网络安装">从网络安装</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/macos">macOS
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/etcher">Etcher
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/createinstallmedia">createinstallmedia
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/abdominal-respiration/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            科学健身，从了解腹式呼吸开始
+        </div>
+    </a>
+    
+    
+    <a href="/posts/usb-type-c/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">USB Type-C的前世今生&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>如何独立安装PostgreSQL客户端工具 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="如何独立安装PostgreSQL客户端工具" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/install-standalone-postgresql-client-tools/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">如何独立安装PostgreSQL客户端工具</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/install-standalone-postgresql-client-tools/" class="article-date">
+                <time datetime='2019-08-06T20:43:36.000&#43;08:00' itemprop="datePublished">2019-08-06</time>
+            </a>
+            
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<h2 id="为什么需要独立安装postgresql客户端工具">为什么需要独立安装PostgreSQL客户端工具</h2>
+
+<p>这里说的PostgreSQL客户端工具主要包括<strong><em>pg_dump</em></strong>, <strong><em>pg_dumpall</em></strong>, <strong><em>pg_restore</em></strong>, <strong><em>psql</em></strong>, <strong><em>pg_basebackup</em></strong>等命令行工具，主要用于数据库的备份与恢复。安装PG server时默认会安装客户端工具，那在什么情况下我们需要独立安装这些客户端工具呢？</p>
+
+<ol>
+<li><p>PG server是容器化部署的，我们不想每次通过docker exec -it [container_name] bash进入到容器内部使用这些工具</p></li>
+
+<li><p>我们希望在另外的机器上（例如我们本地开发机器）使用这些工具连接数据库服务器进行操作，特别当数据库服务器有多台时，这个需求会更明显（你肯定不想ssh到每一台服务器进行备份吧）</p></li>
+</ol>
+
+<h2 id="不同linux发行版的安装方式">不同Linux发行版的安装方式</h2>
+
+<p>本文仅说明在linux系统上安装这些工具，其它平台的需求请读者自行研究。</p>
+
+<p>首先，访问<a href="https://www.postgresql.org/download/linux/">https://www.postgresql.org/download/linux/</a>  选择你的Linux发行版本，主流使用的应该是CentOS和Ubuntu。</p>
+
+<p><img src="/images/postgresql/linux.png" alt="如图所示" /></p>
+
+<p>我们选择CentOS，根据你的环境配置进行选择，我的配置如下：</p>
+
+<p><img src="/images/postgresql/pg_yum-repo.png" alt="如图所示" /></p>
+
+<p>根据上图步骤4和5操作即可，安装完成后可以运行 <em>find / -name pg_dump</em> 查看安装路径:</p>
+
+<pre><code class="language-bash">   /usr/bin/pg_dump
+   /usr/pgsql-9.6/bin/pg_dump
+</code></pre>
+
+<p>其中 <em>/usr/pgsql-9.6/bin/pg_dump</em> 是实际的安装位置，<em>/usr/bin/pg_dump</em> 是软链接文件。</p>
+
+<pre><code class="language-bash">   pg_dump -&gt; /etc/alternatives/pgsql-pg_dump
+   pgsql-pg_dump -&gt; /usr/pgsql-9.6/bin/pg_dump
+</code></pre>
+
+<h2 id="centos-7上常见安装步骤">CentOS 7上常见安装步骤</h2>
+
+<h4 id="x86-64-postgresql-9-6">X86_64 PostgreSQL 9.6</h4>
+
+<ol>
+<li><em>yum install <a href="https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm">https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm</a></em></li>
+<li><em>yum install postgresql96</em></li>
+</ol>
+
+<h4 id="x86-64-postgresql-10">X86_64 PostgreSQL 10</h4>
+
+<ol>
+<li><em>yum install <a href="https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm">https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm</a></em></li>
+<li><em>yum install postgresql10</em></li>
+</ol>
+
+<h2 id="ubuntu-18-04">Ubuntu 18.04</h2>
+
+        </div>
+
+        
+        
+        <div class="article-toc" >
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#为什么需要独立安装postgresql客户端工具">为什么需要独立安装PostgreSQL客户端工具</a></li>
+<li><a href="#不同linux发行版的安装方式">不同Linux发行版的安装方式</a></li>
+<li><a href="#centos-7上常见安装步骤">CentOS 7上常见安装步骤</a>
+<ul>
+<li>
+<ul>
+<li><a href="#x86-64-postgresql-9-6">X86_64 PostgreSQL 9.6</a></li>
+<li><a href="#x86-64-postgresql-10">X86_64 PostgreSQL 10</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#ubuntu-18-04">Ubuntu 18.04</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+
+
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/gorm-postgres-json/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            GORM使用PostgreSQL数据库json类型的一次挖坑经历
+        </div>
+    </a>
+    
+    
+    <a href="/posts/gomodules/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">深入浅出Go Modules&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

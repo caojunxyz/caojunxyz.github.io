@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>centos on 指尖时光</title>
+    <link>https://blog.caojun.xyz/tags/centos/</link>
+    <description>Recent content in centos on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 09 Jun 2019 15:48:44 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/tags/centos/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>CentOS安装配置Docker环境</title>
+      <link>https://blog.caojun.xyz/posts/use-docker-on-centos7/</link>
+      <pubDate>Sun, 09 Jun 2019 15:48:44 +0800</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/use-docker-on-centos7/</guid>
+      <description>目前我所有的服务都是使用Docker来运行，而Linux发行版也最终选定CentOS和大多数公司的选择保持一致。Docker的安装配置在官网</description>
+    </item>
+    
+  </channel>
+</rss>

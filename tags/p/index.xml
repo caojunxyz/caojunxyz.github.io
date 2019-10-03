@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>P on 指尖时光</title>
+    <link>https://blog.caojun.xyz/tags/p/</link>
+    <description>Recent content in P on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 30 Mar 2018 10:43:51 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/tags/p/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>P-NP问题定义学习笔记</title>
+      <link>https://blog.caojun.xyz/posts/p-np-notes/</link>
+      <pubDate>Fri, 30 Mar 2018 10:43:51 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/p-np-notes/</guid>
+      <description>P问题即是多项式时间复杂度可以求解的问题，取多项式单词(Polynomial)的首字母。NP问题并不是不能在多项式时间复杂度内求解的问题，而</description>
+    </item>
+    
+  </channel>
+</rss>

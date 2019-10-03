@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>分享我的VirtualBox网络设置 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="分享我的VirtualBox网络设置" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/virtualbox-network-settings/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">分享我的VirtualBox网络设置</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/virtualbox-network-settings/" class="article-date">
+                <time datetime='2018-08-19T21:26:36.000&#43;00:00' itemprop="datePublished">2018-08-19</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://blog.caojun.xyz//categories/%E6%8A%80%E6%9C%AF">技术</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            <p>使用Mac作为开发机的程序员可能会遇到这样一个使用场景：通过免费的VirtualBox安装一个Linux Server。有可能运行一个web程序，不仅需要通过宿主机（Host）预览/调试，还需要在手机真机上查看效果。
+此时web程序就不仅要能够被宿主机访问到，还需要被宿主机所在网络中的其它设备访问到。而且还需要通过ssh登陆到虚拟机中进行管理。
+如果使用的是笔记本电脑，有移动办公的需求，例如经常需要在公司和家中开发。而公司和家中的网络设置是不同的，又不想每次切换工作环境后再登陆虚拟机都要使用不同的IP配置，有没有什么办法呢？
+答案当然是肯定的，分享我的做法：</p>
+
+<p>步骤一： 通过桥接的方式让虚拟机接入宿主机所在的网络
+<img src="/images/virtualbox/network_adapter1.png" alt="" /></p>
+
+<p>步骤二： 建立一个只关联宿主机和虚拟机的虚拟网络用于在宿主机中ssh访问虚拟机，这个网络可以保证稳定。
+<img src="/images/virtualbox/virtual_box_menu_HNM.png" alt="" />
+<img src="/images/virtualbox/vboxnet0_adapter.png" alt="" />
+<img src="/images/virtualbox/vboxnet0_dhcp.png" alt="" /></p>
+
+<p>步骤三: 为虚拟机分配新建的Host-only adapter
+<img src="/images/virtualbox/network_adapter2.png" alt="" /></p>
+
+<p>步骤四：分别在宿主机和虚拟机中通过*ifconfig -a*命令查看网络配置，我的示例如下
+<img src="/images/virtualbox/host_networks.png" alt="" />
+<img src="/images/virtualbox/vm_networks.png" alt="" /></p>
+
+<p>步骤五: 通过<a href="https://github.com/emre/storm">storm</a>来管理ssh秘钥，新建一个名称为vm0的配置，这样以后无论处于什么网络环境都可以直接使用ssh vm0登陆到虚拟机中。</p>
+
+<p>通过如上操作更清晰的划分了不同网络适配器的作用，一劳永逸的解决了ssh登陆虚拟机的IP问题。但是在其它设备中访问时IP还是会变化，我的解决办法是在代码中使用域名，通过修改本机的hosts文件来映射不同的IP，开发机同时还作为移动设备的代理服务器(共享hosts配置)。更进一步的做法可以搭建内网的DNS服务器来处理，这个话题可以新开一篇文章介绍如何搭建DNS服务器。</p>
+
+        </div>
+
+        
+        
+        
+
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/virtualbox">VirtualBox
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/network">Network
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/bridge">Bridge
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/host-only">Host-only
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/wildcard-certificate-with-letsencrypt-automated-by-caddyserver/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            使用Let&#39;s Encrypt通配符证书装备个人站点
+        </div>
+    </a>
+    
+    
+    <a href="/posts/auto-app-icons/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">如何正确的自动生成App图标&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

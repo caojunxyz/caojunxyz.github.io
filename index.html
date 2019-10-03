@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="指尖时光" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/" />
+    
+
+    <link href="https://blog.caojun.xyz/index.xml" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+            <div class="article-inner">
+                
+                
+                <header class="article-header">
+                    <h1 itemprop="name"><a class="article-title" href="/posts/ssh_practise/">macOS用户使用SSH连接远程主机的常用姿势</a></h1>
+                </header>
+                
+                <div class="article-meta">
+                    <a href="/posts/ssh_practise/" class="article-date">
+                        <time datetime='2019-09-15T22:05:56.000&#43;08:00' itemprop="datePublished">2019-09-15</time>
+                    </a>
+                    
+                    
+                    
+                </div>
+                <div class="article-entry" itemprop="articleBody">
+                    <p>
+                        
+                    SSH是服务器开发运维人员必不可少的工具，本文介绍一些macOS用户常用的SSH操作姿势。 使用密钥登陆 通常可以使用 ssh [user]@[ip] 登陆服务器，但是每次都
+                    </p>
+                    <p class="article-more-link">
+                        <a href="/posts/ssh_practise/">Read More</a>
+                    </p>
+                </div>
+
+                
+            </div>
+        </article>
+        
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+            <div class="article-inner">
+                
+                
+                <header class="article-header">
+                    <h1 itemprop="name"><a class="article-title" href="/posts/traverse_dir_with_golang/">Go语言遍历文件夹的两种方法</a></h1>
+                </header>
+                
+                <div class="article-meta">
+                    <a href="/posts/traverse_dir_with_golang/" class="article-date">
+                        <time datetime='2019-09-08T22:19:10.000&#43;08:00' itemprop="datePublished">2019-09-08</time>
+                    </a>
+                    
+                    
+                    
+                </div>
+                <div class="article-entry" itemprop="articleBody">
+                    <p>
+                        
+                    过滤函数 func exclude(dir, path string) bool { rel, _ := filepath.Rel(dir, path) segs := strings.Split(rel, fmt.Sprintf(&quot;%c&quot;, os.PathSeparator)) if segs[0] == &quot;.git&quot; || segs[0] == &quot;.idea&quot; { return true } name := filepath.Base(path) if name == &quot;.DS_Store&quot; { return true } return false } 第一种方法（使用path/filepath.Wa
+                    </p>
+                    <p class="article-more-link">
+                        <a href="/posts/traverse_dir_with_golang/">Read More</a>
+                    </p>
+                </div>
+
+                
+            </div>
+        </article>
+        
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+            <div class="article-inner">
+                
+                
+                <header class="article-header">
+                    <h1 itemprop="name"><a class="article-title" href="/posts/git-merge-case-1/">Git Merge操作不当导致文件丢失</a></h1>
+                </header>
+                
+                <div class="article-meta">
+                    <a href="/posts/git-merge-case-1/" class="article-date">
+                        <time datetime='2019-09-01T19:12:12.000&#43;08:00' itemprop="datePublished">2019-09-01</time>
+                    </a>
+                    
+                    
+                    
+                </div>
+                <div class="article-entry" itemprop="articleBody">
+                    <p>
+                        
+                    之前团队在使用Git的时候发生了文件 &ldquo;莫名其妙&rdquo; 丢失的情况，说是莫名其妙，是因为通过查看log提交记录，并没有任何关
+                    </p>
+                    <p class="article-more-link">
+                        <a href="/posts/git-merge-case-1/">Read More</a>
+                    </p>
+                </div>
+
+                
+            </div>
+        </article>
+        
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+            <div class="article-inner">
+                
+                
+                <header class="article-header">
+                    <h1 itemprop="name"><a class="article-title" href="/posts/git-lfs/">Git LFS介绍</a></h1>
+                </header>
+                
+                <div class="article-meta">
+                    <a href="/posts/git-lfs/" class="article-date">
+                        <time datetime='2019-08-25T22:36:22.000&#43;08:00' itemprop="datePublished">2019-08-25</time>
+                    </a>
+                    
+                    
+                    
+                </div>
+                <div class="article-entry" itemprop="articleBody">
+                    <p>
+                        
+                    Git的设计初衷是管理Linux内核的开发，即对源代码（文本文件）进行版本控制。Git是基于文件快照而不是增量差异进行文件存储的，如果一个文
+                    </p>
+                    <p class="article-more-link">
+                        <a href="/posts/git-lfs/">Read More</a>
+                    </p>
+                </div>
+
+                
+            </div>
+        </article>
+        
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+            <div class="article-inner">
+                
+                
+                <header class="article-header">
+                    <h1 itemprop="name"><a class="article-title" href="/posts/gorm-postgres-json/">GORM使用PostgreSQL数据库json类型的一次挖坑经历</a></h1>
+                </header>
+                
+                <div class="article-meta">
+                    <a href="/posts/gorm-postgres-json/" class="article-date">
+                        <time datetime='2019-08-18T13:32:02.000&#43;08:00' itemprop="datePublished">2019-08-18</time>
+                    </a>
+                    
+                    
+                    
+                </div>
+                <div class="article-entry" itemprop="articleBody">
+                    <p>
+                        
+                    因为项目数据库使用很简单，没有复杂的查询，因此使用GORM来操作PostgreSQL 10。 最初表结构的定义是这样的： type LogData struct { ID uint `gorm:&quot;primary_key; not null&quot;` Data json.RawMessage }
+                    </p>
+                    <p class="article-more-link">
+                        <a href="/posts/gorm-postgres-json/">Read More</a>
+                    </p>
+                </div>
+
+                
+            </div>
+        </article>
+        
+
+        
+
+<nav id="page-nav">
+    
+    
+    
+    <span class="page-number current">1</span>
+    
+    
+    
+    <a href="/page/2/">2</a>
+    
+    
+    
+    <a href="/page/3/">3</a>
+    
+    
+    
+    <a href="/page/4/">4</a>
+    
+    
+    
+    <a href="/page/5/">5</a>
+    
+    
+    
+    <a href="/page/6/">6</a>
+    
+    
+    
+    <a href="/page/7/">7</a>
+    
+    
+    
+    <a href="/page/8/">8</a>
+    
+    
+    
+    <a href="/page/9/">9</a>
+    
+    
+
+    
+    <a href="/page/2/" rel="next" class="extend next">Next &raquo;</a>
+    
+</nav>
+
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

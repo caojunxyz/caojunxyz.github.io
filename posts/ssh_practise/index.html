@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>macOS用户使用SSH连接远程主机的常用姿势 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="macOS用户使用SSH连接远程主机的常用姿势" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/ssh_practise/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">macOS用户使用SSH连接远程主机的常用姿势</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/ssh_practise/" class="article-date">
+                <time datetime='2019-09-15T22:05:56.000&#43;08:00' itemprop="datePublished">2019-09-15</time>
+            </a>
+            
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>SSH是服务器开发运维人员必不可少的工具，本文介绍一些macOS用户常用的SSH操作姿势。</p>
+
+<h3 id="使用密钥登陆">使用密钥登陆</h3>
+
+<p>通常可以使用 <em>ssh [user]@[ip]</em> 登陆服务器，但是每次都需要输入远程主机用户的密码。</p>
+
+<p>可以将macOS本机用户的SSH公钥拷贝到远程主机上( <em>~/.ssh/authorizied_keys</em> )，最原始的方式是手动拷贝粘贴（如果 <em>authorized_keys</em> 文件不存在则需先创建）。更好的方式是通过 <em>ssh-copy-id</em> 命令将密钥拷贝到远程主机。</p>
+
+<p>用法：<em>ssh-copy-id [user]@[ip]</em> ，按提示输入密码回车即可。</p>
+
+<h3 id="使用storm工具">使用storm工具</h3>
+
+<p>通常情况下，远程服务器可能修改 <strong><em>sshd</em></strong>的默认端口。也可能面临不同的远程服务器需要使用不同的密钥登陆。使用<a href="https://github.com/emre/storm">storm</a>工具可以带来很多便利。macOS用户可以直接使用<code>brew install stormssh</code>命令安装。</p>
+
+<h4 id="添加远程主机">添加远程主机</h4>
+
+<p><code>storm add [host-name] [user]@[ip]:[port]</code></p>
+
+<h4 id="查看ssh配置的远程主机">查看ssh配置的远程主机</h4>
+
+<p><code>storm list</code></p>
+
+<h4 id="编辑远程主机配置">编辑远程主机配置</h4>
+
+<p><code>storm edit [host-name]</code></p>
+
+<h4 id="删除远程主机配置">删除远程主机配置</h4>
+
+<p><code>storm delete [host-name]</code></p>
+
+<h3 id="ssh配置">SSH配置</h3>
+
+<p>ssh的配置文件为 *~/.ssh/config*， 格式为：</p>
+
+<pre><code class="language-bash">Host host1
+    HostName x.x.x.x
+    User root
+    Port 22
+Host host2
+    HostName y.y.y.y
+    User ubuntu
+    Port 22022
+    IdentityFile ~/.ssh/id_rsa_test
+</code></pre>
+
+<p>storm工具的原理是一个对ssh config更加友好的操作接口，有时候也可以直接来编辑配置文件。</p>
+
+        </div>
+
+        
+        
+        <div class="article-toc" >
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#使用密钥登陆">使用密钥登陆</a></li>
+<li><a href="#使用storm工具">使用storm工具</a>
+<ul>
+<li><a href="#添加远程主机">添加远程主机</a></li>
+<li><a href="#查看ssh配置的远程主机">查看ssh配置的远程主机</a></li>
+<li><a href="#编辑远程主机配置">编辑远程主机配置</a></li>
+<li><a href="#删除远程主机配置">删除远程主机配置</a></li>
+</ul></li>
+<li><a href="#ssh配置">SSH配置</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+
+
+        
+    </div>
+    <nav id="article-nav">
+    
+    
+    <a href="/posts/traverse_dir_with_golang/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Go语言遍历文件夹的两种方法&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

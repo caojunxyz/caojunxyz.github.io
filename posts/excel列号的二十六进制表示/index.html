@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Excel列号的二十六进制表示 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="Excel列号的二十六进制表示" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/excel%E5%88%97%E5%8F%B7%E7%9A%84%E4%BA%8C%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E8%A1%A8%E7%A4%BA/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Excel列号的二十六进制表示</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/excel%E5%88%97%E5%8F%B7%E7%9A%84%E4%BA%8C%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E8%A1%A8%E7%A4%BA/" class="article-date">
+                <time datetime='2016-11-24T23:45:06.000&#43;00:00' itemprop="datePublished">2016-11-24</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://blog.caojun.xyz//categories/%E6%8A%80%E6%9C%AF">技术</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            <p>Excel为了方便区分行和列，对行号采用十进制整数递增表示，列号采用一种特殊的“二十六进制”表示。十进制在人类的日常生活中广泛使用，是最容易被理解的整数表示法。对计算机来说，由于半导体晶体管的物理特性，使用二进制作为内部运行的整数表示法（浮点数的表示法和整数不同，浮点数需要特殊的寄存器支持）。在编写代码的时候，通常使用十六进制表示法。一个十六进制数占4bit，很容易直观看出十六进制字面量占用的位数，这在编写跨平台程序时尤为重要。如果直接使用二进制，一方面可读性不好，另一方面书写负担也很严重（试想一下数清楚一长串的0和1是什么概念）。</p>
+
+<p>十六进制使用 &lsquo;0&rsquo; ~ &lsquo;9&rsquo;和&rsquo;A&rsquo; ~ &lsquo;Z&rsquo; (或&rsquo;a&rsquo; ~ &lsquo;z&rsquo;)表示，这16个十六进制数分别对应十进制整数序列0~15。Excel使用&rsquo;A&rsquo; ~ &lsquo;Z&rsquo;（或&rsquo;a&rsquo; ~ &lsquo;z&rsquo;）作为二十六进制数字表示列号。类似十六进制，从0开始计数，低位表示溢出时向高位进位。例如，A表示0， B表示1，Z表示25，AA表示26， AZ表示51， BA表示52。注意16的十六进制字符串表示是<strong>10</strong>，26的&rdquo;二十六进制&rdquo;字符串表示时<strong>AA</strong>，可以从这点着手思考它们与十进制的转换方法的细微差别。</p>
+
+<p>下面两个函数（_Go语言编写_）演示了十六进制和“二十六进制”字符串与十进制整数进行互相转换的算法:</p>
+
+<pre><code class="language-Go">func ConvertToDecimal(str string, dict map[byte]int, start byte, carry int) int {
+	str = strings.ToUpper(str)
+	ret := 0
+	base := len(dict)
+	for i, _ := range str {
+		ch := str[len(str)-i-1]
+		v1 := dict[ch] - dict[start] + carry
+		v2 := int(math.Pow(float64(base), float64(i)))
+		ret += v1 * v2
+	}
+	return ret
+}
+
+func ConvertFromDecimal(n int, dict map[int]byte, carry int) string {
+	ret := &quot;&quot;
+	base := len(dict)
+	n -= carry
+	for {
+		q := n / base // quotient
+		r := n % base // remainder
+		ret = string(dict[r]) + ret
+		if q == 0 {
+			break
+		}
+		n = q - carry
+	}
+	return ret
+}
+</code></pre>
+
+<p>因为十六进制数的ASCII码并不是连续的，为了函数通用，增加了dict参数作为不同进制数和十进制整数的映射表，它们分别是：</p>
+
+<pre><code class="language-Go">var hexDict = map[byte]int{
+	'0': 0, '1': 1, '2': 2, '3': 3, '4': 4,
+	'5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
+	'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14, 'F': 15,
+}
+
+var alphaDict = map[byte]int{
+	'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4,
+	'F': 5, 'G': 6, 'H': 7, 'I': 8, 'J': 9,
+	'K': 10, 'L': 11, 'M': 12, 'N': 13, 'O': 14,
+	'P': 15, 'Q': 16, 'R': 17, 'S': 18, 'T': 19,
+	'U': 20, 'V': 21, 'W': 22, 'X': 23, 'Y': 24,
+	'Z': 25,
+}
+</code></pre>
+
+<p>反转映射表函数：</p>
+
+<pre><code class="language-Go">func reverse(dict map[byte]int) map[int]byte {
+	ret := map[int]byte{}
+	for k, v := range dict {
+		ret[v] = k
+	}
+	return ret
+}
+</code></pre>
+
+<p>测试用例:</p>
+
+<pre><code class="language-Go">func Example_ConvertToDecimal() {
+	// 十六进制
+	list := []string{&quot;0&quot;, &quot;1&quot;, &quot;A&quot;, &quot;F&quot;, &quot;10&quot;, &quot;FF&quot;, &quot;F10&quot;}
+	results := []int{}
+	for _, str := range list {
+		results = append(results, ConvertToDecimal(str, hexDict, '0', 0))
+	}
+	// 二十六进制
+	list = []string{&quot;A&quot;, &quot;Z&quot;, &quot;AA&quot;, &quot;AZ&quot;, &quot;GT&quot;, &quot;AAA&quot;, &quot;JQP&quot;}
+	for _, str := range list {
+		results = append(results, ConvertToDecimal(str, alphaDict, 'A', 1)-1)
+	}
+
+	fmt.Println(results)
+	// Output:
+	// [0 1 10 15 16 255 3856 0 25 26 51 201 702 7217]
+}
+
+func Example_ConvertFromDecimal() {
+	// 十六进制
+	list := []int{0, 1, 10, 15, 16, 255, 3856}
+	results := []string{}
+	for _, n := range list {
+		results = append(results, ConvertFromDecimal(n, reverse(hexDict), 0))
+	}
+	// 二十六进制
+	list = []int{0, 25, 26, 51, 201, 702, 7217}
+	for _, n := range list {
+		results = append(results, ConvertFromDecimal(n+1, reverse(alphaDict), 1))
+	}
+
+	fmt.Println(results)
+	// Output:
+	// [0 1 A F 10 FF F10 A Z AA AZ GT AAA JQP]
+}
+</code></pre>
+
+<p>如果你读到这，那么请思考一下：
+1. carry的区别，还记得前面提到<strong>10</strong>和<strong>AA</strong>吗？
+2. 为什么不用三十二，六十四进制？</p>
+
+        </div>
+
+        
+        
+        
+
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/excel">Excel
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/%E4%BA%8C%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6">二十六进制
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/go%E8%AF%AD%E8%A8%80%E5%8C%85%E7%AE%A1%E7%90%86%E7%AE%80%E4%BB%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Go语言包管理简介
+        </div>
+    </a>
+    
+    
+    <a href="/posts/%E6%B5%85%E8%B0%88%E6%B8%B8%E6%88%8F%E6%95%B0%E5%80%BC%E9%85%8D%E7%BD%AE%E5%B7%A5%E5%85%B7/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">浅谈游戏数值配置工具&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

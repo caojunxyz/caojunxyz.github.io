@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>如何正确的实现一个计算组合数函数 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="如何正确的实现一个计算组合数函数" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/how-to-write-a-combo-function/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">如何正确的实现一个计算组合数函数</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/how-to-write-a-combo-function/" class="article-date">
+                <time datetime='2018-04-06T00:20:54.000&#43;00:00' itemprop="datePublished">2018-04-06</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://blog.caojun.xyz//categories/%E6%8A%80%E6%9C%AF">技术</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>计算<a href="https://en.wikipedia.org/wiki/Combination">组合数(<em>Combination</em>)</a> C(n, k)的数学公式为 n! / ( k! * (n-k)! ), !表示<a href="https://en.wikipedia.org/wiki/Factorial">阶乘(<em>Factorial</em>)</a>的。
+按公式很容易理解：分别求出三个阶乘数，然后再做两次除法操作即可得到组合数。</p>
+
+<h4 id="实现一">实现一:</h4>
+
+<pre><code class="language-Go">func F(n int) int {
+	if n == 1 {
+		return 1
+	}
+	return n*F(n-1)
+}
+
+func C(n, k int) int {
+	return F(n) / F(k) / F(n-k)
+}
+</code></pre>
+
+<p><strong>但是</strong>，实现一的问题是在求阶乘时可能出现整数溢出。以64位机器为例，<strong><em>uint64</em></strong>的最大值为<strong>18446744073709551615</strong>, 21的阶乘为<strong>51090942171709440000</strong>，溢出了。按这种方式计算，最大可以求出n=20的组合数。</p>
+
+<h4 id="实现二">实现二：</h4>
+
+<pre><code class="language-Go">// Gcd : calculate greatest common divisor by Euclidean algorithm
+func Gcd(a, b int) int {
+	if b == 0 {
+		return a
+	}
+	return Gcd(b, a%b)
+}
+
+// Div : divide by gcd
+func Div(a, b int) (a0, b0 int) {
+	gcd := Gcd(a, b)
+	a /= gcd
+	b /= gcd
+	return a, b
+}
+
+// C : combination (k &lt;= n), prevent overflow
+func C(n, k int) int {
+	i := k + 1
+	r := n - k
+	if r &gt; k {
+		i = r + 1
+		r = k
+	}
+	f1, f2 := 1, 1
+	j := 1
+	for ; i &lt;= n; i++ {
+		f1 *= i
+		for ; j &lt;= r; j++ {
+			f2 *= j
+			if f2 &gt; f1 {
+				j++
+				break
+			}
+			if gcd := Gcd(f1, f2); gcd &gt; 1 {
+				f1, f2 = Div(f1, f2)
+			}
+		}
+	}
+	return f1 / f2
+}
+</code></pre>
+
+<p>实现二通过不断约化(通过<a href="https://en.wikipedia.org/wiki/Euclidean_algorithm">欧几里得算法</a>求最大公约数求约)结果来防止溢出，这种方法大大提高了可以计算出的组合数上限，理论上限为最大的int值。</p>
+
+<p>在很多应用场景，实现二应该可以满足需求。如果要得到一个通用的实现，需要引入大数计算，Go语言中有<strong>math/big</strong>包可以使用。</p>
+
+        </div>
+
+        
+        
+        <div class="article-toc" >
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#实现一">实现一:</a></li>
+<li><a href="#实现二">实现二：</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/%E7%BB%84%E5%90%88%E6%95%B0">组合数
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA">整数溢出
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/%E9%98%B6%E4%B9%98">阶乘
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://blog.caojun.xyz//tags/%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95">欧几里得算法
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/hiwifi-fifa-dns-issue/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            记一次极路由翻墙遇到的DNS解析问题
+        </div>
+    </a>
+    
+    
+    <a href="/posts/p-np-notes/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">P-NP问题定义学习笔记&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

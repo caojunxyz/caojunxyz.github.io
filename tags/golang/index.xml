@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>golang on 指尖时光</title>
+    <link>https://blog.caojun.xyz/tags/golang/</link>
+    <description>Recent content in golang on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 18 Sep 2018 22:43:04 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>TOML简明教程</title>
+      <link>https://blog.caojun.xyz/posts/toml-lang/</link>
+      <pubDate>Tue, 18 Sep 2018 22:43:04 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/toml-lang/</guid>
+      <description>TOML （Tom&amp;rsquo;s Obvious, Minimal Language) 是由Tom Preston-Werner设计的一门语言。可以将它简单理解为一种数据描述格式，类比xml, yaml, json, i</description>
+    </item>
+    
+    <item>
+      <title>json iterator介绍</title>
+      <link>https://blog.caojun.xyz/posts/jsoniter-go/</link>
+      <pubDate>Tue, 18 Sep 2018 22:06:22 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/jsoniter-go/</guid>
+      <description>jsoniter的Go语言实现的在Github上宣称的主要特性有两点：首先是快，其次是与标准库完全兼容。暂且不谈benchmark是否客观，</description>
+    </item>
+    
+    <item>
+      <title>Go语言自动化测试简介</title>
+      <link>https://blog.caojun.xyz/posts/go%E8%AF%AD%E8%A8%80%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%AE%80%E4%BB%8B/</link>
+      <pubDate>Fri, 14 Oct 2016 22:14:51 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/go%E8%AF%AD%E8%A8%80%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%AE%80%E4%BB%8B/</guid>
+      <description>Go语言提供了对包（*package*）进行自动化测试的支持，带来了很大的工程便利。本文主要介绍相关的常用知识，进一步学习可阅读官方文档。 测</description>
+    </item>
+    
+  </channel>
+</rss>

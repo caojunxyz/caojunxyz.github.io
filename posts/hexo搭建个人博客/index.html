@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>hexo搭建个人博客 // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="hexo搭建个人博客" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">hexo搭建个人博客</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="article-date">
+                <time datetime='2018-03-15T18:44:58.000&#43;00:00' itemprop="datePublished">2018-03-15</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://blog.caojun.xyz//categories/%E6%8A%98%E8%85%BE">折腾</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>前几日得空用<a href="https://hexo.io/">hexo</a>搭建了自己的<a href="https://caojun.xyz">个人博客</a>， 在此做个记录，写下自己的思考与实践过程。</p>
+
+<h3 id="为什么要写博客">为什么要写博客</h3>
+
+<p>到目前位置，我的个人博客历史大概可以划分为五个阶段：</p>
+
+<ol>
+<li>大学自学了点web开发的知识急切的想去实践，例如利用当时网易的免费二级域名建站。</li>
+<li>在CSDN、cppblog这类程序员技术社区发文。</li>
+<li>使用开源博客WordPress在VPS上搭建个人博客。</li>
+<li>在简书上写作。</li>
+<li>利用静态博客引擎hexo在VPS上搭建个人博客。</li>
+</ol>
+
+<p>第1个阶段绝大多数精力都在折腾酷炫然并卵的js效果；第2个阶段发现技术社区里面有一些牛人，开始模仿榜样；第3个阶段开始用更有逼格的方式模仿牛人；第4个阶段开始意识到内容才是核心，开始实实在在的创作内容；目前的阶段理解到写博客这事的核心是“好记性不如烂笔头”的个人积累，与“另一个自己”的对话，是自己的“历史书”。这个阶段选用哪种方式都是很容易的事情，技术审美上更能接受静态博客，方便版本控制。GitHub Pages绑定个人域名后不能支持https，而自己正好有一台海外的VPS当梯子用，自然而然的想到把博客部署在上面就解决了https和备案的问题。</p>
+
+<p>通过<a href="http://codingnow.com">云风</a>、<a href="http://www.ruanyifeng.com/blog/">阮一峰</a>等知名*&ldquo;技术网红&rdquo;*的博客，可以看到牛人的成长，看到牛人的勤奋和坚持。就跟投资复利一样，坚持下去，时间会产生巨大的效应。</p>
+
+<h3 id="为什么选择hexo">为什么选择hexo</h3>
+
+<p>在语言层面，我更倾向于使用Go开发的博客框架<a href="https://gohugo.io/">hugo</a>(<em>宣称渲染速度世界第一</em>)。但是在了解后发现它的整个生态（*GitHub Star、使用率、插件、主题等*）上和hexo相比差距很大。我的核心诉求只是找一个好用的框架，而不想把大量时间耗在造轮子上。而诸如WordPress之类的博客搭建还要依赖数据库安装，有一点杀鸡用牛刀的感觉，而且也不便于版本控制。基本上没有多大的纠结就选择了hexo。</p>
+
+<h3 id="部署经验">部署经验</h3>
+
+<p>官方的文档很详细，Google也有很多资料，所以在此不再一步步赘述。代码我是托管到GitHub的私有仓，通过rsync方式发布到VPS。
+通过<a href="https://caddyserver.com/">Caddy</a>做http服务器，可以方便的自动化申请和续签<a href="https://letsencrypt.org/">Let&rsquo;s Encrypt</a>免费证书。简单一点可以通过GitHub Pages托管，但是它不支持自定义域名的https服务，而我觉得目前这个是刚需。为什么没有做CI自动部署呢？<a href="https://travis-ci.org/">TravisCI</a>可以免费对GitHub上的公有仓提供CI服务，如果要对私有仓进行CI需要购买。也想了以下利用一些开源的CI工具，例如<a href="https://jenkins.io/">Jenkins</a>、<a href="https://drone.io/">Drone</a>，但我的博客写作主要都是在业余时间进行，还不一定能保证大块时间一气呵成写完一篇，所以我得阶段性的提交到GitHub。当我写完之后<a href="https://hexo.io/docs/deployment.html">发布</a>时，这里如果是先发布到GitHub的某个发布分支，再通过CI部署到VPS，就显得有些蛋疼了，还不如直接配置为rsync发布到VPS。</p>
+
+<p>用docker来运行Caddy肯定是最为方便的，写好Caddyfile和docker-compose文件，运行_<strong>docker-compose up -d</strong>_搞定！</p>
+
+<p>以下是参考配置文件：</p>
+
+<p>docker-compose.yml</p>
+
+<pre><code class="language-yaml">
+version: '2'
+
+services:
+  blog:
+    container_name: &quot;blog&quot;
+    image: &quot;abiosoft/caddy&quot;
+    network_mode: &quot;host&quot;
+    ports:
+      - &quot;80:80&quot;
+      - &quot;443:443&quot;
+    volumes:
+      - &quot;/root/caojun.xyz/blog/Caddyfile:/etc/Caddyfile&quot;
+      - &quot;/root/caojun.xyz/blog/certs:/etc/caddycerts&quot;
+      - &quot;/root/caojun.xyz/blog:/srv&quot;
+    restart: always
+    environment:
+      CADDYPATH: &quot;/etc/caddycerts&quot;
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 20000
+        hard: 40000
+</code></pre>
+
+<pre><code class="language-Caddyfile">caojun.xyz www.caojun.xyz {
+  tls caojun.xyz@gmail.com
+  root /srv/www
+  index index.html index.htm
+  gzip
+  log /srv/log
+}
+</code></pre>
+
+        </div>
+
+        
+        
+        <div class="article-toc" >
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#为什么要写博客">为什么要写博客</a></li>
+<li><a href="#为什么选择hexo">为什么选择hexo</a></li>
+<li><a href="#部署经验">部署经验</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+
+
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/count-and-say/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            解读Leetcode题目之&#34;Count and Say&#34;
+        </div>
+    </a>
+    
+    
+    <a href="/posts/%E6%B5%85%E8%B0%88%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">浅谈散列函数&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

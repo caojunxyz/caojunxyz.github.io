@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>手动激活Unity License // 指尖时光</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="时光不负有心人">
+    <meta name="keywords" content="">
+    <meta name="author" content="Jun Cao">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e793603378be9934f132a915073be5f6";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        <meta property="og:title" content="手动激活Unity License" />
+    <meta property="og:description" content="时光不负有心人" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/unity-manual-activate/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://blog.caojun.xyz/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://blog.caojun.xyz/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://blog.caojun.xyz/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.6" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://blog.caojun.xyz/">指尖时光</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">关于</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">手动激活Unity License</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/unity-manual-activate/" class="article-date">
+                <time datetime='2019-07-02T20:08:56.000&#43;08:00' itemprop="datePublished">2019-07-02</time>
+            </a>
+            
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>今天遭遇在macOS上激活Unity License失败的问题，与Unity官方邮件沟通先是让检查网络和防火墙，最后让尝试手动激活。本文记录一下遇到的坑与大家分享。</p>
+
+<h3 id="问题">问题</h3>
+
+<p>在macOS Mojave (10.14.4) 上在线登录Unity账号，输入Unity Plus订阅Seat的序列号激活失败，所使用的Unity版本为2018.3.6f1。</p>
+
+<p><img src="/images/unity.png" alt="如图所示" /></p>
+
+<p>检查网络及防火墙设置都没有问题，同样的网络在另外一台Windows 10上激活成功。回忆一下，我这台mac之前可能激活过另外一个账号的License，但不确定。</p>
+
+<h3 id="重新安装unity">重新安装Unity</h3>
+
+<p>怀疑是Unity安装的问题，通过<strong>CleanMyMac 3</strong>卸载后重新安装，然后重新激活，依然失败。</p>
+
+<h3 id="手动激活">手动激活</h3>
+
+<p>手动激活的详细步骤请参考<a href="https://docs.unity3d.com/Manual/ManualActivationGuide.html">官方文档</a>，访问<a href="https://license.unity3d.com/manual">https://license.unity3d.com/manual</a> 进行激活。</p>
+
+<p>需要特别注意的是，建议浏览器新建一个无痕窗口(Incognito Window)，用激活账号登录Unity官网<a href="https://id.unity.com。这里因为我又多个账号，手动激活的网站有没有提示需要用激活账号登录，导致第一次还是激活失败，最后还是通过邮件与Unity官方沟通才解决。">https://id.unity.com。这里因为我又多个账号，手动激活的网站有没有提示需要用激活账号登录，导致第一次还是激活失败，最后还是通过邮件与Unity官方沟通才解决。</a></p>
+
+<h3 id="原理">原理</h3>
+
+<p>手动激活的原理，其实就是生成一个xml文件<strong><em>Unity_v2018.3.6f1.alf</em></strong>，其中包括一些设备信息，例如mac的序列号，Windows的mac地址等信息。Unity后台根据登录的用户信息以及该文件包含的设备信息生成一个xml文件<strong><em>Unity_v2018.x.ulf</em></strong>。Unity导入该文件如果校验有效则成功激活。这说明Unity内置了一套离线的激活逻辑 ( <em>仿佛看到了你邪恶的微笑</em> )。离线激活还有一个用途是给企业管理提供了方便的途径，否则就只有将Unity账号和序列号发放下去，这显然是不太好的管理方式。</p>
+
+        </div>
+
+        
+        
+        <div class="article-toc" >
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#问题">问题</a></li>
+<li><a href="#重新安装unity">重新安装Unity</a></li>
+<li><a href="#手动激活">手动激活</a></li>
+<li><a href="#原理">原理</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+
+
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/shell_builtin_hash/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Linux Shell如何查找命令
+        </div>
+    </a>
+    
+    
+    <a href="/posts/backup-restore-gitlab-in-docker/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">备份和还原容器化部署的GitLab&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 指尖时光
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

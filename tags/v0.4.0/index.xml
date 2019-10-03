@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>v0.4.0 on 指尖时光</title>
+    <link>https://blog.caojun.xyz/tags/v0.4.0/</link>
+    <description>Recent content in v0.4.0 on 指尖时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 18 Sep 2018 22:43:04 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.caojun.xyz/tags/v0.4.0/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>TOML简明教程</title>
+      <link>https://blog.caojun.xyz/posts/toml-lang/</link>
+      <pubDate>Tue, 18 Sep 2018 22:43:04 +0000</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/toml-lang/</guid>
+      <description>TOML （Tom&amp;rsquo;s Obvious, Minimal Language) 是由Tom Preston-Werner设计的一门语言。可以将它简单理解为一种数据描述格式，类比xml, yaml, json, i</description>
+    </item>
+    
+  </channel>
+</rss>
