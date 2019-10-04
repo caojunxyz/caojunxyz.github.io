@@ -6,10 +6,19 @@
     <description>Recent content on 指尖时光</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 15 Sep 2019 22:05:56 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 04 Oct 2019 18:56:34 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.caojun.xyz/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>如何更好的维护Android App Version Code</title>
+      <link>https://blog.caojun.xyz/posts/maintain-android-versioncode/</link>
+      <pubDate>Fri, 04 Oct 2019 18:56:34 +0800</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/maintain-android-versioncode/</guid>
+      <description>提交到GooglePlay的每个Android App都需要能够区分版本，要么通过升级versionName （例如从1.0.0 &amp;ndash;&amp;gt; 1.0.1)，</description>
+    </item>
     
     <item>
       <title>macOS用户使用SSH连接远程主机的常用姿势</title>

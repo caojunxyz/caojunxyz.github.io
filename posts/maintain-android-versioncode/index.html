@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>macOS用户使用SSH连接远程主机的常用姿势 // 指尖时光</title>
+    <title>如何更好的维护Android App Version Code // 指尖时光</title>
 
         <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -18,11 +18,11 @@
       s.parentNode.insertBefore(hm, s);
     })();
     </script>
-        <meta property="og:title" content="macOS用户使用SSH连接远程主机的常用姿势" />
+        <meta property="og:title" content="如何更好的维护Android App Version Code" />
     <meta property="og:description" content="时光不负有心人" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:url" content="https://blog.caojun.xyz/posts/ssh_practise/" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/maintain-android-versioncode/" />
     
 
     <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
@@ -62,93 +62,31 @@
     <div class="article-inner">
         
         <header class="article-header">
-            <h1 class="article-title" itemprop="name">macOS用户使用SSH连接远程主机的常用姿势</h1>
+            <h1 class="article-title" itemprop="name">如何更好的维护Android App Version Code</h1>
         </header>
         
         <div class="article-meta">
-            <a href="/posts/ssh_practise/" class="article-date">
-                <time datetime='2019-09-15T22:05:56.000&#43;08:00' itemprop="datePublished">2019-09-15</time>
+            <a href="/posts/maintain-android-versioncode/" class="article-date">
+                <time datetime='2019-10-04T18:56:34.000&#43;08:00' itemprop="datePublished">2019-10-04</time>
             </a>
             
             
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            
+            <p>提交到GooglePlay的每个Android App都需要能够区分版本，要么通过升级versionName （例如从1.0.0 &ndash;&gt; 1.0.1)，要么升级versionCode（例如从1 &ndash;&gt; 2)。其它的Android应用商店，应该也是同样的要求。在实际开发中，versionName的维护可能会和VCS的tag关联起来，而且可能会有市场需求（例如某个重大更新会升级打版本）， 因此会得到良好的维护。而versionCode对普通用户来说是不可见的，完全是为了满足应用商店的要求去设置，所以可能经常出现忘记修改导致重复无法提交的情况，这个时候再重新打包提交又要花费不少时间。如果考虑到CI，那更需要自动维护versionCode了。</p>
 
-<p>SSH是服务器开发运维人员必不可少的工具，本文介绍一些macOS用户常用的SSH操作姿势。</p>
+<p>那么怎么减轻维护versionCode心智负担呢？</p>
 
-<h3 id="使用密钥登陆">使用密钥登陆</h3>
+<p>很容易想到的一点，是记录下当前已经使用的versionCode，下一次再build时将其自增，然后更新记录。这种方法的优点是，可以每次递增1，很符合直觉。缺点是，需要维护记录，如果存在多台机器同时build的情况，维护的代价就更大。</p>
 
-<p>通常可以使用 <em>ssh [user]@[ip]</em> 登陆服务器，但是每次都需要输入远程主机用户的密码。</p>
+<p>另外一种方法是无状态的，我们理解了versionCode完全是给应用商店区分版本用的，那么就可以丢弃只能按1递增的执念，只需保证其在同一个versionName下不重复即可。假如我们第一个版本发布的时间是t0, 假如我们提交应用的频率不会超过每天1个，那么某次构建的versionCode可以根据其构建开始的时间tn来计算：<em>days(tn-t0) + 1</em> 。 <em>days()</em> 函数计算经过的天数。t0可以硬编码到实现函数中，也不一定需要是第一个版本构建的准确时间，只是需要一个初始时间。如果每天提交的包可能超过一个，那么可以将公示改造为计算经过的 <strong>小时</strong> ， 原理都是相同的。值得注意的是，提交应用商店的频率和build的频率是不同的概念，如果有多台机器build，它们build的versionCode可能相同，但这并不冲突，因为我们只会在同一时刻提交一个包。</p>
 
-<p>可以将macOS本机用户的SSH公钥拷贝到远程主机上( <em>~/.ssh/authorizied_keys</em> )，最原始的方式是手动拷贝粘贴（如果 <em>authorized_keys</em> 文件不存在则需先创建）。更好的方式是通过 <em>ssh-copy-id</em> 命令将密钥拷贝到远程主机。</p>
-
-<p>用法：<em>ssh-copy-id [user]@[ip]</em> ，按提示输入密码回车即可。</p>
-
-<h3 id="使用storm工具">使用storm工具</h3>
-
-<p>通常情况下，远程服务器可能修改 <strong><em>sshd</em></strong>的默认端口。也可能面临不同的远程服务器需要使用不同的密钥登陆。使用<a href="https://github.com/emre/storm">storm</a>工具可以带来很多便利。macOS用户可以直接使用<code>brew install stormssh</code>命令安装。</p>
-
-<h4 id="添加远程主机">添加远程主机</h4>
-
-<p><code>storm add [host-name] [user]@[ip]:[port]</code></p>
-
-<h4 id="查看ssh配置的远程主机">查看ssh配置的远程主机</h4>
-
-<p><code>storm list</code></p>
-
-<h4 id="编辑远程主机配置">编辑远程主机配置</h4>
-
-<p><code>storm edit [host-name]</code></p>
-
-<h4 id="删除远程主机配置">删除远程主机配置</h4>
-
-<p><code>storm delete [host-name]</code></p>
-
-<h3 id="ssh配置">SSH配置</h3>
-
-<p>ssh的配置文件为 *~/.ssh/config*， 格式为：</p>
-
-<pre><code class="language-bash">Host host1
-    HostName x.x.x.x
-    User root
-    Port 22
-Host host2
-    HostName y.y.y.y
-    User ubuntu
-    Port 22022
-    IdentityFile ~/.ssh/id_rsa_test
-</code></pre>
-
-<p>storm工具的原理是一个对ssh config更加友好的操作接口，有时候也可以直接来编辑配置文件。</p>
+<p><a href="https://developer.android.com/studio/publish/versioning">GooglePlay对versionCode的要求是小于 <strong><em>2100000000</em></strong> (21亿)</a>，正常情况下build的频率绝对不会需要担心溢出。还要要特别注意versionCode只能递增，实现适合自己的算法后先小心调试。</p>
 
         </div>
 
         
-        
-        <div class="article-toc" >
-            <h3>Contents</h3>
-            <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#使用密钥登陆">使用密钥登陆</a></li>
-<li><a href="#使用storm工具">使用storm工具</a>
-<ul>
-<li><a href="#添加远程主机">添加远程主机</a></li>
-<li><a href="#查看ssh配置的远程主机">查看ssh配置的远程主机</a></li>
-<li><a href="#编辑远程主机配置">编辑远程主机配置</a></li>
-<li><a href="#删除远程主机配置">删除远程主机配置</a></li>
-</ul></li>
-<li><a href="#ssh配置">SSH配置</a></li>
-</ul></li>
-</ul></li>
-</ul>
-</nav>
-        </div>
         
         
 
@@ -159,15 +97,9 @@ Host host2
     </div>
     <nav id="article-nav">
     
-    <a href="/posts/maintain-android-versioncode/" id="article-nav-newer" class="article-nav-link-wrap">
-        <div class="article-nav-title"><span>&lt;</span>&nbsp;
-            如何更好的维护Android App Version Code
-        </div>
-    </a>
     
-    
-    <a href="/posts/traverse_dir_with_golang/" id="article-nav-older" class="article-nav-link-wrap">
-        <div class="article-nav-title">Go语言遍历文件夹的两种方法&nbsp;<span>&gt;</span></div>
+    <a href="/posts/ssh_practise/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">macOS用户使用SSH连接远程主机的常用姿势&nbsp;<span>&gt;</span></div>
     </a>
     
 </nav>

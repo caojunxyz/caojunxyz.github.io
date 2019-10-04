@@ -63,6 +63,36 @@
                 
                 
                 <header class="article-header">
+                    <h1 itemprop="name"><a class="article-title" href="/posts/gorm-postgres-json/">GORM使用PostgreSQL数据库json类型的一次挖坑经历</a></h1>
+                </header>
+                
+                <div class="article-meta">
+                    <a href="/posts/gorm-postgres-json/" class="article-date">
+                        <time datetime='2019-08-18T13:32:02.000&#43;08:00' itemprop="datePublished">2019-08-18</time>
+                    </a>
+                    
+                    
+                    
+                </div>
+                <div class="article-entry" itemprop="articleBody">
+                    <p>
+                        
+                    因为项目数据库使用很简单，没有复杂的查询，因此使用GORM来操作PostgreSQL 10。 最初表结构的定义是这样的： type LogData struct { ID uint `gorm:&quot;primary_key; not null&quot;` Data json.RawMessage }
+                    </p>
+                    <p class="article-more-link">
+                        <a href="/posts/gorm-postgres-json/">Read More</a>
+                    </p>
+                </div>
+
+                
+            </div>
+        </article>
+        
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+            <div class="article-inner">
+                
+                
+                <header class="article-header">
                     <h1 itemprop="name"><a class="article-title" href="/posts/install-standalone-postgresql-client-tools/">如何独立安装PostgreSQL客户端工具</a></h1>
                 </header>
                 
@@ -171,36 +201,6 @@
                     </p>
                     <p class="article-more-link">
                         <a href="/posts/exercise-file-transmit/">Read More</a>
-                    </p>
-                </div>
-
-                
-            </div>
-        </article>
-        
-        <article class="article article-type-post" itemscope itemprop="blogPost">
-            <div class="article-inner">
-                
-                
-                <header class="article-header">
-                    <h1 itemprop="name"><a class="article-title" href="/posts/shell_builtin_hash/">Linux Shell如何查找命令</a></h1>
-                </header>
-                
-                <div class="article-meta">
-                    <a href="/posts/shell_builtin_hash/" class="article-date">
-                        <time datetime='2019-07-13T19:43:29.000&#43;08:00' itemprop="datePublished">2019-07-13</time>
-                    </a>
-                    
-                    
-                    
-                </div>
-                <div class="article-entry" itemprop="articleBody">
-                    <p>
-                        
-                    在Linux Shell（例如bash）中输入ls，系统会显示当前目录的文件列表，但当你直接输入一个你自己开发的程序的文件名时，系统会提示找不
-                    </p>
-                    <p class="article-more-link">
-                        <a href="/posts/shell_builtin_hash/">Read More</a>
                     </p>
                 </div>
 
