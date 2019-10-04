@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>如何更好的维护Android App Version Code // 指尖时光</title>
+    <title>如何解决Excel打开Jira导出csv乱码的问题 // 指尖时光</title>
 
         <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -18,11 +18,11 @@
       s.parentNode.insertBefore(hm, s);
     })();
     </script>
-        <meta property="og:title" content="如何更好的维护Android App Version Code" />
+        <meta property="og:title" content="如何解决Excel打开Jira导出csv乱码的问题" />
     <meta property="og:description" content="时光不负有心人" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:url" content="https://blog.caojun.xyz/posts/maintain-android-versioncode/" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/how-to-resolve-jira-export-csv-bad-display-in-excel/" />
     
 
     <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
@@ -62,31 +62,66 @@
     <div class="article-inner">
         
         <header class="article-header">
-            <h1 class="article-title" itemprop="name">如何更好的维护Android App Version Code</h1>
+            <h1 class="article-title" itemprop="name">如何解决Excel打开Jira导出csv乱码的问题</h1>
         </header>
         
         <div class="article-meta">
-            <a href="/posts/maintain-android-versioncode/" class="article-date">
-                <time datetime='2019-10-01T18:56:34.000&#43;08:00' itemprop="datePublished">2019-10-01</time>
+            <a href="/posts/how-to-resolve-jira-export-csv-bad-display-in-excel/" class="article-date">
+                <time datetime='2019-10-02T19:44:20.000&#43;08:00' itemprop="datePublished">2019-10-02</time>
             </a>
             
             
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            <p>提交到GooglePlay的每个Android App都需要能够区分版本，要么通过升级versionName （例如从1.0.0 &ndash;&gt; 1.0.1)，要么升级versionCode（例如从1 &ndash;&gt; 2)。其它的Android应用商店，应该也是同样的要求。在实际开发中，versionName的维护可能会和VCS的tag关联起来，而且可能会有市场需求（例如某个重大更新会升级打版本）， 因此会得到良好的维护。而versionCode对普通用户来说是不可见的，完全是为了满足应用商店的要求去设置，所以可能经常出现忘记修改导致重复无法提交的情况，这个时候再重新打包提交又要花费不少时间。如果考虑到CI，那更需要自动维护versionCode了。</p>
+            
 
-<p>那么怎么减轻维护versionCode心智负担呢？</p>
+<h4 id="问题">问题</h4>
 
-<p>很容易想到的一点，是记录下当前已经使用的versionCode，下一次再build时将其自增，然后更新记录。这种方法的优点是，可以每次递增1，很符合直觉。缺点是，需要维护记录，如果存在多台机器同时build的情况，维护的代价就更大。</p>
+<p>Jira导出的csv文件，在Mac上使用Numbers打开显示正确，使用Excel (Office 365)打开csv文件乱码，在Windows上使用Excel打开也乱码。</p>
 
-<p>另外一种方法是无状态的，我们理解了versionCode完全是给应用商店区分版本用的，那么就可以丢弃只能按1递增的执念，只需保证其在同一个versionName下不重复即可。假如我们第一个版本发布的时间是t0, 假如我们提交应用的频率不会超过每天1个，那么某次构建的versionCode可以根据其构建开始的时间tn来计算：<em>days(tn-t0) + 1</em> 。 <em>days()</em> 函数计算经过的天数。t0可以硬编码到实现函数中，也不一定需要是第一个版本构建的准确时间，只是需要一个初始时间。如果每天提交的包可能超过一个，那么可以将公示改造为计算经过的 <strong>小时</strong> ， 原理都是相同的。值得注意的是，提交应用商店的频率和build的频率是不同的概念，如果有多台机器build，它们build的versionCode可能相同，但这并不冲突，因为我们只会在同一时刻提交一个包。</p>
+<h4 id="分析">分析</h4>
 
-<p><a href="https://developer.android.com/studio/publish/versioning">GooglePlay对versionCode的要求是小于 <strong><em>2100000000</em></strong> (21亿)</a>，正常情况下build的频率绝对不会需要担心溢出。还要要特别注意versionCode只能递增，实现适合自己的算法后先小心调试。</p>
+<p>乱码的原因就是应用程序没有用正确的编码方式打开文件，我们首先确定csv文件的编码字符集。在<a href="https://code.visualstudio.com/">Visual Studio Code</a>中打开csv文件，从底部状态栏的现实信息中可以得知文件编码字符集。</p>
+
+<p><img src="/images/vscode-utf8.png" alt="如图所示" /></p>
+
+<p>知道了文件的编码字符集，那么在应用程序中选择以正确的字符集打开即可解决乱码。</p>
+
+<h4 id="解决">解决</h4>
+
+<p>在Excel中新建文件，选择从csv中以UTF-8加载数据。</p>
+
+<p><img src="/images/excel_import_data.png" alt="如图所示" /></p>
+
+<h4 id="jira中如何导出csv">Jira中如何导出CSV</h4>
+
+<p>从顶部 <strong><em>Boards</em></strong> 菜单中选择想要导出的项目面板，侧边栏选择 <strong><em>Issues</em></strong> ，右上角点击超链接 <em>[ View all issues and filters ]</em> 。可以通过 <strong><em>Basic</em></strong> 和 <strong><em>Advanced</em></strong> 两种不同的方式筛选过滤。过滤好后点击右上角 <strong><em>Export</em></strong> 按钮，再下拉菜单项中选择 <em>[ CSV (All fields) ]</em> 或 *[ CSV (Current fields) ]*。导出时csv分隔符就选择默认的逗号分隔符。</p>
 
         </div>
 
         
+        
+        <div class="article-toc" >
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#问题">问题</a></li>
+<li><a href="#分析">分析</a></li>
+<li><a href="#解决">解决</a></li>
+<li><a href="#jira中如何导出csv">Jira中如何导出CSV</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
         
         
 
@@ -97,15 +132,9 @@
     </div>
     <nav id="article-nav">
     
-    <a href="/posts/how-to-resolve-jira-export-csv-bad-display-in-excel/" id="article-nav-newer" class="article-nav-link-wrap">
-        <div class="article-nav-title"><span>&lt;</span>&nbsp;
-            如何解决Excel打开Jira导出csv乱码的问题
-        </div>
-    </a>
     
-    
-    <a href="/posts/ssh_practise/" id="article-nav-older" class="article-nav-link-wrap">
-        <div class="article-nav-title">macOS用户使用SSH连接远程主机的常用姿势&nbsp;<span>&gt;</span></div>
+    <a href="/posts/maintain-android-versioncode/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">如何更好的维护Android App Version Code&nbsp;<span>&gt;</span></div>
     </a>
     
 </nav>

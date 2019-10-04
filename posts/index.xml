@@ -6,15 +6,24 @@
     <description>Recent content in Posts on 指尖时光</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 04 Oct 2019 18:56:34 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 02 Oct 2019 19:44:20 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.caojun.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>如何解决Excel打开Jira导出csv乱码的问题</title>
+      <link>https://blog.caojun.xyz/posts/how-to-resolve-jira-export-csv-bad-display-in-excel/</link>
+      <pubDate>Wed, 02 Oct 2019 19:44:20 +0800</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/how-to-resolve-jira-export-csv-bad-display-in-excel/</guid>
+      <description>问题 Jira导出的csv文件，在Mac上使用Numbers打开显示正确，使用Excel (Office 365)打开csv文件乱码，在Windows上使用E</description>
+    </item>
+    
+    <item>
       <title>如何更好的维护Android App Version Code</title>
       <link>https://blog.caojun.xyz/posts/maintain-android-versioncode/</link>
-      <pubDate>Fri, 04 Oct 2019 18:56:34 +0800</pubDate>
+      <pubDate>Tue, 01 Oct 2019 18:56:34 +0800</pubDate>
       
       <guid>https://blog.caojun.xyz/posts/maintain-android-versioncode/</guid>
       <description>提交到GooglePlay的每个Android App都需要能够区分版本，要么通过升级versionName （例如从1.0.0 &amp;ndash;&amp;gt; 1.0.1)，</description>
