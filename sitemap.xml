@@ -4,19 +4,24 @@
   
   <url>
     <loc>https://blog.caojun.xyz/posts/</loc>
-    <lastmod>2019-10-02T19:44:20+08:00</lastmod>
+    <lastmod>2019-10-04T22:25:59+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/posts/helpful-macos-shell-date-aliases/</loc>
+    <lastmod>2019-10-04T22:25:59+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.caojun.xyz/</loc>
+    <lastmod>2019-10-04T22:25:59+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.caojun.xyz/posts/how-to-resolve-jira-export-csv-bad-display-in-excel/</loc>
     <lastmod>2019-10-02T19:44:20+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.caojun.xyz/</loc>
-    <lastmod>2019-10-02T19:44:20+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>如何解决Excel打开Jira导出csv乱码的问题 // 指尖时光</title>
+    <title>几个有用的macOS shell date命令别名 // 指尖时光</title>
 
         <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -18,11 +18,11 @@
       s.parentNode.insertBefore(hm, s);
     })();
     </script>
-        <meta property="og:title" content="如何解决Excel打开Jira导出csv乱码的问题" />
+        <meta property="og:title" content="几个有用的macOS shell date命令别名" />
     <meta property="og:description" content="时光不负有心人" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:url" content="https://blog.caojun.xyz/posts/how-to-resolve-jira-export-csv-bad-display-in-excel/" />
+    <meta property="og:url" content="https://blog.caojun.xyz/posts/helpful-macos-shell-date-aliases/" />
     
 
     <link href="" rel="alternate" type="application/rss+xml" title="指尖时光" />
@@ -62,12 +62,12 @@
     <div class="article-inner">
         
         <header class="article-header">
-            <h1 class="article-title" itemprop="name">如何解决Excel打开Jira导出csv乱码的问题</h1>
+            <h1 class="article-title" itemprop="name">几个有用的macOS shell date命令别名</h1>
         </header>
         
         <div class="article-meta">
-            <a href="/posts/how-to-resolve-jira-export-csv-bad-display-in-excel/" class="article-date">
-                <time datetime='2019-10-02T19:44:20.000&#43;08:00' itemprop="datePublished">2019-10-02</time>
+            <a href="/posts/helpful-macos-shell-date-aliases/" class="article-date">
+                <time datetime='2019-10-04T22:25:59.000&#43;08:00' itemprop="datePublished">2019-10-04</time>
             </a>
             
             
@@ -76,27 +76,50 @@
         <div class="article-entry" itemprop="articleBody">
             
 
-<h4 id="问题">问题</h4>
+<h4 id="now">now</h4>
 
-<p>Jira导出的csv文件，在Mac上使用Numbers打开显示正确，使用Excel (Office 365)打开csv文件乱码，在Windows上使用Excel打开也乱码。</p>
+<p><strong>显示当前日期和时间、时区、星期几</strong></p>
 
-<h4 id="分析">分析</h4>
+<pre><code>alias now=&quot;date +'%Y-%m-%d %X %z %A'&quot;
+</code></pre>
 
-<p>乱码的原因就是应用程序没有用正确的编码方式打开文件，我们首先确定csv文件的编码字符集。在<a href="https://code.visualstudio.com/">Visual Studio Code</a>中打开csv文件，从底部状态栏的现实信息中可以得知文件编码字符集。</p>
+<h4 id="nowts">nowts</h4>
 
-<p><img src="/images/vscode-utf8.png" alt="如图所示" /></p>
+<p><strong>显示当前时间戳</strong></p>
 
-<p>知道了文件的编码字符集，那么在应用程序中选择以正确的字符集打开即可解决乱码。</p>
+<pre><code>alias nowts='date -j -f &quot;%a %b %d %T %Z %Y&quot; &quot;`date`&quot; &quot;+%s&quot;'
+</code></pre>
 
-<h4 id="解决">解决</h4>
+<h4 id="tsdate">tsdate</h4>
 
-<p>在Excel中新建文件，选择从csv中以UTF-8加载数据。</p>
+<p><strong>将时间戳转换为本地时间</strong></p>
 
-<p><img src="/images/excel_import_data.png" alt="如图所示" /></p>
+<pre><code>alias tsdate='new() { date -r &quot;$1&quot; +&quot;%Y-%m-%d %X %z %A&quot; }; new'
+</code></pre>
 
-<h4 id="jira中如何导出csv">Jira中如何导出CSV</h4>
+<p><strong><em>example</em></strong>:  <em>tsdate 1569898863</em></p>
 
-<p>从顶部 <strong><em>Boards</em></strong> 菜单中选择想要导出的项目面板，侧边栏选择 <strong><em>Issues</em></strong> ，右上角点击超链接 <em>[ View all issues and filters ]</em> 。可以通过 <strong><em>Basic</em></strong> 和 <strong><em>Advanced</em></strong> 两种不同的方式筛选过滤。过滤好后点击右上角 <strong><em>Export</em></strong> 按钮，再下拉菜单项中选择 <em>[ CSV (All fields) ]</em> 或 *[ CSV (Current fields) ]*。导出时csv分隔符就选择默认的逗号分隔符。</p>
+<h4 id="datets">datets</h4>
+
+<p><strong>将本地时间转换为时间戳</strong></p>
+
+<pre><code>alias datets='new() { date -j -f &quot;%Y-%m-%d %X&quot; &quot;$1&quot; &quot;+%s&quot; }; new'
+</code></pre>
+
+<p><strong><em>example</em></strong>:  <em>datets &ldquo;2019-10-01 11:01:03&rdquo;</em></p>
+
+<h4 id="datezts">datezts</h4>
+
+<p><strong>将指定时区的时间转换为时间戳</strong></p>
+
+<pre><code>alias datezts='new() { date -j -f &quot;%Y-%m-%d %X %z&quot; &quot;$1&quot; &quot;+%s&quot; }; new'
+</code></pre>
+
+<p><strong><em>example</em></strong>:  <em>datezts &ldquo;2019-10-01 11:01:03 +0800&rdquo;</em></p>
+
+<h4 id="注意">注意</h4>
+
+<p>macOS上的date命令参数选项和Linux上的略有不同，如果要在linux上实现同样的别名，还需参考man手册修改</p>
 
         </div>
 
@@ -112,10 +135,12 @@
 <ul>
 <li>
 <ul>
-<li><a href="#问题">问题</a></li>
-<li><a href="#分析">分析</a></li>
-<li><a href="#解决">解决</a></li>
-<li><a href="#jira中如何导出csv">Jira中如何导出CSV</a></li>
+<li><a href="#now">now</a></li>
+<li><a href="#nowts">nowts</a></li>
+<li><a href="#tsdate">tsdate</a></li>
+<li><a href="#datets">datets</a></li>
+<li><a href="#datezts">datezts</a></li>
+<li><a href="#注意">注意</a></li>
 </ul></li>
 </ul></li>
 </ul></li>
@@ -132,15 +157,9 @@
     </div>
     <nav id="article-nav">
     
-    <a href="/posts/helpful-macos-shell-date-aliases/" id="article-nav-newer" class="article-nav-link-wrap">
-        <div class="article-nav-title"><span>&lt;</span>&nbsp;
-            几个有用的macOS shell date命令别名
-        </div>
-    </a>
     
-    
-    <a href="/posts/maintain-android-versioncode/" id="article-nav-older" class="article-nav-link-wrap">
-        <div class="article-nav-title">如何更好的维护Android App Version Code&nbsp;<span>&gt;</span></div>
+    <a href="/posts/how-to-resolve-jira-export-csv-bad-display-in-excel/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">如何解决Excel打开Jira导出csv乱码的问题&nbsp;<span>&gt;</span></div>
     </a>
     
 </nav>

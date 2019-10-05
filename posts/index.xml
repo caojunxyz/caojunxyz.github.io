@@ -6,10 +6,19 @@
     <description>Recent content in Posts on 指尖时光</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 02 Oct 2019 19:44:20 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 04 Oct 2019 22:25:59 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.caojun.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>几个有用的macOS shell date命令别名</title>
+      <link>https://blog.caojun.xyz/posts/helpful-macos-shell-date-aliases/</link>
+      <pubDate>Fri, 04 Oct 2019 22:25:59 +0800</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/helpful-macos-shell-date-aliases/</guid>
+      <description>now 显示当前日期和时间、时区、星期几 alias now=&amp;quot;date +&#39;%Y-%m-%d %X %z %A&#39;&amp;quot; nowts 显示当前时间戳 alias nowts=&#39;date -j -f &amp;quot;%a %b %d %T %Z %Y&amp;quot; &amp;quot;`date`&amp;quot; &amp;quot;+%s&amp;quot;&#39; tsdate 将时间戳转换为本地时间 alias tsdate=&#39;new() { date -r &amp;quot;$1&amp;quot; +&amp;quot;%Y-%m-%d %X %z %A&amp;quot; }; new&#39; example: tsdate 1569898863</description>
+    </item>
     
     <item>
       <title>如何解决Excel打开Jira导出csv乱码的问题</title>
