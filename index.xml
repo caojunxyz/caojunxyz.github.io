@@ -6,10 +6,19 @@
     <description>Recent content on 指尖时光</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 04 Oct 2019 22:25:59 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 13 Oct 2019 21:19:03 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.caojun.xyz/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>一些关于团队管理的思考</title>
+      <link>https://blog.caojun.xyz/posts/think-in-team-management/</link>
+      <pubDate>Sun, 13 Oct 2019 21:19:03 +0800</pubDate>
+      
+      <guid>https://blog.caojun.xyz/posts/think-in-team-management/</guid>
+      <description>看标题好像有点太大，可能有朋友谁觉得我何德何能敢来谈管理，你在哪家企业担任高管，有多大团队的管理经验。我不这么认为，首先我写这篇文章不是为了</description>
+    </item>
     
     <item>
       <title>几个有用的macOS shell date命令别名</title>
